@@ -1,0 +1,13 @@
+.customer-row td:first-child {
+  font-weight: 600;
+  color: var(--eco-dark);
+}
+
+.customer-orders {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-weight: bold;
+  display: inline-block;
+}

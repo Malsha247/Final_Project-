@@ -1,0 +1,56 @@
+
+services:
+  frontend:
+    build:
+      context: ./wasantha-eco-husk-solutions
+    container_name: eco-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: "0.0.0.0"
+      REACT_APP_API_URL: "http://localhost:8081"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./wasanthaecohusksolution
+    container_name: eco-backend
+    ports:
+      - "8081:80"
+    env_file:
+      - path: .env.services.local
+        required: false
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - eco_uploads:/var/www/html/uploads
+
+  db:
+    image: mysql:8.0
+    container_name: eco-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - eco_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+volumes:
+  eco_mysql_data:
+  eco_uploads:

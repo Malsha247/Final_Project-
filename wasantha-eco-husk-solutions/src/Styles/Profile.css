@@ -1,0 +1,95 @@
+.profile-page {
+  max-width: 800px;
+  margin: 22px auto;
+  padding: 12px;
+}
+.profile-card {
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+.profile-links .profile-btn {
+  display: inline-block;
+  margin-right: 8px;
+  background: #1b4d1b;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.profile-page {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card {
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.profile-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #027a48;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.profile-btn:hover {
+  background-color: #03623b;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.profile-form button {
+  background-color: #027a48;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-form button:hover {
+  background-color: #03623b;
+}
+
+.profile-form input,
+.profile-form textarea {
+  pointer-events: auto !important;
+  user-select: text !important;
+  opacity: 1 !important;
+  background-color: #fff !important;
+}

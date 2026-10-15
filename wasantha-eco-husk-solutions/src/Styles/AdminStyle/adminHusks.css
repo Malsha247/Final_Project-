@@ -1,0 +1,15 @@
+
+.admin-husks-page {
+  padding: 18px;
+}
+.admin-husks-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-husks-table th,
+.admin-husks-table td {
+  border: 1px solid #eee;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}

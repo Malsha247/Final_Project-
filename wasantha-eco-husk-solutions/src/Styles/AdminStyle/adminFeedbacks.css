@@ -1,0 +1,43 @@
+
+.admin-feedbacks-page {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 16px;
+}
+.feedback-card {
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+.fb-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #333;
+}
+.fb-subject {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1b4d1b;
+}
+.fb-message {
+  margin-bottom: 8px;
+}
+.fb-reply-form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+.fb-reply-form button {
+  margin-top: 8px;
+  background: #2b7a0b;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

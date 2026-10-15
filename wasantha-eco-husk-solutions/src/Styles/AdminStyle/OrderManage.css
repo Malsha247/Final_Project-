@@ -1,0 +1,80 @@
+
+
+.admin-orders {
+  padding: 30px;
+  font-family: "Poppins", sans-serif;
+  background: #f1f8e9;
+  min-height: 90vh;
+}
+
+.admin-orders h2 {
+  color: #2b7a0b;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 15px;
+}
+
+th {
+  background-color: #2b7a0b;
+  color: white;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+select {
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+select:focus {
+  border-color: #2b7a0b;
+  outline: none;
+}
+
+/* Status colors */
+td:nth-child(4) {
+  font-weight: bold;
+}
+
+td:nth-child(4):contains("Pending") {
+  color: #ff9800;
+}
+td:nth-child(4):contains("Processing") {
+  color: #2196f3;
+}
+td:nth-child(4):contains("Delivered") {
+  color: #4caf50;
+}
+td:nth-child(4):contains("Canceled") {
+  color: #f44336;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  table {
+    font-size: 13px;
+  }
+  th,
+  td {
+    padding: 8px;
+  }
+}

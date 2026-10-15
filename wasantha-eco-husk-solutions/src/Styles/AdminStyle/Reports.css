@@ -1,0 +1,155 @@
+
+:root {
+  --bg: #f6fbf7;
+  --card: #ffffff;
+  --accent: #2e7d32;
+  --muted: #6b6b6b;
+  --shadow: 0 8px 20px rgba(18, 55, 27, 0.06);
+  --radius: 12px;
+  --gap: 20px;
+  --max-width: 1200px;
+}
+
+.eco-dashboard {
+  background: var(--bg);
+  min-height: calc(100vh - 40px);
+  padding: 28px 18px;
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: #222;
+}
+
+.dashboard-main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.dashboard-main h2 {
+  font-size: 26px;
+  margin: 6px 0 18px;
+  color: #133a16;
+  font-weight: 700;
+}
+
+/* Responsive grid of cards (re-used by other report pages) */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+/* Card */
+.dashboard-card {
+  background: linear-gradient(180deg, var(--card), #fbfff9);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  cursor: pointer;
+  border: 1px solid rgba(34, 34, 34, 0.03);
+  min-height: 220px;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(18, 55, 27, 0.09);
+}
+
+/* image */
+.dashboard-card .report-thumb {
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #eef8ee;
+  display: block;
+  margin-bottom: 12px;
+  border: 1px solid rgba(34, 34, 34, 0.04);
+  box-shadow: 0 6px 16px rgba(6, 20, 8, 0.03);
+}
+
+/* Fallback decorative background using your uploaded file */
+.dashboard-card .report-deco {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background-image: url("/mnt/data/173a9021-526a-4b60-aaac-7bf034eb5d39.png");
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+}
+
+/* title and description */
+.dashboard-card h3 {
+  margin: 8px 0 6px;
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  max-width: 230px;
+}
+
+/* button */
+.dashboard-card button {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.12);
+  font-weight: 600;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+.dashboard-card button:hover {
+  transform: translateY(-2px);
+  opacity: 0.98;
+}
+
+
+@media (max-width: 1000px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dashboard-card {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 620px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-main {
+    padding: 8px;
+  }
+  .dashboard-card {
+    padding: 14px;
+    min-height: 160px;
+  }
+  .dashboard-card p {
+    max-width: 100%;
+    font-size: 14px;
+  }
+}
+.dashboard-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}

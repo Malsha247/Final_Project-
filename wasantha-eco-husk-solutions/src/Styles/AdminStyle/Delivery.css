@@ -1,0 +1,31 @@
+.delivery-admin {
+  padding: 20px;
+}
+.dp-form input {
+  margin: 5px;
+  padding: 8px;
+}
+.dp-form button {
+  padding: 8px 15px;
+  background: green;
+  color: white;
+  border: none;
+}
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+.delivery-page table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.delivery-page th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}

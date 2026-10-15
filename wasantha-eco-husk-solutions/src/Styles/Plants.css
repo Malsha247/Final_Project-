@@ -1,0 +1,66 @@
+/* Plants.css */
+.plants-page {
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: "Poppins", sans-serif;
+}
+
+.center {
+  text-align: center;
+}
+
+.plants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.plants-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(6, 20, 10, 0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.plants-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(6, 20, 10, 0.12);
+}
+
+.plants-thumb-wrap {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6faf6;
+}
+
+.plants-thumb-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.plants-info {
+  padding: 12px 14px;
+}
+
+.plants-info h3 {
+  margin: 0 0 6px 0;
+  color: #1b4d1b;
+}
+
+.plants-address {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 6px 0;
+}
+.plants-meta {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}

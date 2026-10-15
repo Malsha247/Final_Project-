@@ -1,0 +1,189 @@
+/* ===== Page Wrapper ===== */
+.delivery-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  background: #f9fbe7;
+  border-radius: 12px;
+}
+
+/* ===== Page Title ===== */
+.delivery-wrapper h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1b5e20;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Form Card ===== */
+.delivery-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: grid;
+  gap: 12px;
+  max-width: 450px;
+}
+
+/* ===== Inputs ===== */
+.delivery-form input {
+  padding: 12px;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.delivery-form input:focus {
+  outline: none;
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.15);
+}
+
+/* ===== Button ===== */
+.delivery-form button {
+  margin-top: 10px;
+  padding: 12px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.delivery-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4);
+}
+
+/* ===== Success Message ===== */
+.msg {
+  margin-top: 10px;
+  padding: 10px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ===== Section Divider ===== */
+.delivery-divider {
+  margin: 30px 0 15px;
+  border-top: 2px solid #c8e6c9;
+}
+
+/* ===== List Container ===== */
+.delivery-list {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 15px 20px;
+}
+
+/* ===== Row Item ===== */
+.delivery-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.delivery-row:last-child {
+  border-bottom: none;
+}
+
+/* ===== Name ===== */
+.delivery-row strong {
+  color: #1b5e20;
+  font-size: 15px;
+}
+
+/* ===== Email ===== */
+.delivery-row span {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ===== Delivery Count Badge ===== */
+.delivery-count {
+  justify-self: end;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .delivery-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .delivery-count {
+    justify-self: start;
+  }
+}
+.pay-btn {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pay-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+.delivery-page {
+  padding: 30px;
+  background: #f7fbe8;
+}
+
+.salary-box {
+  background: #eaf4ff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #2e7d32;
+  color: white;
+}
+
+td, th {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+button {
+  background: #2e7d32;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}

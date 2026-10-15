@@ -1,0 +1,92 @@
+.admin-orders-page {
+  padding: 20px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.orders-table th {
+  background: #f5f5f5;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.pending {
+  background: #ffe8b3;
+}
+.delivered {
+  background: #c9f7c2;
+}
+.cancelled {
+  background: #f8caca;
+}
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.orders-table th {
+  background: #f7f7f7;
+  font-weight: bold;
+}
+
+/* Reply box styling */
+.order-details .reply-box textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.order-details .reply-box button {
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.message-card {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.msg-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.msg-body {
+  white-space: pre-wrap;
+}

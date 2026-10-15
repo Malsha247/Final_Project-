@@ -1,0 +1,34 @@
+# Local credentials and configuration
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!.env.services.example
+!**/.env.example
+*.pem
+*.key
+
+# Dependencies and generated files
+**/node_modules/
+**/vendor/
+**/build/
+**/coverage/
+**/logs/
+*.log
+**/error_log.txt
+
+# Database data and local backups
+*.sql
+*.dump
+.codex-backups/
+*.backup
+*.bak
+react-src-backup/
+**/docker-old/
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+**/,

@@ -1,0 +1,134 @@
+/* ===== ORDERS REPORT ===== */
+
+.report-wrapper {
+  padding: 30px;
+  background: #f9fbe7;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.report-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1b5e20;
+  margin-bottom: 20px;
+}
+
+/* ===== SUMMARY CARDS ===== */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.summary-card {
+  background: white;
+  border-left: 6px solid #2e7d32;
+  padding: 15px 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.summary-card p {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1b5e20;
+}
+
+/* ===== TABLE ===== */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.report-table thead {
+  background: #2e7d32;
+  color: white;
+}
+
+.report-table th,
+.report-table td {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.report-table tbody tr:nth-child(even) {
+  background: #f1f8e9;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status.pending {
+  color: #f57c00;
+}
+
+.status.delivered {
+  color: #2e7d32;
+}
+
+/* ===== ACTION BAR ===== */
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.pdf-btn {
+  background: #1b5e20;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.pdf-btn:hover {
+  background: #2e7d32;
+}
+.back-btn {
+  background: #eeeeee;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.back-btn:hover {
+  background: #e0e0e0;
+}
+/* ===== CHARTS ===== */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.chart-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.chart-card h4 {
+  margin-bottom: 12px;
+  color: #1b5e20;
+}

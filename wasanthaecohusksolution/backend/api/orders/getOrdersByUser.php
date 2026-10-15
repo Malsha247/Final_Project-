@@ -1,0 +1,20 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+require_once __DIR__ . '/../../config/db.php';
+
+$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+if (!$user_id) {
+    echo json_encode(["success" => false, "message" => "user_id required"]);
+    exit;
+}
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM orders WHERE customer_id = ? ORDER BY created_at DESC");
+    $stmt->execute([$user_id]);
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode(["success" => true, "orders" => $orders]);
+} catch (PDOException $e) {
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+}

@@ -1,0 +1,92 @@
+/* Sell.css - styles for Sell page (husk / plant choice) */
+
+.sell-page {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 18px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.sell-page h2 {
+  color: #1b4d1b;
+  margin-bottom: 6px;
+}
+
+.sell-page p {
+  color: #4f5a4f;
+  margin-bottom: 18px;
+}
+
+/* container for option cards */
+.sell-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+  margin-top: 12px;
+}
+
+/* individual card */
+.sell-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(6, 20, 10, 0.06);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  min-height: 220px;
+}
+
+.sell-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(6, 20, 10, 0.12);
+}
+
+.sell-card img {
+  width: 100%;
+  max-width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eef7ee;
+  background: #f8fdf8;
+}
+
+.sell-card h3 {
+  margin: 0;
+  color: #164d1a;
+  font-size: 1.05rem;
+}
+
+.sell-card p {
+  margin: 0;
+  color: #6c6c6c;
+  font-size: 0.95rem;
+}
+
+/* useful CTA at bottom if you want text or small button */
+.sell-card .small-cta {
+  margin-top: auto;
+  font-size: 0.9rem;
+  color: #2b7a0b;
+  background: rgba(43, 122, 11, 0.06);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* mobile tweaks */
+@media (max-width: 640px) {
+  .sell-card {
+    padding: 14px;
+    min-height: 200px;
+  }
+  .sell-card img {
+    height: 120px;
+  }
+}

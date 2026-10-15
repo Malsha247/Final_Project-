@@ -1,0 +1,57 @@
+.orders-page {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #f9f9ef;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-page h2 {
+  text-align: center;
+  color: #175d2a;
+  margin-bottom: 20px;
+}
+
+.no-orders {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.orders-table th {
+  background: #e8f2e8;
+  color: #175d2a;
+}
+
+.orders-table tr:hover {
+  background: #f5f5f5;
+}
+
+.orders-table td.paid {
+  color: #1b7b32;
+}
+
+.orders-table td.pending {
+  color: #b34b00;
+}
+
+.orders-table td.cancelled {
+  color: #d93025;
+}

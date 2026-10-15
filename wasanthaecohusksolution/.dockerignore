@@ -1,0 +1,14 @@
+
+.git
+.gitignore
+.env
+**/.env
+**/.env.*
+vendor
+**/vendor
+logs
+**/logs
+**/error_log.txt
+*.sql
+*.dump
+docker-old
