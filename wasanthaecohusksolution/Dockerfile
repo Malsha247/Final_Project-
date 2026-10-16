@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache rewrite
-# Configure Apache MPM for mod_php
 RUN a2dismod mpm_event mpm_worker || true \
     && a2enmod mpm_prefork rewrite
 
