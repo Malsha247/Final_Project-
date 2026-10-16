@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Styles/Login.css";
 import logo from "../assests/icon.png";
+import API_BASE_URL from "../config/api";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -55,7 +56,7 @@ function Login() {
 
     try {
       const res = await fetch(
-        `${(process.env.REACT_APP_API_URL || "http://localhost:8081").replace(/\/$/, "")}/api/login.php`,
+        `${(process.env.REACT_APP_API_URL || `${API_BASE_URL}/login.php`).replace(/\/$/, "")}/api/login.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Products.css";
+import API_BASE_URL from "../config/api";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -15,9 +16,7 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("newest");
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8081/api/products/getAllProducts.php"
-    )
+    fetch(`${API_BASE_URL}/products/getAllProducts.php`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setProducts(data.products);
