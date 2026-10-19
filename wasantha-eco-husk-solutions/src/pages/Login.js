@@ -6,29 +6,34 @@ import logo from "../assests/icon.png";
 import API_BASE_URL from "../config/api";
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
   const submitting = useRef(false);
-
   const navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
- 
   const validate = () => {
     const newErrors = {};
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) {
       newErrors.email = "Invalid email format.";
     }
 
@@ -41,13 +46,14 @@ function Login() {
     return newErrors;
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (submitting.current || submitted) return;
 
     const validationErrors = validate();
     setErrors(validationErrors);
+
     if (Object.keys(validationErrors).length > 0) return;
 
     submitting.current = true;
@@ -55,38 +61,48 @@ function Login() {
     setApiError("");
 
     try {
-      const res = await fetch(
-        `${(process.env.REACT_APP_API_URL || `${API_BASE_URL}/login.php`).replace(/\/$/, "")}/api/login.php`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${API_BASE_URL}/login.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
+      });
 
       let data;
+
       try {
         data = await res.json();
       } catch {
-        setApiError("The login server returned an invalid response. Please try again later.");
+        setApiError(
+          "The login server returned an invalid response. Please try again later."
+        );
         return;
       }
-      if (!data || typeof data !== "object" || typeof data.success !== "boolean") {
-        setApiError("The login server returned an invalid response. Please try again later.");
+
+      if (
+        !data ||
+        typeof data !== "object" ||
+        typeof data.success !== "boolean"
+      ) {
+        setApiError(
+          "The login server returned an invalid response. Please try again later."
+        );
         return;
       }
 
       if (res.ok && data.success && data.user) {
-        setSubmitted(true);
-        setApiError("");
-
         const user = data.user;
 
-        
         sessionStorage.setItem("user_id", user.id);
         sessionStorage.setItem("user", JSON.stringify(user));
 
-        
+        setSubmitted(true);
+        setApiError("");
+
         setTimeout(() => {
           if (user.role === "admin") {
             navigate("/admin/dashboard");
@@ -97,7 +113,11 @@ function Login() {
           }
         }, 1200);
       } else {
-        setApiError(typeof data.message === "string" ? data.message : "Login failed. Please try again later.");
+        setApiError(
+          typeof data.message === "string"
+            ? data.message
+            : "Login failed. Please try again later."
+        );
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -115,14 +135,18 @@ function Login() {
           <img src={logo} alt="Wasantha Eco Husk Logo" />
         </div>
 
-        <h2>Welcome Back </h2>
-        <p className="welcome-text">Login to your Wasantha Eco Husk account</p>
+        <h2>Welcome Back</h2>
+        <p className="welcome-text">
+          Login to your Wasantha Eco Husk account
+        </p>
 
-        {submitted && <div className="success-msg"> Login successful!</div>}
+        {submitted && (
+          <div className="success-msg">Login successful!</div>
+        )}
+
         {apiError && <div className="error-msg">{apiError}</div>}
 
         <form onSubmit={handleSubmit}>
-       
           <div className="input-group">
             <FaEnvelope className="icon" />
             <input
@@ -131,11 +155,14 @@ function Login() {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="username"
             />
           </div>
-          {errors.email && <small className="error">{errors.email}</small>}
 
-          
+          {errors.email && (
+            <small className="error">{errors.email}</small>
+          )}
+
           <div className="input-group password-group">
             <FaLock className="icon" />
             <input
@@ -144,19 +171,35 @@ function Login() {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
+              autoComplete="current-password"
             />
+
             <span
               className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
+              role="button"
+              tabIndex={0}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowPassword((prev) => !prev)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setShowPassword((prev) => !prev);
+                }
+              }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
+
           {errors.password && (
             <small className="error">{errors.password}</small>
           )}
 
-          <button type="submit" className="btn-login" disabled={loading || submitted}>
+          <button
+            type="submit"
+            className="btn-login"
+            disabled={loading || submitted}
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
