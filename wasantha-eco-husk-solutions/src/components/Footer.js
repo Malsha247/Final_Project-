@@ -7,7 +7,7 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
-import "../Styles/Footer.css"; 
+import "../Styles/Footer.css";
 import logo from "../assests/icon.png";
 
 export const Footer = () => {
@@ -23,24 +23,25 @@ export const Footer = () => {
             />
             <span>Wasantha Eco Husk Solutions</span>
           </div>
+
           <p className="footer-description">
             Leading the way in sustainable coconut husk products and plant
             trading. Supporting eco-friendly farming and green growth in Sri
             Lanka.
           </p>
+
           <div className="footer-social">
-            <a href="#" className="social-icon">
-              <Facebook size={20} />
-            </a>
-            <a href="#" className="social-icon">
-              <Instagram size={20} />
-            </a>
-            <a href="#" className="social-icon">
-              <Twitter size={20} />
-            </a>
+            <span className="social-icon" role="img" aria-label="Facebook">
+              <Facebook size={20} aria-hidden="true" />
+            </span>
+            <span className="social-icon" role="img" aria-label="Instagram">
+              <Instagram size={20} aria-hidden="true" />
+            </span>
+            <span className="social-icon" role="img" aria-label="Twitter">
+              <Twitter size={20} aria-hidden="true" />
+            </span>
           </div>
         </div>
-
 
         <div className="footer-section">
           <h3>Products</h3>
@@ -63,6 +64,7 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
+
         <div className="footer-section">
           <h3>Company</h3>
           <ul>
@@ -75,7 +77,6 @@ export const Footer = () => {
             <li>
               <Link to="/sell">Sell with Us</Link>
             </li>
-
           </ul>
         </div>
 

@@ -1,14 +1,20 @@
-// src/pages/SellPlant.js
-import React, { useState, useRef, useEffect } from "react";
-import "../Styles/SellForm.css";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config/api";
+import "../Styles/SellForm.css";
 
 export default function SellPlant() {
   const navigate = useNavigate();
   const fileRef = useRef(null);
+  const submittingRef = useRef(false);
 
-  // get logged-in user from session
-  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  const user = useMemo(() => {
+    try {
+      return JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch {
+      return null;
+    }
+  }, []);
 
   const [form, setForm] = useState({
     owner_name: "",
@@ -16,90 +22,102 @@ export default function SellPlant() {
     phone: "",
     description: "",
   });
+
   const [imageFile, setImageFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // require login
   useEffect(() => {
-    if (!user || !user.id) {
-      alert("Please log in first to sell your coconut plants.");
+    if (!user?.id) {
       navigate("/login");
     }
-  }, []);
+  }, [user, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleFileChange = (e) => {
-    setImageFile(e.target.files && e.target.files[0]);
+    setImageFile(e.target.files?.[0] || null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user || !user.id) {
+    if (submittingRef.current) return;
+
+    if (!user?.id) {
       alert("Please log in.");
+      navigate("/login");
       return;
     }
 
-    // basic validation
-    if (!form.owner_name.trim() || !form.address.trim() || !form.phone.trim()) {
+    if (
+      !form.owner_name.trim() ||
+      !form.address.trim() ||
+      !form.phone.trim()
+    ) {
       alert("Please fill owner name, address and phone.");
       return;
     }
 
+    submittingRef.current = true;
     setSubmitting(true);
 
     try {
       const fd = new FormData();
       fd.append("user_id", user.id);
-      fd.append("owner_name", form.owner_name);
-      fd.append("address", form.address);
-      fd.append("phone", form.phone);
+      fd.append("owner_name", form.owner_name.trim());
+      fd.append("address", form.address.trim());
+      fd.append("phone", form.phone.trim());
       fd.append("description", form.description || "");
-      if (imageFile) fd.append("image", imageFile);
 
-      console.log("Sending formdata to addPlant.php", {
-        user_id: user.id,
-        owner_name: form.owner_name,
-        address: form.address,
-        phone: form.phone,
-        hasImage: !!imageFile,
-      });
-
-      const res = await fetch(
-        "http://localhost:8081/api/plants/addPlant.php",
-        {
-          method: "POST",
-          body: fd, // DO NOT set Content-Type header — browser will set multipart/form-data
-        }
-      );
-
-      // network/server status
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(
-          `Server returned ${res.status} ${res.statusText}: ${text}`
-        );
+      if (imageFile) {
+        fd.append("image", imageFile);
       }
 
-      const data = await res.json();
-      console.log("addPlant response:", data);
+      const res = await fetch(`${API_BASE_URL}/plants/addPlant.php`, {
+        method: "POST",
+        body: fd,
+      });
 
-      if (!data.success) {
-        throw new Error(data.message || "Server returned unsuccessful result");
+      let data;
+
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error("The server returned an invalid response.");
+      }
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Could not create the listing.");
       }
 
       alert(data.message || "Listing created successfully");
 
-      // clear form + file input
-      setForm({ owner_name: "", address: "", phone: "", description: "" });
-      setImageFile(null);
-      if (fileRef.current) fileRef.current.value = "";
+      setForm({
+        owner_name: "",
+        address: "",
+        phone: "",
+        description: "",
+      });
 
-      // go to user's plant listings (adjust route if needed)
+      setImageFile(null);
+
+      if (fileRef.current) {
+        fileRef.current.value = "";
+      }
+
       navigate("/my-plants");
     } catch (err) {
       console.error("Submit plant failed:", err);
       alert("Submit failed: " + (err.message || "Unknown error"));
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   };
@@ -113,39 +131,48 @@ export default function SellPlant() {
         className="sell-form"
         encType="multipart/form-data"
       >
-        <label>Owner name</label>
+        <label htmlFor="owner_name">Owner name</label>
         <input
+          id="owner_name"
+          name="owner_name"
           type="text"
           value={form.owner_name}
-          onChange={(e) => setForm({ ...form, owner_name: e.target.value })}
+          onChange={handleChange}
           required
         />
 
-        <label>Address</label>
+        <label htmlFor="address">Address</label>
         <input
+          id="address"
+          name="address"
           type="text"
           value={form.address}
-          onChange={(e) => setForm({ ...form, address: e.target.value })}
+          onChange={handleChange}
           required
         />
 
-        <label>Phone</label>
+        <label htmlFor="phone">Phone</label>
         <input
-          type="text"
+          id="phone"
+          name="phone"
+          type="tel"
           value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          onChange={handleChange}
           required
         />
 
-        <label>Type of Plant</label>
+        <label htmlFor="description">Type of Plant</label>
         <textarea
+          id="description"
+          name="description"
           value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          onChange={handleChange}
         />
 
-        <label>Upload Image (optional)</label>
+        <label htmlFor="plant_image">Upload Image (optional)</label>
         <div className="image-inputs">
           <input
+            id="plant_image"
             ref={fileRef}
             type="file"
             accept="image/*"
