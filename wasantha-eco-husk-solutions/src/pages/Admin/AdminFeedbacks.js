@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
 import "../../Styles/AdminStyle/adminFeedbacks.css";
 
@@ -13,7 +14,7 @@ export default function AdminFeedbacks() {
     const load = async () => {
       try {
         const res = await fetch(
-          "http://localhost:8081/api/feedback/getAllFeedbacks.php"
+          `${API_BASE_URL}/feedback/getAllFeedbacks.php`
         );
 
         const text = await res.text();
@@ -48,7 +49,7 @@ export default function AdminFeedbacks() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/feedback/replyFeedback.php",
+        `${API_BASE_URL}/feedback/replyFeedback.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -117,7 +118,7 @@ export default function AdminFeedbacks() {
             <div key={f.id} className="feedback-card">
               <div className="fb-header">
                 <div>
-                  <strong>{f.user_name}</strong> — {f.user_email}
+                  <strong>{f.user_name}</strong> ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {f.user_email}
                 </div>
                 <div>{new Date(f.created_at).toLocaleString()}</div>
               </div>

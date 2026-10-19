@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 
 import React, { useEffect, useState } from "react";
 import "../Styles/MyHuskSales.css";
@@ -13,7 +14,7 @@ export default function MyHuskSales() {
       return;
     }
     fetch(
-      `http://localhost:8081/api/seller/getHusksByUser.php?user_id=${user.id}`
+      `${API_BASE_URL}/seller/getHusksByUser.php?user_id=${user.id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -46,13 +47,13 @@ export default function MyHuskSales() {
               <div className="images">
                 {h.image1 && (
                   <img
-                    src={`http://localhost:8081/${h.image1}`}
+                    src={assetUrl(h.image1)}
                     alt="img1"
                   />
                 )}
                 {h.image2 && (
                   <img
-                    src={`http://localhost:8081/${h.image2}`}
+                    src={assetUrl(h.image2)}
                     alt="img2"
                   />
                 )}

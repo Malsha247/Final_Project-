@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../Styles/PlantDetails.css";
@@ -24,7 +25,7 @@ export default function PlantDetails() {
   /* ================= LOAD PLANT ================= */
   useEffect(() => {
     fetch(
-      `http://localhost:8081/api/plants/getPlant.php?id=${id}`
+      `${API_BASE_URL}/plants/getPlant.php?id=${id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -54,7 +55,7 @@ export default function PlantDetails() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/plants/requestPlant.php",
+        `${API_BASE_URL}/plants/requestPlant.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -102,7 +103,7 @@ export default function PlantDetails() {
         <img
           src={
             plant.image
-              ? `http://localhost:8081/${plant.image}`
+              ? assetUrl(plant.image)
               : "/placeholder-plant.png"
           }
           alt={plant.owner_name}

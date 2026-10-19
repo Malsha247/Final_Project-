@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
@@ -30,7 +31,7 @@ export default function CustomersReport() {
   const loadReport = async () => {
     try {
       const res = await fetch(
-        "http://localhost:8081/api/Reports/customersReport.php"
+        `${API_BASE_URL}/Reports/customersReport.php`
       );
       const data = await res.json();
 
@@ -91,10 +92,10 @@ export default function CustomersReport() {
 
       <div className="report-actions">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          ← Back to Reports
+          ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back to Reports
         </button>
         <button className="pdf-btn" onClick={downloadPDF}>
-          ⬇ Download PDF
+          ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ Download PDF
         </button>
       </div>
 

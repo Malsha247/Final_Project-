@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/DeliveryDashboard.css";
@@ -25,7 +26,7 @@ export default function DeliveryDashboard() {
   const loadOrders = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8081/api/orders/getAllOrders.php`,
+        `${API_BASE_URL}/orders/getAllOrders.php`,
       );
       const data = await res.json();
 
@@ -48,7 +49,7 @@ export default function DeliveryDashboard() {
   const loadSalary = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8081/api/delivery/getSalary.php?id=${user.id}`,
+        `${API_BASE_URL}/delivery/getSalary.php?id=${user.id}`,
       );
       const data = await res.json();
 
@@ -66,7 +67,7 @@ export default function DeliveryDashboard() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/delivery/markDelivered.php",
+        `${API_BASE_URL}/delivery/markDelivered.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -114,7 +115,7 @@ export default function DeliveryDashboard() {
       {/* ===== SALARY ===== */}
       {salary && (
         <div className="salary-box">
-          <h3> Salary – {salary.month}</h3>
+          <h3> Salary ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ {salary.month}</h3>
           <p>Delivered Orders: {salary.deliveries}</p>
           <p>Base Salary: Rs. {salary.base.toLocaleString()}</p>
           <p>Bonus: Rs. {salary.bonus.toLocaleString()}</p>

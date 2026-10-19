@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
@@ -14,7 +15,7 @@ export default function HuskProductionReport() {
 
   const loadReport = async () => {
     const res = await fetch(
-      `http://localhost:8081/api/Reports/huskProductionReport.php?start=${start}&end=${end}`
+      `${API_BASE_URL}/Reports/huskProductionReport.php?start=${start}&end=${end}`
     );
     const json = await res.json();
     if (json.success) setData(json);
@@ -38,7 +39,7 @@ export default function HuskProductionReport() {
     <div className="report-wrapper">
       <div className="report-header">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          ← Back
+          ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back
         </button>
         <h2>Husk Production Report</h2>
       </div>
@@ -87,7 +88,7 @@ export default function HuskProductionReport() {
           </table>
 
           <button className="pdf-btn" onClick={downloadPDF}>
-            ⬇ Download PDF
+            ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ Download PDF
           </button>
         </>
       )}

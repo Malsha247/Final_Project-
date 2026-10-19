@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/HuskProductionEntry.css";
@@ -28,7 +29,7 @@ export default function HuskProductionEntry() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/reports/addHuskProduction.php",
+        `${API_BASE_URL}/reports/addHuskProduction.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -39,7 +40,7 @@ export default function HuskProductionEntry() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Daily production recorded successfully 🌿");
+        alert("Daily production recorded successfully ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸Ãƒâ€¦Ã¢â‚¬â„¢Ãƒâ€šÃ‚Â¿");
         navigate("/admin/reports/husk-production");
       } else {
         alert(data.message || "Failed to save record");
@@ -95,7 +96,7 @@ export default function HuskProductionEntry() {
               className="btn-back"
               onClick={() => navigate("/admin/reports")}
             >
-              ← Back
+              ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back
             </button>
 
             <button type="submit" className="btn-save" disabled={loading}>

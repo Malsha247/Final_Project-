@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json");
 require_once __DIR__ . '/../../config/db.php';
 

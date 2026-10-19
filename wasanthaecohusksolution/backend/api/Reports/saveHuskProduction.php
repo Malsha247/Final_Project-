@@ -1,10 +1,8 @@
 <?php
+require_once __DIR__ . '/../_cors.php';
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if ($origin === 'http://localhost:3000') {
-  header("Access-Control-Allow-Origin: $origin");
 }
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;

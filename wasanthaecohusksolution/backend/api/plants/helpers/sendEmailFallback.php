@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../_cors.php';
 // backend/api/plants/helpers/sendEmailFallback.php
 // Clean, safe email helper.
 // DOES NOT load DB
@@ -9,7 +10,7 @@ function send_email_fallback(
     $to,
     $subject,
     $htmlBody,
-    $from = "yourgmail@gmail.com",      // ✅ system email
+    $from = "yourgmail@gmail.com",      // âœ… system email
     $fromName = "Wasantha Eco Husk",
     $replyTo = null
 ) {
@@ -30,12 +31,12 @@ function send_email_fallback(
         try {
             $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
-            // 🔐 SMTP CONFIG (Gmail)
+            // ðŸ” SMTP CONFIG (Gmail)
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'wasanthaeco2001@gmail.com'; // 🔴 CHANGE
-            $mail->Password   = (getenv('SMTP_PASSWORD_API_PLANTS_HELPERS_SENDEMAILFALLBACK') ?: '');   // 🔴 CHANGE
+            $mail->Username   = 'wasanthaeco2001@gmail.com'; // ðŸ”´ CHANGE
+            $mail->Password   = (getenv('SMTP_PASSWORD_API_PLANTS_HELPERS_SENDEMAILFALLBACK') ?: '');   // ðŸ”´ CHANGE
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
@@ -74,5 +75,5 @@ function send_email_fallback(
         return true;
     }
 
-    return "mail() failed — SMTP not configured";
+    return "mail() failed â€” SMTP not configured";
 }

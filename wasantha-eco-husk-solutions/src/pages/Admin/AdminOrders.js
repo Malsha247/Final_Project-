@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import API_BASE_URL from "../../config/api";
+import React, { useCallback, useEffect, useState } from "react";
 import "../../Styles/AdminStyle/OrderManage.css";
 
 export default function AdminOrders() {
@@ -6,9 +7,9 @@ export default function AdminOrders() {
   const [loading, setLoading] = useState(true);
 
   const API_BASE =
-    "http://localhost:8081/api/orders";
+    `${API_BASE_URL}/orders`;
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE}/getAllOrders.php`);
@@ -27,11 +28,11 @@ export default function AdminOrders() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE]);
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [fetchOrders]);
 
   const updateStatus = async (orderId, status) => {
     try {
@@ -103,7 +104,7 @@ export default function AdminOrders() {
               <tr key={o.id}>
                 <td>{o.id}</td>
                 <td>{o.customer_name}</td>
-                <td>{o.shipping_address || "—"}</td>
+                <td>{o.shipping_address || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</td>
                 <td>Rs. {o.total_price}</td>
                 <td>{o.status}</td>
                 <td>

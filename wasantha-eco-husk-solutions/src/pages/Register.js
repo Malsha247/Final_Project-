@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -64,7 +65,7 @@ function Register() {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:8081/api/register.php",
+        `${API_BASE_URL}/register.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

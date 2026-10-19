@@ -65,7 +65,7 @@ $d = $emailStmt->fetch(PDO::FETCH_ASSOC);
 /* ===== EMAIL ===== */
 send_email_fallback(
     $d['email'],
-    "Salary Paid – {$month}",
+    "Salary Paid â€“ {$month}",
     "
         <h3>Hello {$d['name']}</h3>
         <p>Your salary for <b>{$month}</b> has been paid.</p>

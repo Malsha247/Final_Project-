@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 $total = isset($_GET['total']) ? floatval($_GET['total']) : 0;
 $return_url = isset($_GET['return_url']) ? $_GET['return_url'] : null;

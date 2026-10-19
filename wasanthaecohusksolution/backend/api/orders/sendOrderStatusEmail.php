@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 require_once __DIR__ . '/../plants/helpers/sendEmailFallback.php';
 
 function sendOrderStatusEmail(

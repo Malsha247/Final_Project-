@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Cart.css";
@@ -17,7 +18,7 @@ export default function Cart() {
     if (!user) return;
     try {
       const res = await fetch(
-        `http://localhost:8081/api/cart/getCart.php?user.id=${user.id}`
+        `${API_BASE_URL}/cart/getCart.php?user.id=${user.id}`
       );
       const data = await res.json();
       if (data.success) setCart(data.items);
@@ -48,7 +49,7 @@ export default function Cart() {
     if (newQty < 1) return;
     try {
       const res = await fetch(
-        "http://localhost:8081/api/cart/updateCart.php",
+        `${API_BASE_URL}/cart/updateCart.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -69,7 +70,7 @@ export default function Cart() {
           )
         );
       } else {
-        alert("⚠️ " + data.message);
+        alert("Ã¢Å¡Â Ã¯Â¸Â " + data.message);
       }
     } catch (err) {
       console.error("Update failed:", err);
@@ -82,7 +83,7 @@ export default function Cart() {
   const handleRemove = async (id) => {
     try {
       await fetch(
-        `http://localhost:8081/api/cart/removeFromCart.php?id=${id}`
+        `${API_BASE_URL}/cart/removeFromCart.php?id=${id}`
       );
       setCart((prev) => prev.filter((i) => i.id !== id));
     } catch (err) {
@@ -118,7 +119,7 @@ export default function Cart() {
                 <tr key={item.id}>
                   <td className="cart-product">
                     <img
-                      src={`http://localhost:8081/${item.image_url}`}
+                      src={assetUrl(item.image_url)}
                       alt={item.name}
                       className="cart-thumb"
                     />
@@ -137,7 +138,7 @@ export default function Cart() {
                           )
                         }
                       >
-                        −
+                        Ã¢Ë†â€™
                       </button>
                       <input
                         type="text"
@@ -187,7 +188,7 @@ export default function Cart() {
                 className="btn-continue"
                 onClick={() => navigate("/products")}
               >
-                ← Continue Shopping
+                Ã¢â€ Â Continue Shopping
               </button>
 
               <button

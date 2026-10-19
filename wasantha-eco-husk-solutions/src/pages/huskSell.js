@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -40,7 +41,7 @@ export default function SellHusk() {
     mapInstance.current = L.map(mapRef.current).setView(defaultLoc, 8);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
+      attribution: "ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© OpenStreetMap contributors",
     }).addTo(mapInstance.current);
 
     const marker = L.marker(defaultLoc, { draggable: true }).addTo(
@@ -71,7 +72,7 @@ export default function SellHusk() {
     formData.append("image", file);
 
     const res = await fetch(
-      "http://localhost:8081/api/seller/uploadImage.php",
+      `${API_BASE_URL}/seller/uploadImage.php`,
       { method: "POST", body: formData }
     );
 
@@ -101,7 +102,7 @@ export default function SellHusk() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/seller/addHusk.php",
+        `${API_BASE_URL}/seller/addHusk.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

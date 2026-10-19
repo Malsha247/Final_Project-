@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
 
 export default function AdminOrders() {
@@ -5,7 +6,7 @@ export default function AdminOrders() {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8081/api/orders/getAllOrders.php"
+      `${API_BASE_URL}/orders/getAllOrders.php`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -34,7 +35,7 @@ export default function AdminOrders() {
               <td>{o.id}</td>
               <td>{o.customer_name}</td>
               <td>{o.customer_phone}</td>
-              <td>{o.shipping_address || "—"}</td> 
+              <td>{o.shipping_address || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</td> 
               <td>{o.payment_status}</td>
               <td>{o.status}</td>
               <td>Rs. {o.total_price}</td>

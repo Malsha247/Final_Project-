@@ -1,13 +1,11 @@
 <?php
+require_once __DIR__ . '/_cors.php';
 /* ================= CORS ================= */
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 $allowed = ['http://localhost:3000', 'http://localhost:3002'];
 
 if (in_array($origin, $allowed)) {
-    header("Access-Control-Allow-Origin: $origin");
 }
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -27,7 +25,7 @@ if (!$message) {
 /* ===== AUTO HI RESPONSE ===== */
 if (in_array(strtolower($message), ["hi", "hello", "hey"])) {
     echo json_encode([
-        "reply" => "Hi 👋 I’m Eco Assistant. I can help you with coconut husk chips, coconut plants, and gardening."
+        "reply" => "Hi ðŸ‘‹ Iâ€™m Eco Assistant. I can help you with coconut husk chips, coconut plants, and gardening."
     ]);
     exit;
 }
@@ -92,7 +90,7 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 $res = json_decode($response, true);
-$reply = $res['choices'][0]['message']['content'] ?? "Sorry, I couldn’t generate a reply.";
+$reply = $res['choices'][0]['message']['content'] ?? "Sorry, I couldnâ€™t generate a reply.";
 
 echo json_encode(["reply" => $reply]);
 exit;

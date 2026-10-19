@@ -1,9 +1,10 @@
+import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
-  "http://localhost:8081/api/products";
+  `${API_BASE_URL}/products`;
 
 export default function EditProductPage() {
   const { id } = useParams();
@@ -159,7 +160,7 @@ export default function EditProductPage() {
           Current image:
           {form.image_url ? (
             <img
-              src={`http://localhost:8081/${form.image_url}`}
+              src={assetUrl(form.image_url)}
               alt="current"
               className="pm-current"
             />

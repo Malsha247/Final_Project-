@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/DeliveryPersons.css";
@@ -23,7 +24,7 @@ export default function DeliveryPersons() {
   const load = async () => {
     try {
       const res = await fetch(
-        "http://localhost:8081/api/delivery/getAll.php"
+        `${API_BASE_URL}/delivery/getAll.php`
       );
       const data = await res.json();
       setList(data.data || []);
@@ -48,7 +49,7 @@ export default function DeliveryPersons() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/delivery/create.php",
+        `${API_BASE_URL}/delivery/create.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -78,7 +79,7 @@ export default function DeliveryPersons() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/delivery/paySalary.php",
+        `${API_BASE_URL}/delivery/paySalary.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -110,7 +111,7 @@ export default function DeliveryPersons() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/delivery/delete.php",
+        `${API_BASE_URL}/delivery/delete.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -136,7 +137,7 @@ export default function DeliveryPersons() {
       <h2> Delivery Persons Management</h2>
 
       <button className="back-btn" onClick={() => navigate("/admin/dashboard")}>
-        ⬅ Back to Admin Dashboard
+        ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Back to Admin Dashboard
       </button>
 
       {message && <p className="msg">{message}</p>}

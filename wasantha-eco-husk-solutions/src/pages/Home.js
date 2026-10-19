@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ export const Home = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8081/api/products/getFeaturedProducts.php"
+      `${API_BASE_URL}/products/getFeaturedProducts.php`
     )
       .then((res) => res.json())
       .then((data) => setFeaturedProducts(data))
@@ -22,7 +23,7 @@ export const Home = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8081/api/feedback/getAllFeedbacks.php"
+      `${API_BASE_URL}/feedback/getAllFeedbacks.php`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -69,7 +70,7 @@ export const Home = () => {
       <div className="features">
         <h2>Why Choose Wasantha Eco Husk Solutions?</h2>
         <p>
-          We’re committed to sustainability, fair trade, and top-quality
+          WeÃ¢â‚¬â„¢re committed to sustainability, fair trade, and top-quality
           coconut-based products.
         </p>
 
@@ -79,7 +80,7 @@ export const Home = () => {
             <h3>Eco-Friendly Production</h3>
             <p>
               Our husk and plant products are made from natural coconut
-              by-products — reducing waste and improving soil health.
+              by-products Ã¢â‚¬â€ reducing waste and improving soil health.
             </p>
           </div>
 
@@ -114,7 +115,7 @@ export const Home = () => {
                   <img
                     src={
                       product.image_url
-                        ? `http://localhost:8081/${product.image_url}`
+                        ? assetUrl(product.image_url)
                         : PLACEHOLDER_AVATAR
                     }
                     alt={product.name}
@@ -152,13 +153,13 @@ export const Home = () => {
                 </div>
 
                 <blockquote className="testimonial-quote no-avatar">
-                  <p>“{t.message}”</p>
+                  <p>Ã¢â‚¬Å“{t.message}Ã¢â‚¬Â</p>
                 </blockquote>
               </figure>
             ))
           ) : (
             <p className="no-products">
-              No testimonials yet — be the first to review!
+              No testimonials yet Ã¢â‚¬â€ be the first to review!
             </p>
           )}
         </div>
@@ -181,10 +182,10 @@ export const Home = () => {
         <div className="cta-container">
           <div className="cta-card">
             <h2 className="cta-title fade-in">
-              Let’s Build a Greener Tomorrow Together 🌴
+              LetÃ¢â‚¬â„¢s Build a Greener Tomorrow Together Ã°Å¸Å’Â´
             </h2>
             <p className="cta-subtitle fade-in">
-              Support sustainable coconut farming in Sri Lanka — purchase
+              Support sustainable coconut farming in Sri Lanka Ã¢â‚¬â€ purchase
               eco-friendly husk products and plants directly from the source.
             </p>
             <div className="cta-buttons fade-in">

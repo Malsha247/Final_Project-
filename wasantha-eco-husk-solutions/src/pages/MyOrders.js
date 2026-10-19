@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 import React, { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import "../Styles/MyOrders.css";
@@ -10,7 +11,7 @@ export default function MyOrders() {
 
   const API_BASE =
     process.env.REACT_APP_API_BASE ||
-    "http://localhost:8081/api";
+    `${API_BASE_URL}`;
 
   const fetchOrders = useCallback(() => {
     if (!user || !user.id) {
@@ -116,7 +117,7 @@ export default function MyOrders() {
                   {o.status === "Pending" || o.status === "Processing" ? (
                     <button onClick={() => cancelOrder(o.id)}>Cancel</button>
                   ) : (
-                    <span style={{ color: "#888" }}>—</span>
+                    <span style={{ color: "#888" }}>ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â</span>
                   )}
                 </td>
               </tr>

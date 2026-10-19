@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 // src/pages/EditProfile.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +32,7 @@ export default function EditProfile() {
     if (loaded) return;
 
     fetch(
-      `http://localhost:8081/api/user/getUser.php?id=${user.id}`
+      `${API_BASE_URL}/user/getUser.php?id=${user.id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -84,7 +85,7 @@ export default function EditProfile() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/user/updateUser.php",
+        `${API_BASE_URL}/user/updateUser.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -161,7 +162,7 @@ export default function EditProfile() {
       </form>
 
       <button className="back-btn" onClick={() => navigate("/profile")}>
-        ← Back to Profile
+        ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back to Profile
       </button>
     </div>
   );

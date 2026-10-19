@@ -1,8 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-
 require_once __DIR__ . '/../../config/db.php';
 
 try {
@@ -28,7 +26,7 @@ try {
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // ✅ ADD map_link for admin use
+    // âœ… ADD map_link for admin use
     foreach ($rows as &$row) {
         if ($row['latitude'] !== null && $row['longitude'] !== null) {
             $row['map_link'] =

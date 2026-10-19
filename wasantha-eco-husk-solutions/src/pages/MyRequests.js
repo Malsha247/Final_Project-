@@ -1,7 +1,8 @@
+import API_BASE_URL from "../config/api";
 import React, { useEffect, useState } from "react";
 import "../Styles/MyRequests.css";
 
-const API = "http://localhost:8081/api/plants/getRequests.php";
+const API = `${API_BASE_URL}/plants/getRequests.php`;
 
 export default function MyRequests() {
   const [q, setQ] = useState("");
@@ -70,11 +71,11 @@ export default function MyRequests() {
               </div>
 
               <div className="req-body">
-                <div><strong>Requester:</strong> {r.requester_name || "—"}</div>
-                <div><strong>Email:</strong> {r.requester_email || "—"}</div>
-                <div><strong>Phone:</strong> {r.requester_phone || "—"}</div>
+                <div><strong>Requester:</strong> {r.requester_name || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
+                <div><strong>Email:</strong> {r.requester_email || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
+                <div><strong>Phone:</strong> {r.requester_phone || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
                 <div><strong>Quantity:</strong> {r.quantity}</div>
-                <div className="req-msg"><strong>Message:</strong><div>{r.request_message || "—"}</div></div>
+                <div className="req-msg"><strong>Message:</strong><div>{r.request_message || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div></div>
               </div>
             </li>
           ))}

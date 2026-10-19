@@ -1,8 +1,6 @@
 <?php
+require_once __DIR__ . '/../_cors.php';
 /* ================= CORS ================= */
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -32,7 +30,7 @@ if ($total <= 0) {
 
 try {
     $intent = \Stripe\PaymentIntent::create([
-        'amount' => intval($total * 100), // Rs → cents
+        'amount' => intval($total * 100), // Rs â†’ cents
         'currency' => 'lkr',
         'payment_method_types' => ['card'],
     ]);

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../_cors.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -26,14 +27,14 @@ function sendOrderEmail($toEmail, $toName, $orderId, $paymentMethod, $total, $ad
     $mail->isHTML(true);
     $mail->Subject = "Order Confirmation #$orderId";
     $mail->Body = "
-      <h3>Thank you for your order, $toName! 🥥</h3>
+      <h3>Thank you for your order, $toName! ðŸ¥¥</h3>
       <p>Your order <b>#$orderId</b> has been placed successfully.</p>
       <p><b>Payment Method:</b> $paymentMethod</p>
       <p><b>Total:</b> Rs. $total</p>
       <p><b>Shipping Address:</b> $address</p>
       <hr>
-      <p>We’ll notify you when your order is on its way!</p>
-      <p> Wasantha Eco Husk Solutions 🌿</p>
+      <p>Weâ€™ll notify you when your order is on its way!</p>
+      <p> Wasantha Eco Husk Solutions ðŸŒ¿</p>
     ";
 
     $mail->send();

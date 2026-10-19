@@ -1,9 +1,10 @@
+import API_BASE_URL from "../../config/api";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
-  "http://localhost:8081/api/products";
+  `${API_BASE_URL}/products`;
 
 export default function AddProductPage() {
   const [form, setForm] = useState({

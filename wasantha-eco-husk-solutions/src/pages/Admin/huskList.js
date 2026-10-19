@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import "../../Styles/AdminStyle/adminHusks.css";
 
@@ -7,7 +8,7 @@ export default function AdminHusks() {
 
   useEffect(() => {
     fetch(
-      "http://localhost:8081/api/seller/getAllHusks.php"
+      `${API_BASE_URL}/seller/getAllHusks.php`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -22,7 +23,7 @@ export default function AdminHusks() {
   // -------------------------------
   const handleResponse = async (sellerId) => {
     const res = await fetch(
-      "http://localhost:8081/api/seller/sendResponse.php",
+      `${API_BASE_URL}/seller/sendResponse.php`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,7 +41,7 @@ export default function AdminHusks() {
     if (!window.confirm("Delete this husk submission permanently?")) return;
 
     const res = await fetch(
-      "http://localhost:8081/api/seller/deleteHusk.php",
+      `${API_BASE_URL}/seller/deleteHusk.php`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -89,14 +90,14 @@ export default function AdminHusks() {
                 <td>
                   {h.image_1 && (
                     <img
-                      src={`http://localhost:8081/${h.image_1}`}
+                      src={assetUrl(h.image_1)}
                       alt=""
                       width="70"
                     />
                   )}
                   {h.image_2 && (
                     <img
-                      src={`http://localhost:8081/${h.image_2}`}
+                      src={assetUrl(h.image_2)}
                       alt=""
                       width="70"
                       style={{ marginLeft: 5 }}
@@ -106,7 +107,7 @@ export default function AdminHusks() {
 
                 <td>{h.description}</td>
 
-                <td>{h.admin_response || "—"}</td>
+                <td>{h.admin_response || "Ã¢â‚¬â€"}</td>
 
                 <td>
                   {h.map_link ? (

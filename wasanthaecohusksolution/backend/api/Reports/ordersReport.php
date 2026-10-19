@@ -1,7 +1,6 @@
 <?php
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: http://localhost:3000");
-
 require_once __DIR__ . '/../../config/db.php';
 
 try {

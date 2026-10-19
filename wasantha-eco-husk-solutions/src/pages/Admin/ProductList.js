@@ -1,9 +1,10 @@
+import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
-  "http://localhost:8081/api/products";
+  `${API_BASE_URL}/products`;
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -73,7 +74,7 @@ export default function ProductList() {
               <div className="pm-image-wrap">
                 {p.image_url ? (
                   <img
-                    src={`http://localhost:8081/${p.image_url}`}
+                    src={assetUrl(p.image_url)}
                     alt={p.name}
                     className="pm-image"
                   />

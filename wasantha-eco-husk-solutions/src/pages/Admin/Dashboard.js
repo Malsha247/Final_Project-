@@ -1,3 +1,4 @@
+import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Styles/AdminStyle/Dashbord.css";
@@ -15,7 +16,7 @@ const Dashboard = () => {
 
   const fetchTotalOrders = () => {
     fetch(
-      "http://localhost:8081/api/orders/getOrderStats.php"
+      `${API_BASE_URL}/orders/getOrderStats.php`
     )
       .then((res) => res.json())
       .then((data) => {

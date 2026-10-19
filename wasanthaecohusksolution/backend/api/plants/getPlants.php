@@ -1,9 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

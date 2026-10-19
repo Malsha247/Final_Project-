@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 // src/pages/Plants.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +10,7 @@ export default function Plants() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8081/api/plants/getPlants.php")
+    fetch(`${API_BASE_URL}/plants/getPlants.php`)
       .then((res) => res.json())
       .then((data) => {
         
@@ -40,7 +41,7 @@ export default function Plants() {
             <div key={p.id} className="plants-card" onClick={() => navigate(`/plant/${p.id}`)}>
               <div className="plants-thumb-wrap">
                 <img
-                  src={p.image ? `http://localhost:8081/${p.image}` : "/placeholder-plant.png"}
+                  src={p.image ? assetUrl(p.image) : "/placeholder-plant.png"}
                   alt={p.owner_name}
                 />
               </div>

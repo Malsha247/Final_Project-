@@ -1,7 +1,7 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Products.css";
-import API_BASE_URL from "../config/api";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -16,7 +16,9 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("newest");
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/products/getAllProducts.php`)
+    fetch(
+      `${API_BASE_URL}/products/getAllProducts.php`
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) setProducts(data.products);
@@ -82,8 +84,8 @@ const Products = () => {
         </label>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="newest">Newest</option>
-          <option value="price-asc">Price: Low → High</option>
-          <option value="price-desc">Price: High → Low</option>
+          <option value="price-asc">Price: Low Ã¢â€ â€™ High</option>
+          <option value="price-desc">Price: High Ã¢â€ â€™ Low</option>
         </select>
       </div>
 
@@ -118,7 +120,7 @@ const Products = () => {
               onClick={() => navigate(`/product/${p.id}`)}
             >
               <img
-                src={`http://localhost:8081/${p.image_url}`}
+                src={assetUrl(p.image_url)}
                 alt={p.name}
               />
               <div className="product-info">

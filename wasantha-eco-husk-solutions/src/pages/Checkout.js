@@ -399,7 +399,7 @@ export default function Checkout() {
                 }}
               >
                 <span>
-                  {item.name} × {item.quantity}
+                  {item.name} ÃƒÆ’Ã¢â‚¬â€ {item.quantity}
                 </span>
                 <span>
                   Rs.{" "}

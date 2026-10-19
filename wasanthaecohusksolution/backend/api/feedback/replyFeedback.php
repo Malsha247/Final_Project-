@@ -1,15 +1,11 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 /* ========= CORS ========= */
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 $allowed = ['http://localhost:3000', 'http://localhost:3002'];
 
 if (in_array($origin, $allowed)) {
-    header("Access-Control-Allow-Origin: $origin");
 }
-
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -43,7 +39,7 @@ if (!$feedback_id || !$reply) {
     exit;
 }
 
-/* ===== LOAD FEEDBACK (✅ TABLE NAME FIXED HERE) ===== */
+/* ===== LOAD FEEDBACK (âœ… TABLE NAME FIXED HERE) ===== */
 $stmt = $conn->prepare("
     SELECT id, user_name, user_email, subject
     FROM feedback

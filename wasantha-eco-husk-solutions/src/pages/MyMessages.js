@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 
 import React, { useEffect, useState } from "react";
 import "../Styles/Contact.css";
@@ -10,7 +11,7 @@ export default function MyMessages() {
   useEffect(() => {
     if (!user) return;
     fetch(
-      `http://localhost:8081/api/feedback/getCustomerFeedbacks.php?user_id=${user.id}`
+      `${API_BASE_URL}/feedback/getCustomerFeedbacks.php?user_id=${user.id}`
     )
       .then((res) => res.json())
       .then((data) => {

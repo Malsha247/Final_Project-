@@ -1,7 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
 require_once __DIR__ . '/../../config/db.php';
 
 $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;

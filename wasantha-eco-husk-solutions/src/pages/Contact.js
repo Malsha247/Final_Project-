@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 import React, { useState } from "react";
 import "../Styles/Contact.css";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +38,7 @@ export default function Contact() {
 
     try {
       const res = await fetch(
-        "http://localhost:8081/api/feedback/sendFeedback.php",
+        `${API_BASE_URL}/feedback/sendFeedback.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -95,7 +96,7 @@ export default function Contact() {
             <span></span>
             <div>
               <p>+94 77 0326787</p>
-              <small>Mon–Sun 8am to 6pm</small>
+              <small>MonÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œSun 8am to 6pm</small>
             </div>
           </div>
 

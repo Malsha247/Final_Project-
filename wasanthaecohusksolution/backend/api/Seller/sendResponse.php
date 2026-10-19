@@ -1,10 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../_cors.php';
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-
 require_once __DIR__ . '/../../config/db.php';
 require __DIR__ . '/../../vendor/autoload.php'; 
 
@@ -59,17 +55,17 @@ try {
     $mail->setFrom('youremail@gmail.com', 'Wasantha Eco Husk Solutions');
     $mail->addAddress($seller['email'], $seller['name']);
     $mail->isHTML(true);
-    $mail->Subject = "🌿 Response from Wasantha Eco Husk Solutions";
+    $mail->Subject = "ðŸŒ¿ Response from Wasantha Eco Husk Solutions";
     $mail->Body = "
         <h3>Hello {$seller['name']},</h3>
         <p>Your coconut husk submission has been reviewed by our team.</p>
-        <p>We’ll contact you soon regarding the next steps.</p>
+        <p>Weâ€™ll contact you soon regarding the next steps.</p>
         <br>
         <p><strong>Address:</strong> {$seller['address']}</p>
         <p><strong>Phone:</strong> {$seller['phone']}</p>
         <br>
-        <p>Thank you for supporting sustainable eco-husk solutions! 🌿</p>
-        <p>– The Wasantha Eco Husk Solutions Team</p>
+        <p>Thank you for supporting sustainable eco-husk solutions! ðŸŒ¿</p>
+        <p>â€“ The Wasantha Eco Husk Solutions Team</p>
     ";
 
     $mail->send();

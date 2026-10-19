@@ -1,3 +1,4 @@
+import API_BASE_URL, { assetUrl } from "../config/api";
 
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -24,7 +25,7 @@ export default function ProductDetails() {
     async function fetchProduct() {
       try {
         const res = await fetch(
-          `http://localhost:8081/api/products/getProductById.php?id=${id}`
+          `${API_BASE_URL}/products/getProductById.php?id=${id}`
         );
         const data = await res.json();
         if (data.success) setProduct(data.product);
@@ -48,7 +49,7 @@ export default function ProductDetails() {
     }
 
     const res = await fetch(
-      "http://localhost:8081/api/cart/addToCart.php",
+      `${API_BASE_URL}/cart/addToCart.php`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +76,7 @@ export default function ProductDetails() {
   return (
     <div className="product-details">
       <img
-        src={`http://localhost:8081/${product.image_url}`}
+        src={assetUrl(product.image_url)}
         alt={product.name}
         className="pd-image"
       />

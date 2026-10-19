@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,7 @@ export default function PaymentSuccess() {
     async function verify() {
       try {
         const res = await fetch(
-          "http://localhost:8081/api/payment/paymentSuccess.php",
+          `${API_BASE_URL}/payment/paymentSuccess.php`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -27,7 +28,7 @@ export default function PaymentSuccess() {
         );
         const data = await res.json();
         if (data.success) {
-          setStatus("Payment confirmed — order placed!");
+          setStatus("Payment confirmed ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â order placed!");
           setTimeout(() => navigate("/my-orders"), 1500);
         } else {
           setStatus("Verification failed: " + data.message);
