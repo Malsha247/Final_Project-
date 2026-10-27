@@ -7,6 +7,70 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+table {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  main,
+  section,
+  .page-container,
+  .report-wrapper {
+    max-width: 100%;
+  }
+
+  .report-wrapper {
+    padding: 18px 12px;
+  }
+
+  .report-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .report-actions {
+    justify-content: stretch;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .report-actions button {
+    flex: 1 1 140px;
+  }
+
+  .charts-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .chart-card {
+    min-width: 0;
+    padding: 14px;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

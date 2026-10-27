@@ -70,17 +70,23 @@ function Register() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
+            firstName: formData.firstName.trim(),
+            lastName: formData.lastName.trim(),
+            email: formData.email.trim(),
             password: formData.password,
           }),
         }
       );
 
-      const data = await res.json();
+      const responseText = await res.text();
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch {
+        throw new Error(`Registration server returned HTTP ${res.status}.`);
+      }
 
-      if (data.success) {
+      if (res.ok && data.success) {
         setSubmitted(true);
         setApiError("");
         setTimeout(() => navigate("/login"), 2000); 

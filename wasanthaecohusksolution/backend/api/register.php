@@ -7,14 +7,12 @@ ini_set('error_log', __DIR__ . '/../error_log.txt');
 header("Content-Type: application/json; charset=UTF-8");
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit(0);
-}
-
-
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+if (is_file($autoloadPath)) {
+    require_once $autoloadPath;
+}
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -70,8 +68,9 @@ try {
     $insert->execute([$firstName, $lastName, $email, $hashedPassword]);
 
     
-    $mail = new PHPMailer(true);
-    try {
+    if (class_exists(PHPMailer::class)) {
+        $mail = new PHPMailer(true);
+        try {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
@@ -100,18 +99,20 @@ try {
         $mail->AltBody = "Welcome, {$firstName}! Thank you for joining Wasantha Eco Husk Solutions.";
 
         if ($mail->send()) {
-            error_log(" Greeting email sent successfully to {$email}");
-            echo json_encode(["success" => true, "message" => "Registration successful! Greeting email sent."]);
+            error_log("Greeting email sent successfully to {$email}");
         } else {
             error_log("PHPMailer send() returned false: " . $mail->ErrorInfo);
-            echo json_encode(["success" => true, "message" => "Registered successfully, but email not sent."]);
         }
 
-    } catch (Exception $e) {
-        error_log(" Mailer Exception: " . $e->getMessage());
-        error_log(" PHPMailer Debug Info: " . $mail->ErrorInfo);
-        echo json_encode(["success" => true, "message" => "Registration successful (email sending failed)."]);
+        } catch (Exception $e) {
+            error_log(" Mailer Exception: " . $e->getMessage());
+            error_log(" PHPMailer Debug Info: " . ($mail->ErrorInfo ?? 'unavailable'));
+        }
+    } else {
+        error_log('PHPMailer is unavailable; registration email was skipped.');
     }
+
+    echo json_encode(["success" => true, "message" => "Registration successful."]);
 
 } catch (Throwable $e) {
     error_log(" PHP Error: " . $e->getMessage());
