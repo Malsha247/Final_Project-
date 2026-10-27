@@ -137,6 +137,16 @@
   display: none;
 }
 
+/* Final responsive header rules. Keep one navigation menu and hide the
+   hamburger on desktop screens. */
+.menu-btn {
+  display: none;
+}
+
+.mobile-menu {
+  display: none !important;
+}
+
 @media (max-width: 950px) {
   .nav-links {
     display: none;
@@ -395,6 +405,45 @@
 
 /* Mobile behaviour */
 @media (max-width: 820px) {
+  .navbar-container {
+    padding: 8px 14px;
+  }
+
+  .logo-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-text h1 {
+    font-size: 15px;
+  }
+
+  .logo-text p {
+    font-size: 10px;
+  }
+
+  .nav-icons {
+    gap: 5px;
+  }
+
+  .profile-btn {
+    max-width: 145px;
+    padding: 6px 8px;
+  }
+
+  .user-greeting {
+    max-width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 0;
+    padding: 5px 8px;
+  }
+
+  .menu-btn {
+    display: inline-flex;
+  }
+
   .nav-links {
     display: none;
   }
@@ -409,11 +458,36 @@
     padding: 12px;
     gap: 8px;
     border-bottom: 1px solid #eee;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   }
-  .mobile-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px;
+
+  .nav-links.open a {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .logo-text h1 {
+    font-size: 13px;
+  }
+
+  .logo-text p {
+    display: none;
+  }
+
+  .profile-btn {
+    max-width: 112px;
+  }
+
+  .user-greeting {
+    max-width: 72px;
+    font-size: 0.82rem;
   }
 }
