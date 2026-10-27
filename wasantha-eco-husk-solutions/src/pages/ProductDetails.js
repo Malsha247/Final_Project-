@@ -62,16 +62,16 @@ export default function ProductDetails() {
     );
     const data = await res.json();
     if (data.success) {
-      alert(" Added to cart!");
+      alert("Product added to cart.");
       navigate("/cart");
     } else {
-      alert(" " + data.message);
+      alert(data.message || "Could not add the product to your cart.");
     }
   };
 
   if (loading) return <p>Loading product details...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!product) return <p> Product not found.</p>;
+  if (!product) return <p>Product not found.</p>;
 
   return (
     <div className="product-details">

@@ -66,3 +66,46 @@
 .checkout-form button:hover {
   background: #146126;
 }
+
+.checkout-page {
+  width: min(100% - 32px, 760px);
+  box-sizing: border-box;
+  margin: 32px auto 56px;
+}
+
+.order-summary {
+  background: #ffffff;
+  border: 1px solid #dcebdc;
+  border-radius: 10px;
+  padding: 16px;
+  color: #394939;
+}
+
+.order-summary h3 {
+  margin: 0 0 12px;
+}
+
+@media (max-width: 600px) {
+  .checkout-page {
+    width: calc(100% - 24px);
+    margin: 20px auto 36px;
+    padding: 18px 14px;
+  }
+
+  .checkout-page h2 {
+    font-size: 22px;
+  }
+
+  .checkout-form {
+    gap: 12px;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea,
+  .checkout-form select,
+  .checkout-form button {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+}

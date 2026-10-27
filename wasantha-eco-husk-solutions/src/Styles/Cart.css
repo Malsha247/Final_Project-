@@ -198,3 +198,40 @@
 .btn-checkout:hover {
   background-color: #256628;
 }
+
+@media (max-width: 700px) {
+  .cart-page {
+    margin: 20px 12px;
+    padding: 18px 12px;
+    overflow: hidden;
+  }
+
+  .cart-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    padding: 10px 8px;
+  }
+
+  .cart-product {
+    min-width: 180px;
+  }
+
+  .cart-summary {
+    align-items: stretch;
+  }
+
+  .cart-summary > div {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-continue,
+  .btn-checkout {
+    width: 100%;
+  }
+}
