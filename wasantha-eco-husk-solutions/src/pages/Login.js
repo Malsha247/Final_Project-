@@ -137,7 +137,7 @@ function Login() {
 
         <h2>Welcome Back</h2>
         <p className="welcome-text">
-          Login to your Wasantha Eco Husk account
+          Sign in to continue
         </p>
 
         {submitted && (
@@ -208,7 +208,7 @@ function Login() {
           <p>
             DonÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t have an account?{" "}
             <Link to="/register" className="link-green">
-              Register Now
+              Create an account
             </Link>
           </p>
         </div>

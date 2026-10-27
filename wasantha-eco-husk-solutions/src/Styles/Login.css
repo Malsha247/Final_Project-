@@ -2,6 +2,7 @@
 
 .login-page {
   min-height: 100vh;
+  padding: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,11 +12,12 @@
 
 
 .login-box {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.48);
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  padding: 45px 50px;
-  width: 400px;
+  padding: 38px 42px;
+  width: min(400px, 100%);
+  box-sizing: border-box;
   text-align: center;
   color: #0a2612;
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
@@ -40,10 +42,10 @@
 }
 
 /* === Headings === */
-h2 {
+.login-box h2 {
   color: #0b3d20;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin: 18px 0 8px;
   font-size: 1.7rem;
 }
 
@@ -76,7 +78,7 @@ h2 {
   font-size: 1rem;
 }
 
-input {
+.login-box input {
   border: none;
   outline: none;
   background: transparent;
@@ -85,7 +87,7 @@ input {
   color: #0a2612;
 }
 
-input::placeholder {
+.login-box input::placeholder {
   color: #7a8c7a;
 }
 
@@ -127,6 +129,13 @@ input::placeholder {
   box-shadow: 0 6px 18px rgba(27, 94, 32, 0.4);
 }
 
+.btn-login:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+  transform: none;
+  box-shadow: none;
+}
+
 
 .success-msg {
   background-color: #c8e6c9;
@@ -158,7 +167,13 @@ input::placeholder {
   font-size: 0.9rem;
 }
 
+.extra-links p {
+  color: #285c35;
+  font-size: 0;
+}
+
 .link-green {
+  font-size: 0.9rem;
   color: #1b5e20;
   font-weight: 600;
   text-decoration: none;
@@ -202,7 +217,7 @@ input::placeholder {
     height: 65px;
   }
 
-  h2 {
+  .login-box h2 {
     font-size: 1.5rem;
   }
 }
