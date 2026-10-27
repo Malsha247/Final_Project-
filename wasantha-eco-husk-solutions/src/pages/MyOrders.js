@@ -117,7 +117,7 @@ export default function MyOrders() {
                   {o.status === "Pending" || o.status === "Processing" ? (
                     <button onClick={() => cancelOrder(o.id)}>Cancel</button>
                   ) : (
-                    <span style={{ color: "#888" }}>ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â</span>
+                    <span style={{ color: "#888" }}>Not available</span>
                   )}
                 </td>
               </tr>

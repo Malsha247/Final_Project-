@@ -137,7 +137,7 @@ export default function DeliveryPersons() {
       <h2> Delivery Persons Management</h2>
 
       <button className="back-btn" onClick={() => navigate("/admin/dashboard")}>
-        ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Back to Admin Dashboard
+        Back to Admin Dashboard
       </button>
 
       {message && <p className="msg">{message}</p>}

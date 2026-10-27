@@ -39,7 +39,7 @@ export default function HuskProductionReport() {
     <div className="report-wrapper">
       <div className="report-header">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back
+          Back
         </button>
         <h2>Husk Production Report</h2>
       </div>
@@ -88,7 +88,7 @@ export default function HuskProductionReport() {
           </table>
 
           <button className="pdf-btn" onClick={downloadPDF}>
-            ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ Download PDF
+            Download PDF
           </button>
         </>
       )}

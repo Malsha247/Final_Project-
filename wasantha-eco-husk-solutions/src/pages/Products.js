@@ -84,8 +84,8 @@ const Products = () => {
         </label>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="newest">Newest</option>
-          <option value="price-asc">Price: Low Ã¢â€ â€™ High</option>
-          <option value="price-desc">Price: High Ã¢â€ â€™ Low</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
         </select>
       </div>
 

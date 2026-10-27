@@ -96,7 +96,7 @@ export default function Contact() {
             <span></span>
             <div>
               <p>+94 77 0326787</p>
-              <small>MonÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œSun 8am to 6pm</small>
+              <small>Monday to Sunday, 8:00 AM to 6:00 PM</small>
             </div>
           </div>
 

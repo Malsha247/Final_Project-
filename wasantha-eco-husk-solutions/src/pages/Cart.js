@@ -70,7 +70,7 @@ export default function Cart() {
           )
         );
       } else {
-        alert("Ã¢Å¡Â Ã¯Â¸Â " + data.message);
+        alert(data.message);
       }
     } catch (err) {
       console.error("Update failed:", err);
@@ -138,7 +138,7 @@ export default function Cart() {
                           )
                         }
                       >
-                        Ã¢Ë†â€™
+                        −
                       </button>
                       <input
                         type="text"
@@ -188,7 +188,7 @@ export default function Cart() {
                 className="btn-continue"
                 onClick={() => navigate("/products")}
               >
-                Ã¢â€ Â Continue Shopping
+                        ← Continue Shopping
               </button>
 
               <button

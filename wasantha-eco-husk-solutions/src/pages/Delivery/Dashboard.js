@@ -115,7 +115,7 @@ export default function DeliveryDashboard() {
       {/* ===== SALARY ===== */}
       {salary && (
         <div className="salary-box">
-          <h3> Salary ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ {salary.month}</h3>
+          <h3>Salary — {salary.month}</h3>
           <p>Delivered Orders: {salary.deliveries}</p>
           <p>Base Salary: Rs. {salary.base.toLocaleString()}</p>
           <p>Bonus: Rs. {salary.bonus.toLocaleString()}</p>

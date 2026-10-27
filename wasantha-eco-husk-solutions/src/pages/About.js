@@ -87,7 +87,7 @@ export default function AboutUs() {
       </section>
 
       <section className="about-cta">
-        <h2>Join Our Mission for a Greener Tomorrow 🌱</h2>
+        <h2>Building a cleaner future together</h2>
         <p>
           Support sustainable farming by choosing eco-friendly coconut-based
           products.

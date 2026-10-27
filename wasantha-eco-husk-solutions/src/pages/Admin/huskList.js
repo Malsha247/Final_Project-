@@ -107,7 +107,7 @@ export default function AdminHusks() {
 
                 <td>{h.description}</td>
 
-                <td>{h.admin_response || "Ã¢â‚¬â€"}</td>
+                <td>{h.admin_response || "No response"}</td>
 
                 <td>
                   {h.map_link ? (

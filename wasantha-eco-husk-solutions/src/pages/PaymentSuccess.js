@@ -28,7 +28,7 @@ export default function PaymentSuccess() {
         );
         const data = await res.json();
         if (data.success) {
-          setStatus("Payment confirmed ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â order placed!");
+          setStatus("Payment confirmed — order placed!");
           setTimeout(() => navigate("/my-orders"), 1500);
         } else {
           setStatus("Verification failed: " + data.message);

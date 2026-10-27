@@ -92,10 +92,10 @@ export default function CustomersReport() {
 
       <div className="report-actions">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back to Reports
+          Back to Reports
         </button>
         <button className="pdf-btn" onClick={downloadPDF}>
-          ÃƒÆ’Ã‚Â¢Ãƒâ€šÃ‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¡ Download PDF
+          Download PDF
         </button>
       </div>
 

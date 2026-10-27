@@ -41,7 +41,7 @@ export default function SellHusk() {
     mapInstance.current = L.map(mapRef.current).setView(defaultLoc, 8);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© OpenStreetMap contributors",
+      attribution: "© OpenStreetMap contributors",
     }).addTo(mapInstance.current);
 
     const marker = L.marker(defaultLoc, { draggable: true }).addTo(

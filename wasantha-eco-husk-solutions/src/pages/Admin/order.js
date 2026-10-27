@@ -35,7 +35,7 @@ export default function AdminOrders() {
               <td>{o.id}</td>
               <td>{o.customer_name}</td>
               <td>{o.customer_phone}</td>
-              <td>{o.shipping_address || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</td> 
+              <td>{o.shipping_address || "Not provided"}</td>
               <td>{o.payment_status}</td>
               <td>{o.status}</td>
               <td>Rs. {o.total_price}</td>

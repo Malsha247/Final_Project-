@@ -162,7 +162,7 @@ export default function EditProfile() {
       </form>
 
       <button className="back-btn" onClick={() => navigate("/profile")}>
-        ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Ãƒâ€šÃ‚Â Back to Profile
+        Back to Profile
       </button>
     </div>
   );

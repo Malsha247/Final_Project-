@@ -71,11 +71,11 @@ export default function MyRequests() {
               </div>
 
               <div className="req-body">
-                <div><strong>Requester:</strong> {r.requester_name || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
-                <div><strong>Email:</strong> {r.requester_email || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
-                <div><strong>Phone:</strong> {r.requester_phone || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div>
+                <div><strong>Requester:</strong> {r.requester_name || "Not provided"}</div>
+                <div><strong>Email:</strong> {r.requester_email || "Not provided"}</div>
+                <div><strong>Phone:</strong> {r.requester_phone || "Not provided"}</div>
                 <div><strong>Quantity:</strong> {r.quantity}</div>
-                <div className="req-msg"><strong>Message:</strong><div>{r.request_message || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</div></div>
+                <div className="req-msg"><strong>Message:</strong><div>{r.request_message || "No message"}</div></div>
               </div>
             </li>
           ))}

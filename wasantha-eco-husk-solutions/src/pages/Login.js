@@ -206,7 +206,7 @@ function Login() {
 
         <div className="extra-links">
           <p>
-            DonÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t have an account?{" "}
+            Don't have an account?{" "}
             <Link to="/register" className="link-green">
               Create an account
             </Link>

@@ -118,7 +118,7 @@ export default function AdminFeedbacks() {
             <div key={f.id} className="feedback-card">
               <div className="fb-header">
                 <div>
-                  <strong>{f.user_name}</strong> ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {f.user_email}
+                  <strong>{f.user_name}</strong> — {f.user_email}
                 </div>
                 <div>{new Date(f.created_at).toLocaleString()}</div>
               </div>

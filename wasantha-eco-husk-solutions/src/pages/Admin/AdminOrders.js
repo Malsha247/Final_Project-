@@ -104,7 +104,7 @@ export default function AdminOrders() {
               <tr key={o.id}>
                 <td>{o.id}</td>
                 <td>{o.customer_name}</td>
-                <td>{o.shipping_address || "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â"}</td>
+                <td>{o.shipping_address || "Not provided"}</td>
                 <td>Rs. {o.total_price}</td>
                 <td>{o.status}</td>
                 <td>
