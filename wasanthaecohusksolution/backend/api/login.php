@@ -4,15 +4,6 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
 
-/* ===== CORS ===== */
-header("Content-Type: application/json; charset=UTF-8");
-
-/* ===== PREFLIGHT ===== */
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Allow: POST, OPTIONS');
     http_response_code(405);

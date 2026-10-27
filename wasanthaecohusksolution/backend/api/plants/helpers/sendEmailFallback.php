@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../../_cors.php';
 // backend/api/plants/helpers/sendEmailFallback.php
 // Clean, safe email helper.
 // DOES NOT load DB
