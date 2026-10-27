@@ -51,6 +51,24 @@ body {
   max-width: 550px;
 }
 
+.hero-eyebrow,
+.section-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.hero-eyebrow {
+  color: #dcedc8;
+  margin: 0 0 12px;
+}
+
+.section-eyebrow {
+  color: #2e7d32;
+  margin: 0 0 8px;
+}
+
 .hero-text h1 {
   font-size: 3rem;
   font-weight: 800;
@@ -154,6 +172,18 @@ body {
   color: #1b5e20;
   text-align: center;
   margin-bottom: 40px;
+}
+
+.section-link {
+  display: inline-block;
+  margin-top: 28px;
+  color: #1b5e20;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.section-link:hover {
+  text-decoration: underline;
 }
 
 .product-grid {

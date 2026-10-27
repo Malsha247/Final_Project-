@@ -3,6 +3,7 @@ $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
 $allowed_origins = [
     'http://localhost:3000',
+    'http://localhost:3001',
     'https://final-project-8c7g.vercel.app'
 ];
 
