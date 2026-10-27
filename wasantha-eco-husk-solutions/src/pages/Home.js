@@ -43,7 +43,7 @@ export const Home = () => {
           <p>Quality coconut husk products and healthy plants for homes, gardens, farms and businesses.</p>
           <div className="hero-buttons">
             <Link to="/products" className="btn-shop">Explore products</Link>
-            <Link to="/about" className="btn-learn">About our company</Link>
+            <Link to="/about-us" className="btn-learn">About our company</Link>
           </div>
         </div>
       </section>

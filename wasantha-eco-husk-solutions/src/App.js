@@ -82,13 +82,22 @@ const App = () => {
         <Route path="/my-requests" element={<MyRequests />} />
 
         {/* ===== Admin Reports ===== */}
-        <Route path="/admin/reports/customers" element={<CustomersReport />} />
-        <Route path="/admin/reports/stocks" element={<StocksReport />} />
+        <Route
+          path="/admin/reports/customers"
+          element={<><AdminNavbar /><CustomersReport /></>}
+        />
+        <Route
+          path="/admin/reports/stocks"
+          element={<><AdminNavbar /><StocksReport /></>}
+        />
         <Route
           path="/admin/reports/husk-production"
-          element={<HuskProductionReport />}
+          element={<><AdminNavbar /><HuskProductionReport /></>}
         />
-        <Route path="/admin/reports/orders" element={<OrdersReport />} />
+        <Route
+          path="/admin/reports/orders"
+          element={<><AdminNavbar /><OrdersReport /></>}
+        />
 
         {/* ===== Admin Routes ===== */}
         <Route
@@ -173,10 +182,13 @@ const App = () => {
 
         <Route
           path="/admin/husk-production-entry"
-          element={<HuskProductionEntry />}
+          element={<><AdminNavbar /><HuskProductionEntry /></>}
         />
 
-        <Route path="/admin/delivery-persons" element={<DeliveryPersons />} />
+        <Route
+          path="/admin/delivery-persons"
+          element={<><AdminNavbar /><DeliveryPersons /></>}
+        />
 
         {/* ===== Delivery ===== */}
         <Route path="/delivery/dashboard" element={<DeliveryDashboard />} />
