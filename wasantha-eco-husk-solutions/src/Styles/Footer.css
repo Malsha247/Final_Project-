@@ -7,6 +7,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+html[lang="si"] .footer {
+  font-family: "Noto Sans Sinhala", "Iskoola Pota", sans-serif;
+}
+
 .footer-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

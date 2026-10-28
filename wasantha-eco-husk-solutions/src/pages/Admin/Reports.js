@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/Dashbord.css";
 
 import stock from "../../assests/stock.png";
@@ -8,41 +9,42 @@ import huskcut from "../../assests/report.png";
 import enterHusk from "../../assests/enter.png";
 
 export default function Reports() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
 
   const cards = [
     {
       id: "orders",
-      title: "Orders Report",
-      description: "Sales, order counts, revenue and status breakdowns.",
+      title: t("Orders Report"),
+      description: t("Sales, order counts, revenue and status breakdowns."),
       link: "/admin/reports/orders",
       image: order,
     },
     {
       id: "stocks",
-      title: "Stocks Report",
-      description: "Product inventory, low-stock alerts and stock history.",
+      title: t("Stocks Report"),
+      description: t("Product inventory, low-stock alerts and stock history."),
       link: "/admin/reports/stocks",
       image: stock,
     },
     {
       id: "customers",
-      title: "Customers Report",
-      description: "Customer list, order frequency and top customers.",
+      title: t("Customers Report"),
+      description: t("Customer list, order frequency and top customers."),
       link: "/admin/reports/customers",
       image: customer,
     },
     {
       id: "husk-production",
-      title: "Husk Production Report",
-      description: "Daily production data and total bags cut.",
+      title: t("Husk Production Report"),
+      description: t("Daily production data and total bags cut."),
       link: "/admin/reports/husk-production",
       image: huskcut,
     },
     {
       id: "husk-production-add",
-      title: "Add Daily Husk Cutting",
-      description: "Record number of husk bags cut today.",
+      title: t("Add Daily Husk Cutting"),
+      description: t("Record number of husk bags cut today."),
       link: "/admin/husk-production-entry",
       image: enterHusk,
     },
@@ -51,7 +53,7 @@ export default function Reports() {
   return (
     <div className="eco-dashboard">
       <main className="dashboard-main">
-        <h2>Reports</h2>
+        <h2>{t("Reports")}</h2>
 
         <div className="dashboard-grid">
           {cards.map((c) => (

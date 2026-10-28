@@ -1,9 +1,11 @@
 import API_BASE_URL from "../../config/api";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/HuskProductionEntry.css";
 
 export default function HuskProductionEntry() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -21,7 +23,7 @@ export default function HuskProductionEntry() {
     e.preventDefault();
 
     if (!form.date || !form.bags_cut) {
-      alert("Date and number of bags are required");
+      alert(t("Date and number of bags are required"));
       return;
     }
 
@@ -40,14 +42,14 @@ export default function HuskProductionEntry() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Daily production recorded successfully.");
+        alert(t("Daily production recorded successfully."));
         navigate("/admin/reports/husk-production");
       } else {
-        alert(data.message || "Failed to save record");
+        alert(data.message || t("Failed to save record"));
       }
     } catch (err) {
       console.error("Husk entry error:", err);
-      alert("Server error");
+      alert(t("Server error"));
     } finally {
       setLoading(false);
     }
@@ -56,13 +58,13 @@ export default function HuskProductionEntry() {
   return (
     <div className="husk-entry-wrapper">
       <div className="husk-entry-card">
-        <h2>Daily Husk Cutting</h2>
+        <h2>{t("Daily Husk Cutting")}</h2>
         <p className="subtitle">
-          Record the number of coconut husk bags cut today
+          {t("Record the number of coconut husk bags cut today")}
         </p>
 
         <form onSubmit={handleSubmit}>
-          <label>Date</label>
+          <label>{t("Date")}</label>
           <input
             type="date"
             name="date"
@@ -71,21 +73,21 @@ export default function HuskProductionEntry() {
             required
           />
 
-          <label>Number of Bags Cut</label>
+          <label>{t("Number of Bags Cut")}</label>
           <input
             type="number"
             name="bags_cut"
-            placeholder="e.g. 120"
+            placeholder={t("e.g. 120")}
             value={form.bags_cut}
             onChange={handleChange}
             required
           />
 
-          <label>Notes (optional)</label>
+          <label>{t("Notes (optional)")}</label>
           <textarea
             name="notes"
             rows="3"
-            placeholder="Any remarks for today..."
+            placeholder={t("Any remarks for today...")}
             value={form.notes}
             onChange={handleChange}
           />
@@ -96,11 +98,11 @@ export default function HuskProductionEntry() {
               className="btn-back"
               onClick={() => navigate("/admin/reports")}
             >
-              Back
+              {t("Back")}
             </button>
 
             <button type="submit" className="btn-save" disabled={loading}>
-              {loading ? "Saving..." : "Save Entry"}
+              {loading ? t("Saving...") : t("Save Entry")}
             </button>
           </div>
         </form>

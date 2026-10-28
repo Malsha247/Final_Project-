@@ -1,10 +1,12 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/ProductDetails.css";
 import productPlaceholder from "../assests/main.jpg";
 
 export default function ProductDetails() {
+  const { t } = usePreferences();
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -22,7 +24,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     if (!id) {
-      setError("Invalid or missing product ID.");
+      setError(t("Invalid or missing product ID."));
       setLoading(false);
       return;
     }
@@ -35,32 +37,32 @@ export default function ProductDetails() {
         const data = await res.json();
 
         if (!res.ok || !data.success) {
-          throw new Error(data.message || "Product details could not be loaded.");
+          throw new Error(data.message || t("Product details could not be loaded."));
         }
 
         setProduct(data.product);
       } catch (fetchError) {
         console.error("Failed to fetch product:", fetchError);
-        setError(fetchError.message || "Failed to fetch product.");
+        setError(fetchError.message || t("Failed to fetch product."));
       } finally {
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, t]);
 
   const stock = Number(product?.stock) || 0;
 
   const handleAddToCart = async () => {
     if (!user?.id) {
-      alert("Please log in to add to cart.");
+      alert(t("Please log in to add to cart."));
       navigate("/login");
       return;
     }
 
     if (!product || stock <= 0 || qty > stock) {
-      alert(stock <= 0 ? "This product is out of stock." : "Please select a valid quantity.");
+      alert(stock <= 0 ? t("This product is out of stock.") : t("Please select a valid quantity."));
       return;
     }
 
@@ -79,27 +81,27 @@ export default function ProductDetails() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Could not add the product to your cart.");
+        throw new Error(data.message || t("Could not add the product to your cart."));
       }
 
-      alert("Product added to cart.");
+      alert(t("Product added to cart."));
       navigate("/cart");
     } catch (addError) {
       console.error("Add to cart failed:", addError);
-      alert(addError.message || "Could not add the product to your cart.");
+      alert(addError.message || t("Could not add the product to your cart."));
     } finally {
       setAddingToCart(false);
     }
   };
 
   if (loading) {
-    return <p className="product-details-status" role="status">Loading product details...</p>;
+    return <p className="product-details-status" role="status">{t("Loading product details...")}</p>;
   }
   if (error) {
     return <p className="product-details-status error" role="alert">{error}</p>;
   }
   if (!product) {
-    return <p className="product-details-status">Product not found.</p>;
+    return <p className="product-details-status">{t("Product not found.")}</p>;
   }
 
   return (
@@ -117,17 +119,17 @@ export default function ProductDetails() {
           />
         </div>
         <div className="details-info">
-          <p className="pd-eyebrow">Wasantha Eco Husk product</p>
+          <p className="pd-eyebrow">{t("Wasantha Eco Husk product")}</p>
           <h2 id="product-title">{product.name}</h2>
           {product.description && (
             <p className="pd-description">{product.description}</p>
           )}
           <p className="pd-price">Rs. {Number(product.price).toFixed(2)}</p>
           <p className={`pd-stock ${stock <= 0 ? "out-of-stock" : ""}`}>
-            {stock > 0 ? `${stock} available` : "Out of stock"}
+            {stock > 0 ? `${stock} ${t("available")}` : t("Out of stock")}
           </p>
           <div className="quantity-section">
-            <label htmlFor="product-quantity">Quantity</label>
+            <label htmlFor="product-quantity">{t("Quantity")}</label>
             <input
               id="product-quantity"
               type="number"
@@ -146,7 +148,7 @@ export default function ProductDetails() {
             onClick={handleAddToCart}
             disabled={stock <= 0 || addingToCart}
           >
-            {addingToCart ? "Adding to cart..." : stock > 0 ? "Add to cart" : "Out of stock"}
+            {addingToCart ? t("Adding to cart...") : stock > 0 ? t("Add to cart") : t("Out of stock")}
           </button>
         </div>
       </section>

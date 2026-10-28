@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Styles/Login.css";
 import logo from "../assests/icon.png";
 import API_BASE_URL from "../config/api";
 
 function Login() {
+  const { t } = usePreferences();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,15 +34,15 @@ function Login() {
     const newErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t("Email is required.");
     } else if (!/\S+@\S+\.\S+/.test(formData.email.trim())) {
-      newErrors.email = "Invalid email format.";
+      newErrors.email = t("Invalid email format.");
     }
 
     if (!formData.password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t("Password is required.");
     } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters.";
+      newErrors.password = t("Password must be at least 8 characters.");
     }
 
     return newErrors;
@@ -78,7 +80,7 @@ function Login() {
         data = await res.json();
       } catch {
         setApiError(
-          "The login server returned an invalid response. Please try again later."
+          t("The login server returned an invalid response. Please try again later.")
         );
         return;
       }
@@ -89,7 +91,7 @@ function Login() {
         typeof data.success !== "boolean"
       ) {
         setApiError(
-          "The login server returned an invalid response. Please try again later."
+          t("The login server returned an invalid response. Please try again later.")
         );
         return;
       }
@@ -116,12 +118,12 @@ function Login() {
         setApiError(
           typeof data.message === "string"
             ? data.message
-            : "Login failed. Please try again later."
+            : t("Login failed. Please try again later.")
         );
       }
     } catch (err) {
       console.error("Login error:", err);
-      setApiError("Something went wrong. Please try again later.");
+      setApiError(t("Something went wrong. Please try again later."));
     } finally {
       submitting.current = false;
       setLoading(false);
@@ -132,16 +134,16 @@ function Login() {
     <div className="login-page">
       <div className="login-box">
         <div className="login-logo">
-          <img src={logo} alt="Wasantha Eco Husk Logo" />
+          <img src={logo} alt={t("Wasantha Eco Husk Logo")} />
         </div>
 
-        <h2>Welcome Back</h2>
+        <h2>{t("Welcome Back")}</h2>
         <p className="welcome-text">
-          Sign in to continue
+          {t("Sign in to continue")}
         </p>
 
         {submitted && (
-          <div className="success-msg">Login successful!</div>
+          <div className="success-msg">{t("Login successful!")}</div>
         )}
 
         {apiError && <div className="error-msg">{apiError}</div>}
@@ -152,7 +154,7 @@ function Login() {
             <input
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder={t("Enter your email")}
               value={formData.email}
               onChange={handleChange}
               autoComplete="username"
@@ -168,7 +170,7 @@ function Login() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Enter your password"
+              placeholder={t("Enter your password")}
               value={formData.password}
               onChange={handleChange}
               autoComplete="current-password"
@@ -178,7 +180,7 @@ function Login() {
               className="toggle-password"
               role="button"
               tabIndex={0}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? t("Hide password") : t("Show password")}
               onClick={() => setShowPassword((prev) => !prev)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -200,15 +202,15 @@ function Login() {
             className="btn-login"
             disabled={loading || submitted}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? t("Logging in...") : t("Login")}
           </button>
         </form>
 
         <div className="extra-links">
           <p>
-            Don't have an account?{" "}
+            {t("Don't have an account?")}{" "}
             <Link to="/register" className="link-green">
-              Create an account
+              {t("Create an account")}
             </Link>
           </p>
         </div>

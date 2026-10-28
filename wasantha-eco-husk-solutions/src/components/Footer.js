@@ -9,8 +9,10 @@ import {
 } from "lucide-react";
 import "../Styles/Footer.css";
 import logo from "../assests/icon.png";
+import { usePreferences } from "../contexts/PreferencesContext";
 
 export const Footer = () => {
+  const { t } = usePreferences();
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -25,9 +27,7 @@ export const Footer = () => {
           </div>
 
           <p className="footer-description">
-            Leading the way in sustainable coconut husk products and plant
-            trading. Supporting eco-friendly farming and green growth in Sri
-            Lanka.
+            {t("Leading the way in sustainable coconut husk products and plant trading. Supporting eco-friendly farming and green growth in Sri Lanka.")}
           </p>
 
           <div className="footer-social">
@@ -44,44 +44,44 @@ export const Footer = () => {
         </div>
 
         <div className="footer-section">
-          <h3>Products</h3>
+          <h3>{t("Products")}</h3>
           <ul>
             <li>
-              <Link to="/products?category=husk">Coconut Husk Chips</Link>
+              <Link to="/products?category=husk">{t("Coconut Husk Chips")}</Link>
             </li>
             <li>
-              <Link to="/products?category=plants">Coconut Plants</Link>
+              <Link to="/products?category=plants">{t("Coconut Plants")}</Link>
             </li>
             <li>
               <Link to="/products?category=organic">
-                Organic Fertilizer Mix
+                {t("Organic Fertilizer Mix")}
               </Link>
             </li>
             <li>
               <Link to="/products?category=accessories">
-                Gardening Accessories
+                {t("Gardening Accessories")}
               </Link>
             </li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h3>Company</h3>
+          <h3>{t("Company")}</h3>
           <ul>
             <li>
-              <Link to="/about-us">About Us</Link>
+              <Link to="/about-us">{t("About Us")}</Link>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">{t("Contact")}</Link>
             </li>
             <li>
-              <Link to="/sell">Sell with Us</Link>
+              <Link to="/sell">{t("Sell with Us")}</Link>
             </li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h3>Contact</h3>
+          <h3>{t("Contact")}</h3>
           <ul className="footer-contact">
             <li>
               <Phone size={16} className="footer-icon" />
@@ -93,7 +93,7 @@ export const Footer = () => {
             </li>
             <li>
               <MapPin size={16} className="footer-icon" />
-              <span>Monaragala, Sri Lanka</span>
+              <span>{t("Monaragala, Sri Lanka")}</span>
             </li>
           </ul>
         </div>
@@ -101,8 +101,7 @@ export const Footer = () => {
 
       <div className="footer-bottom">
         <p>
-          {new Date().getFullYear()} Wasantha Eco Husk Solutions. All rights
-          reserved.
+          {new Date().getFullYear()} Wasantha Eco Husk Solutions. {t("All rights reserved.")}
         </p>
       </div>
     </footer>

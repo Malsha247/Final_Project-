@@ -1,12 +1,14 @@
 import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
   `${API_BASE_URL}/products`;
 
 export default function ProductList() {
+  const { t } = usePreferences();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ export default function ProductList() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
+    if (!window.confirm(t("Are you sure you want to delete this product?")))
       return;
     try {
       const res = await fetch(`${API_BASE}/deleteProduct.php`, {
@@ -41,32 +43,32 @@ export default function ProductList() {
       const data = await res.json();
       if (data.success) {
         fetchProducts();
-        alert("Product deleted.");
-      } else alert(data.message || "Delete failed");
+        alert(t("Product deleted."));
+      } else alert(data.message || t("Delete failed"));
     } catch (e) {
       console.error(e);
-      alert("Delete error");
+      alert(t("Delete error"));
     }
   };
 
   return (
     <div className="pm-container">
       <div className="pm-header">
-        <h2>Products</h2>
+        <h2>{t("Products")}</h2>
         <div>
           <button
             className="pm-btn"
             onClick={() => navigate("/admin/products/add")}
           >
-            + Add Product
+            {t("+ Add Product")}
           </button>
         </div>
       </div>
 
       {loading ? (
-        <p>Loading products...</p>
+        <p>{t("Loading products...")}</p>
       ) : products.length === 0 ? (
-        <p>No products found.</p>
+        <p>{t("No products found.")}</p>
       ) : (
         <div className="pm-grid">
           {products.map((p) => (
@@ -79,7 +81,7 @@ export default function ProductList() {
                     className="pm-image"
                   />
                 ) : (
-                  <div className="pm-noimage">No Image</div>
+                  <div className="pm-noimage">{t("No Image")}</div>
                 )}
               </div>
 
@@ -91,9 +93,9 @@ export default function ProductList() {
                 </p>
                 <p className="pm-stock">
                   {parseInt(p.stock || 0) <= 0 ? (
-                    <span className="pm-out">Out of Stock</span>
+                    <span className="pm-out">{t("Out of Stock")}</span>
                   ) : (
-                    <span>{p.stock} in stock</span>
+                    <span>{p.stock} {t("in stock")}</span>
                   )}
                 </p>
 
@@ -102,13 +104,13 @@ export default function ProductList() {
                     className="pm-btn small"
                     onClick={() => navigate(`/admin/products/edit/${p.id}`)}
                   >
-                    Edit
+                    {t("Edit")}
                   </button>
                   <button
                     className="pm-btn small danger"
                     onClick={() => handleDelete(p.id)}
                   >
-                    Delete
+                    {t("Delete")}
                   </button>
                 </div>
               </div>

@@ -1,9 +1,11 @@
 import API_BASE_URL from "../../config/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/DeliveryDashboard.css";
 
 export default function DeliveryDashboard() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const user = JSON.parse(sessionStorage.getItem("user"));
 
@@ -63,7 +65,7 @@ export default function DeliveryDashboard() {
 
   /* ================= MARK DELIVERED ================= */
   const markDelivered = async (orderId) => {
-    if (!window.confirm("Mark this order as delivered?")) return;
+    if (!window.confirm(t("Mark this order as delivered?"))) return;
 
     try {
       const res = await fetch(
@@ -88,7 +90,7 @@ export default function DeliveryDashboard() {
       }
     } catch (err) {
       console.error("Mark delivered error:", err);
-      alert("Failed to mark delivered");
+      alert(t("Failed to mark delivered"));
     }
   };
 
@@ -102,30 +104,30 @@ export default function DeliveryDashboard() {
   return (
     <div className="delivery-page">
       <div className="delivery-header">
-        <h2> Delivery Dashboard</h2>
+        <h2> {t("Delivery Dashboard")}</h2>
         <button className="logout-btn" onClick={logout}>
-          Logout
+          {t("Logout")}
         </button>
       </div>
 
       <p className="welcome">
-        Welcome, <strong>{user?.name}</strong>
+        {t("Welcome")}, <strong>{user?.name}</strong>
       </p>
 
       {/* ===== SALARY ===== */}
       {salary && (
         <div className="salary-box">
-          <h3>Salary — {salary.month}</h3>
-          <p>Delivered Orders: {salary.deliveries}</p>
-          <p>Base Salary: Rs. {salary.base.toLocaleString()}</p>
-          <p>Bonus: Rs. {salary.bonus.toLocaleString()}</p>
+          <h3>{t("Salary")} — {salary.month}</h3>
+          <p>{t("Delivered Orders")}: {salary.deliveries}</p>
+          <p>{t("Base Salary")}: Rs. {salary.base.toLocaleString()}</p>
+          <p>{t("Bonus")}: Rs. {salary.bonus.toLocaleString()}</p>
           <p>
-            <strong>Total: Rs. {salary.total.toLocaleString()}</strong>
+            <strong>{t("Total")}: Rs. {salary.total.toLocaleString()}</strong>
           </p>
           <p>
-            Status:{" "}
+            {t("Status")}:{" "}
             <strong className={salary.paid ? "paid" : "unpaid"}>
-              {salary.paid ? "PAID" : "UNPAID"}
+              {salary.paid ? t("PAID") : t("UNPAID")}
             </strong>
           </p>
         </div>
@@ -133,18 +135,18 @@ export default function DeliveryDashboard() {
 
       {/* ===== ORDERS ===== */}
       {loading ? (
-        <p>Loading...</p>
+        <p>{t("Loading...")}</p>
       ) : orders.length === 0 ? (
-        <p>No shipped orders assigned.</p>
+        <p>{t("No shipped orders assigned.")}</p>
       ) : (
         <table className="delivery-table">
           <thead>
             <tr>
-              <th>Order #</th>
-              <th>Customer</th>
-              <th>Address</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{t("Order #")}</th>
+              <th>{t("Customer")}</th>
+              <th>{t("Address")}</th>
+              <th>{t("Status")}</th>
+              <th>{t("Action")}</th>
             </tr>
           </thead>
           <tbody>
@@ -159,7 +161,7 @@ export default function DeliveryDashboard() {
                     className="deliver-btn"
                     onClick={() => markDelivered(o.id)}
                   >
-                    Mark Delivered
+                    {t("Mark Delivered")}
                   </button>
                 </td>
               </tr>

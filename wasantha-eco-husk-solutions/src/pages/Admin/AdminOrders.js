@@ -1,8 +1,10 @@
 import API_BASE_URL from "../../config/api";
 import React, { useCallback, useEffect, useState } from "react";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/OrderManage.css";
 
 export default function AdminOrders() {
+  const { t } = usePreferences();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,16 +48,16 @@ export default function AdminOrders() {
       const data = JSON.parse(text);
 
       if (data.success) fetchOrders();
-      else alert(data.message || "Update failed");
+      else alert(data.message || t("Update failed"));
     } catch (err) {
-      alert("Network error");
+      alert(t("Network error"));
     }
   };
 
  
   const deleteOrder = async (orderId) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this order?"
+      t("Are you sure you want to delete this order?")
     );
     if (!confirmDelete) return;
 
@@ -70,33 +72,33 @@ export default function AdminOrders() {
       const data = JSON.parse(text);
 
       if (data.success) {
-        alert("Order deleted successfully");
+        alert(t("Order deleted successfully"));
         fetchOrders();
       } else {
-        alert(data.message || "Delete failed");
+        alert(data.message || t("Delete failed"));
       }
     } catch (err) {
-      alert("Network error");
+      alert(t("Network error"));
     }
   };
 
   return (
     <div className="admin-orders">
-      <h2>Manage Orders</h2>
+      <h2>{t("Manage Orders")}</h2>
 
       {loading ? (
-        <p>Loading...</p>
+        <p>{t("Loading...")}</p>
       ) : (
         <table>
           <thead>
             <tr>
-              <th>Order Number</th>
-              <th>Customer</th>
-              <th>Address</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Change</th>
-              <th>Delete</th> 
+              <th>{t("Order Number")}</th>
+              <th>{t("Customer")}</th>
+              <th>{t("Address")}</th>
+              <th>{t("Total")}</th>
+              <th>{t("Status")}</th>
+              <th>{t("Change")}</th>
+              <th>{t("Delete")}</th>
             </tr>
           </thead>
           <tbody>
@@ -104,7 +106,7 @@ export default function AdminOrders() {
               <tr key={o.id}>
                 <td>{o.id}</td>
                 <td>{o.customer_name}</td>
-                <td>{o.shipping_address || "Not provided"}</td>
+                <td>{o.shipping_address || t("Not provided")}</td>
                 <td>Rs. {o.total_price}</td>
                 <td>{o.status}</td>
                 <td>
@@ -112,11 +114,11 @@ export default function AdminOrders() {
                     value={o.status}
                     onChange={(e) => updateStatus(o.id, e.target.value)}
                   >
-                    <option>Pending</option>
-                    <option>Processing</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
-                    <option>Canceled</option>
+                    <option value="Pending">{t("Pending")}</option>
+                    <option value="Processing">{t("Processing")}</option>
+                    <option value="Shipped">{t("Shipped")}</option>
+                    <option value="Delivered">{t("Delivered")}</option>
+                    <option value="Canceled">{t("Canceled")}</option>
                   </select>
                 </td>
                 <td>
@@ -131,7 +133,7 @@ export default function AdminOrders() {
                       borderRadius: "4px",
                     }}
                   >
-                    Delete
+                    {t("Delete")}
                   </button>
                 </td>
               </tr>

@@ -2,10 +2,12 @@ import API_BASE_URL from "../config/api";
 import React, { useState } from "react";
 import "../Styles/Contact.css";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import { Mail, MapPin, Phone } from "lucide-react";
 import contactImage from "../assests/main.jpg";
 
 export default function Contact() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
 
   let user = null;
@@ -27,7 +29,7 @@ export default function Contact() {
     e.preventDefault();
 
     if (!isLoggedIn) {
-      alert("Please login to send a message.");
+      alert(t("Please login to send a message."));
       return;
     }
 
@@ -58,24 +60,24 @@ export default function Contact() {
         try {
           data = JSON.parse(text);
         } catch {
-          data = { success: false, message: "Invalid server response" };
+          data = { success: false, message: t("Invalid server response") };
         }
       } else {
-        data = { success: false, message: "Empty response from server" };
+        data = { success: false, message: t("Empty response from server") };
       }
 
       if (res.ok && data && data.success) {
-        alert("Message sent!");
+        alert(t("Message sent!"));
         setForm({ subject: "", message: "" });
         navigate("/my-messages");
       } else {
         const msg =
-          (data && data.message) || `Request failed (status ${res.status})`;
-        alert("Failed: " + msg);
+          (data && data.message) || `${t("Request failed (status ")}${res.status})`;
+        alert(t("Failed: ") + msg);
       }
     } catch (err) {
       console.error("Network error:", err);
-      alert("Could not connect to backend");
+      alert(t("Could not connect to backend"));
     } finally {
       setLoading(false);
     }
@@ -84,9 +86,9 @@ export default function Contact() {
   return (
     <main className="contact-page">
       <header className="contact-intro">
-        <p className="contact-eyebrow">We are happy to help</p>
-        <h1>Contact us</h1>
-        <p>Questions about our products or your order? Send us a message.</p>
+        <p className="contact-eyebrow">{t("We are happy to help")}</p>
+        <h1>{t("Contact us")}</h1>
+        <p>{t("Questions about our products or your order? Send us a message.")}</p>
       </header>
 
       <div className="contact-wrapper">
@@ -96,11 +98,10 @@ export default function Contact() {
           aria-labelledby="contact-details-title"
         >
           <div className="contact-copy">
-            <p className="contact-card-eyebrow">Wasantha Eco Husk Solutions</p>
-            <h2 id="contact-details-title">Get in touch</h2>
+            <p className="contact-card-eyebrow">{t("Wasantha Eco Husk Solutions")}</p>
+            <h2 id="contact-details-title">{t("Get in touch")}</h2>
             <p>
-              Have questions about our coconut products or need assistance?
-              We’re here to help and will get back to you as soon as possible.
+              {t("Have questions about our coconut products or need assistance? We’re here to help and will get back to you as soon as possible.")}
             </p>
           </div>
 
@@ -109,7 +110,7 @@ export default function Contact() {
               <span className="info-icon"><Phone size={19} aria-hidden="true" /></span>
               <span className="info-copy">
                 <strong>+94 77 0326787</strong>
-                <small>Daily, 8:00 AM to 6:00 PM</small>
+                <small>{t("Daily, 8:00 AM to 6:00 PM")}</small>
               </span>
             </a>
 
@@ -117,15 +118,15 @@ export default function Contact() {
               <span className="info-icon"><Mail size={19} aria-hidden="true" /></span>
               <span className="info-copy">
                 <strong>wasanthaeco2001@gmail.com</strong>
-                <small>We’ll respond as soon as possible</small>
+                <small>{t("We’ll respond as soon as possible")}</small>
               </span>
             </a>
 
             <div className="info-item">
               <span className="info-icon"><MapPin size={19} aria-hidden="true" /></span>
               <span className="info-copy">
-                <strong>Court Road</strong>
-                <small>Monaragala, Sri Lanka</small>
+                <strong>{t("Court Road")}</strong>
+                <small>{t("Monaragala, Sri Lanka")}</small>
               </span>
             </div>
           </div>
@@ -133,25 +134,25 @@ export default function Contact() {
 
         <section className="contact-right" aria-labelledby="contact-form-title">
           <div className="contact-form-heading">
-            <p className="contact-card-eyebrow">Send us a message</p>
-            <h2 id="contact-form-title">How can we help?</h2>
+            <p className="contact-card-eyebrow">{t("Send us a message")}</p>
+            <h2 id="contact-form-title">{t("How can we help?")}</h2>
           </div>
 
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="row">
               <div className="col">
-                <label htmlFor="contact-name">Full name</label>
+                <label htmlFor="contact-name">{t("Full name")}</label>
                 <input
                   id="contact-name"
                   readOnly
                   value={
-                    isLoggedIn ? user.first_name || user.firstName || "" : "Guest"
+                    isLoggedIn ? user.first_name || user.firstName || "" : t("Guest")
                   }
                 />
               </div>
 
               <div className="col">
-                <label htmlFor="contact-email">Email</label>
+                <label htmlFor="contact-email">{t("Email")}</label>
                 <input
                   id="contact-email"
                   type="email"
@@ -162,39 +163,39 @@ export default function Contact() {
             </div>
 
             <div className="contact-field">
-              <label htmlFor="contact-subject">Subject</label>
+              <label htmlFor="contact-subject">{t("Subject")}</label>
               <input
                 id="contact-subject"
                 value={form.subject}
                 onChange={(e) => setForm({ ...form, subject: e.target.value })}
                 required
-                placeholder="Brief subject"
+                placeholder={t("Brief subject")}
               />
             </div>
 
             <div className="contact-field">
-              <label htmlFor="contact-message">Message</label>
+              <label htmlFor="contact-message">{t("Message")}</label>
               <textarea
                 id="contact-message"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 rows="6"
                 required
-                placeholder="Write your message here..."
+                placeholder={t("Write your message here...")}
               />
             </div>
 
             {!isLoggedIn ? (
               <>
                 <p className="login-hint">
-                  Please log in to send a message.
+                  {t("Please log in to send a message.")}
                 </p>
                 <button
                   type="button"
                   className="btn-login"
                   onClick={() => navigate("/login")}
                 >
-                  Log in to send
+                  {t("Log in to send")}
                 </button>
               </>
             ) : (
@@ -202,7 +203,7 @@ export default function Contact() {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Sending..." : "Send message"}
+                {loading ? t("Sending...") : t("Send message")}
               </button>
             )}
           </form>

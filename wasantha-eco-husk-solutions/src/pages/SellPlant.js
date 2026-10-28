@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import API_BASE_URL from "../config/api";
 import "../Styles/SellForm.css";
 
 export default function SellPlant() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const fileRef = useRef(null);
   const submittingRef = useRef(false);
@@ -51,7 +53,7 @@ export default function SellPlant() {
     if (submittingRef.current) return;
 
     if (!user?.id) {
-      alert("Please log in.");
+      alert(t("Please log in."));
       navigate("/login");
       return;
     }
@@ -61,7 +63,7 @@ export default function SellPlant() {
       !form.address.trim() ||
       !form.phone.trim()
     ) {
-      alert("Please fill owner name, address and phone.");
+      alert(t("Please fill owner name, address and phone."));
       return;
     }
 
@@ -90,14 +92,14 @@ export default function SellPlant() {
       try {
         data = await res.json();
       } catch {
-        throw new Error("The server returned an invalid response.");
+        throw new Error(t("The server returned an invalid response."));
       }
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Could not create the listing.");
+        throw new Error(data.message || t("Could not create the listing."));
       }
 
-      alert(data.message || "Listing created successfully");
+      alert(data.message || t("Listing created successfully"));
 
       setForm({
         owner_name: "",
@@ -115,7 +117,7 @@ export default function SellPlant() {
       navigate("/my-plants");
     } catch (err) {
       console.error("Submit plant failed:", err);
-      alert("Submit failed: " + (err.message || "Unknown error"));
+      alert(t("Submit failed: ") + (err.message || t("Unknown error")));
     } finally {
       submittingRef.current = false;
       setSubmitting(false);
@@ -124,14 +126,14 @@ export default function SellPlant() {
 
   return (
     <div className="sell-form-page">
-      <h2>Sell Your Coconut Plants</h2>
+      <h2>{t("Sell Your Coconut Plants")}</h2>
 
       <form
         onSubmit={handleSubmit}
         className="sell-form"
         encType="multipart/form-data"
       >
-        <label htmlFor="owner_name">Owner name</label>
+        <label htmlFor="owner_name">{t("Owner name")}</label>
         <input
           id="owner_name"
           name="owner_name"
@@ -141,7 +143,7 @@ export default function SellPlant() {
           required
         />
 
-        <label htmlFor="address">Address</label>
+        <label htmlFor="address">{t("Address")}</label>
         <input
           id="address"
           name="address"
@@ -151,7 +153,7 @@ export default function SellPlant() {
           required
         />
 
-        <label htmlFor="phone">Phone</label>
+        <label htmlFor="phone">{t("Phone")}</label>
         <input
           id="phone"
           name="phone"
@@ -161,7 +163,7 @@ export default function SellPlant() {
           required
         />
 
-        <label htmlFor="description">Type of Plant</label>
+        <label htmlFor="description">{t("Type of Plant")}</label>
         <textarea
           id="description"
           name="description"
@@ -169,7 +171,7 @@ export default function SellPlant() {
           onChange={handleChange}
         />
 
-        <label htmlFor="plant_image">Upload Image (optional)</label>
+        <label htmlFor="plant_image">{t("Upload Image (optional)")}</label>
         <div className="image-inputs">
           <input
             id="plant_image"
@@ -181,7 +183,7 @@ export default function SellPlant() {
         </div>
 
         <button type="submit" disabled={submitting}>
-          {submitting ? "Submitting..." : "Submit"}
+          {submitting ? t("Submitting...") : t("Submit")}
         </button>
       </form>
     </div>

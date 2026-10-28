@@ -1,6 +1,7 @@
 import API_BASE_URL from "../../config/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Bar } from "react-chartjs-2";
@@ -8,6 +9,7 @@ import "chart.js/auto";
 import "../../../Styles/AdminStyle/Reports/HuskProduction.css";
 
 export default function HuskProductionReport() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -23,12 +25,12 @@ export default function HuskProductionReport() {
 
   const downloadPDF = () => {
     const doc = new jsPDF();
-    doc.text("Weekly Husk Production Report", 14, 15);
-    doc.text(`Total Bags Cut: ${data.total}`, 14, 25);
+    doc.text(t("Weekly Husk Production Report"), 14, 15);
+    doc.text(`${t("Total Bags Cut")}: ${data.total}`, 14, 25);
 
     autoTable(doc, {
       startY: 35,
-      head: [["Date", "Bags Cut"]],
+      head: [[t("Date"), t("Bags Cut")]],
       body: data.days.map((d) => [d.production_date, d.bags_cut]),
     });
 
@@ -39,21 +41,21 @@ export default function HuskProductionReport() {
     <div className="report-wrapper">
       <div className="report-header">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          Back
+          {t("Back")}
         </button>
-        <h2>Husk Production Report</h2>
+        <h2>{t("Husk Production Report")}</h2>
       </div>
 
       <div className="filters">
         <input type="date" onChange={(e) => setStart(e.target.value)} />
         <input type="date" onChange={(e) => setEnd(e.target.value)} />
-        <button onClick={loadReport}>Generate</button>
+        <button onClick={loadReport}>{t("Generate")}</button>
       </div>
 
       {data && (
         <>
           <div className="summary-card">
-            <h3>Total Bags Cut</h3>
+            <h3>{t("Total Bags Cut")}</h3>
             <p>{data.total}</p>
           </div>
 
@@ -62,7 +64,7 @@ export default function HuskProductionReport() {
               labels: data.days.map((d) => d.production_date),
               datasets: [
                 {
-                  label: "Bags Cut",
+                  label: t("Bags Cut"),
                   data: data.days.map((d) => d.bags_cut),
                   backgroundColor: "#7CB342",
                 },
@@ -73,8 +75,8 @@ export default function HuskProductionReport() {
           <table className="report-table">
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Bags Cut</th>
+                <th>{t("Date")}</th>
+                <th>{t("Bags Cut")}</th>
               </tr>
             </thead>
             <tbody>
@@ -88,7 +90,7 @@ export default function HuskProductionReport() {
           </table>
 
           <button className="pdf-btn" onClick={downloadPDF}>
-            Download PDF
+            {t("Download PDF")}
           </button>
         </>
       )}

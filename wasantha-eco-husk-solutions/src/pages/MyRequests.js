@@ -1,10 +1,12 @@
 import API_BASE_URL from "../config/api";
 import React, { useEffect, useState } from "react";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/MyRequests.css";
 
 const API = `${API_BASE_URL}/plants/getRequests.php`;
 
 export default function MyRequests() {
+  const { t } = usePreferences();
   const [q, setQ] = useState("");
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,11 +29,11 @@ export default function MyRequests() {
         setRequests(data.requests || []);
         setTotal(data.total || 0);
       } else {
-        alert(data.message || "Failed to load requests");
+        alert(data.message || t("Failed to load requests"));
       }
     } catch (err) {
       console.error(err);
-      alert("Failed to fetch requests");
+      alert(t("Failed to fetch requests"));
     } finally {
       setLoading(false);
     }
@@ -44,38 +46,38 @@ export default function MyRequests() {
 
   return (
     <div className="my-requests-page">
-      <h2>Requests for your listings</h2>
+      <h2>{t("Requests for your listings")}</h2>
 
       <div className="controls">
         <input
-          placeholder="Search name/email/phone/message"
+          placeholder={t("Search name/email/phone/message")}
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <button onClick={() => { setOffset(0); load(); }}>Search</button>
+        <button onClick={() => { setOffset(0); load(); }}>{t("Search")}</button>
       </div>
 
       <div className="summary">
-        <span>Total: {total}</span>
+        <span>{t("Total:")} {total}</span>
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p>{t("Loading...")}</p>
       ) : (
         <ul className="requests-list">
           {requests.map((r) => (
             <li key={r.request_id} className="req-item">
               <div className="req-top">
-                <div className="req-title">{r.owner_name} (Listing #{r.listing_id})</div>
+                <div className="req-title">{r.owner_name} ({t("Listing #")}{r.listing_id})</div>
                 <div className="req-time">{new Date(r.requested_at).toLocaleString()}</div>
               </div>
 
               <div className="req-body">
-                <div><strong>Requester:</strong> {r.requester_name || "Not provided"}</div>
-                <div><strong>Email:</strong> {r.requester_email || "Not provided"}</div>
-                <div><strong>Phone:</strong> {r.requester_phone || "Not provided"}</div>
-                <div><strong>Quantity:</strong> {r.quantity}</div>
-                <div className="req-msg"><strong>Message:</strong><div>{r.request_message || "No message"}</div></div>
+                <div><strong>{t("Requester:")}</strong> {r.requester_name || t("Not provided")}</div>
+                  <div><strong>{t("Email:")}</strong> {r.requester_email || t("Not provided")}</div>
+                  <div><strong>{t("Phone:")}</strong> {r.requester_phone || t("Not provided")}</div>
+                  <div><strong>{t("Quantity:")}</strong> {r.quantity}</div>
+                  <div className="req-msg"><strong>{t("Message:")}</strong><div>{r.request_message || t("No message")}</div></div>
               </div>
             </li>
           ))}
@@ -83,9 +85,9 @@ export default function MyRequests() {
       )}
 
       <div className="pagination">
-        <button onClick={() => setOffset(Math.max(0, offset - limit))} disabled={offset === 0}>Prev</button>
-        <button onClick={() => setOffset(offset + limit)} disabled={offset + limit >= total}>Next</button>
-        <span> Page: {Math.floor(offset / limit) + 1} </span>
+        <button onClick={() => setOffset(Math.max(0, offset - limit))} disabled={offset === 0}>{t("Prev")}</button>
+        <button onClick={() => setOffset(offset + limit)} disabled={offset + limit >= total}>{t("Next")}</button>
+        <span> {t("Page:")} {Math.floor(offset / limit) + 1} </span>
       </div>
     </div>
   );

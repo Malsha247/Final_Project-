@@ -40,6 +40,7 @@ import EditProductPage from "./pages/Admin/EditProductPage";
 import HuskProductionEntry from "./pages/Admin/HuskProductionEntry";
 
 import "./App.css";
+import { PreferenceControls } from "./contexts/PreferencesContext";
 
 const App = () => {
   const location = useLocation();
@@ -56,6 +57,11 @@ const App = () => {
 
   return (
     <>
+      {(shouldHideCustomerLayout || isAdminRoute) && (
+        <div className="preferences-floating">
+          <PreferenceControls />
+        </div>
+      )}
       {/* ===== Customer Navbar ===== */}
       {!shouldHideCustomerLayout && !isAdminRoute && <Navbar />}
 

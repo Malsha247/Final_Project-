@@ -1,6 +1,7 @@
 // src/pages/Payment/PaymentForm.js
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { usePreferences } from "../../contexts/PreferencesContext";
 
 /*
  Props:
@@ -9,6 +10,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
   - onSuccess(orderId) optional callback
 */
 export default function PaymentForm({ clientSecret, orderId, onSuccess }) {
+  const { t } = usePreferences();
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -33,14 +35,14 @@ export default function PaymentForm({ clientSecret, orderId, onSuccess }) {
 
       if (error) {
         console.error("Payment error:", error);
-        alert(error.message || "Payment failed");
+        alert(error.message || t("Payment failed"));
         setLoading(false);
         return;
       }
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
         // Payment succeeded client-side. Final status will be updated by webhook.
-        alert("Payment successful — we will confirm your order shortly.");
+        alert(t("Payment successful — we will confirm your order shortly."));
         if (onSuccess) onSuccess(orderId);
         // redirect to orders page (include order id as query param)
         window.location.href = `${
@@ -48,12 +50,12 @@ export default function PaymentForm({ clientSecret, orderId, onSuccess }) {
         }/my-orders?order_id=${encodeURIComponent(orderId)}`;
       } else {
         alert(
-          "Unexpected payment status: " + (paymentIntent?.status || "unknown")
+          t("Unexpected payment status: ") + (paymentIntent?.status || t("unknown"))
         );
       }
     } catch (err) {
       console.error("confirmCardPayment error:", err);
-      alert("Payment confirmation error");
+      alert(t("Payment confirmation error"));
     } finally {
       setLoading(false);
     }
@@ -70,7 +72,7 @@ export default function PaymentForm({ clientSecret, orderId, onSuccess }) {
         style={{ marginTop: 12, display: "flex", justifyContent: "flex-end" }}
       >
         <button disabled={!stripe || loading} type="submit" className="pm-btn">
-          {loading ? "Processing..." : "Pay now"}
+          {loading ? t("Processing...") : t("Pay now")}
         </button>
       </div>
     </form>

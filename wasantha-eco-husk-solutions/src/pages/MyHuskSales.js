@@ -1,9 +1,11 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 
 import React, { useEffect, useState } from "react";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/MyHuskSales.css";
 
 export default function MyHuskSales() {
+  const { t } = usePreferences();
   const userJson = sessionStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
   const [items, setItems] = useState([]);
@@ -28,18 +30,18 @@ export default function MyHuskSales() {
     return (
       <div className="my-husks-page">
         <p>
-          Please <a href="/login">login</a>
+          {t("Please")} <a href="/login">{t("login")}</a>
         </p>
       </div>
     );
   }
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{t("Loading...")}</p>;
 
   return (
     <div className="my-husks-page">
-      <h2>My Husk Submissions</h2>
+      <h2>{t("My Husk Submissions")}</h2>
       {items.length === 0 ? (
-        <p>No submissions yet.</p>
+        <p>{t("No submissions yet.")}</p>
       ) : (
         <div className="husks-grid">
           {items.map((h) => (
@@ -48,27 +50,27 @@ export default function MyHuskSales() {
                 {h.image1 && (
                   <img
                     src={assetUrl(h.image1)}
-                    alt="img1"
+                    alt={t("First uploaded image")}
                   />
                 )}
                 {h.image2 && (
                   <img
                     src={assetUrl(h.image2)}
-                    alt="img2"
+                    alt={t("Second uploaded image")}
                   />
                 )}
               </div>
               <div className="husk-info">
                 <h3>{h.name}</h3>
                 <p>
-                  <b>Phone:</b> {h.phone}
+                  <b>{t("Phone:")}</b> {h.phone}
                 </p>
                 <p>
-                  <b>Address:</b> {h.address}
+                  <b>{t("Address:")}</b> {h.address}
                 </p>
                 {h.location_lat && h.location_lng && (
                   <p>
-                    <b>Location:</b> {h.location_lat}, {h.location_lng}
+                    <b>{t("Location:")}</b> {h.location_lat}, {h.location_lng}
                   </p>
                 )}
                 {h.details && <p>{h.details}</p>}

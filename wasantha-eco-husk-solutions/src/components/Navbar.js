@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, User, LogOut, ChevronDown } from "lucide-react";
 import "../Styles/Navbar.css";
 import logo from "../assests/icon.png";
+import { PreferenceControls, usePreferences } from "../contexts/PreferencesContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +12,7 @@ const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
   const profileRef = useRef(null);
+  const { language, t } = usePreferences();
 
   /* ================= LOAD USER FROM SESSION ================= */
   useEffect(() => {
@@ -63,12 +65,12 @@ const Navbar = () => {
           className={`nav-links ${isMenuOpen ? "open" : ""}`}
         >
           {[
-            { name: "Home", path: "/" },
-            { name: "Products", path: "/products" },
-            { name: "Plants", path: "/plants" },
-            { name: "Sell", path: "/sell" },
-            { name: "About", path: "/about-us" },
-            { name: "Contact", path: "/contact" },
+            { name: t("Home"), path: "/" },
+            { name: t("Products"), path: "/products" },
+            { name: t("Plants"), path: "/plants" },
+            { name: t("Sell"), path: "/sell" },
+            { name: t("About"), path: "/about-us" },
+            { name: t("Contact"), path: "/contact" },
           ].map((link) => (
             <li key={link.name}>
               <NavLink
@@ -89,7 +91,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                Orders
+                {t("Orders")}
               </NavLink>
             </li>
           )}
@@ -103,11 +105,11 @@ const Navbar = () => {
                   handleLogout();
                 }}
               >
-                Log out
+                {t("Log out")}
               </Link>
             ) : (
               <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                Log in
+                {t("Log in")}
               </Link>
             )}
           </li>
@@ -115,6 +117,7 @@ const Navbar = () => {
 
         {/* ===== RIGHT ICONS ===== */}
         <div className="nav-icons">
+          <PreferenceControls />
           {/* ===== USER PROFILE ===== */}
           {userName ? (
             <div className="profile-dropdown" ref={profileRef}>
@@ -123,34 +126,34 @@ const Navbar = () => {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
                 <User size={18} />
-                <span className="user-greeting">Hi, {userName}</span>
+                <span className="user-greeting">{language === "si" ? "ආයුබෝවන්" : "Hi"}, {userName}</span>
                 <ChevronDown size={14} />
               </button>
 
               {showProfileMenu && (
                 <div className="profile-menu">
                   <Link to="/profile" onClick={() => setShowProfileMenu(false)}>
-                    My Account
+                    {t("My Account")}
                   </Link>
 
                   <Link
                     to="/my-orders"
                     onClick={() => setShowProfileMenu(false)}
                   >
-                    My Orders
+                    {t("My Orders")}
                   </Link>
 
                   <Link
                     to="/MyHuskSales"
                     onClick={() => setShowProfileMenu(false)}
                   >
-                    My Husk Sales
+                    {t("My Husk Sales")}
                   </Link>
 
                  
 
                   <button className="logout-menu-btn" onClick={handleLogout}>
-                    <LogOut size={14} /> Logout
+                    <LogOut size={14} /> {t("Logout")}
                   </button>
                 </div>
               )}
@@ -173,7 +176,7 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-controls="primary-navigation"
-            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={t(isMenuOpen ? "Close navigation menu" : "Open navigation menu")}
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>

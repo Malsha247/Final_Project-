@@ -1,8 +1,10 @@
 import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/adminHusks.css";
 
 export default function AdminHusks() {
+  const { t } = usePreferences();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +40,7 @@ export default function AdminHusks() {
 
  
   const handleDeleteHusk = async (sellerId) => {
-    if (!window.confirm("Delete this husk submission permanently?")) return;
+    if (!window.confirm(t("Delete this husk submission permanently?"))) return;
 
     const res = await fetch(
       `${API_BASE_URL}/seller/deleteHusk.php`,
@@ -57,26 +59,26 @@ export default function AdminHusks() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{t("Loading...")}</p>;
 
   return (
     <div className="admin-husks-page">
-      <h2>All Husk Submissions</h2>
+      <h2>{t("All Husk Submissions")}</h2>
 
       {items.length === 0 ? (
-        <p>No entries.</p>
+        <p>{t("No entries.")}</p>
       ) : (
         <table className="admin-husks-table">
           <thead>
             <tr>
-              <th>Owner</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Images</th>
-              <th>Description</th>
-              <th>Admin Response</th>
-              <th>Location</th>
-              <th>Action</th>
+              <th>{t("Owner")}</th>
+              <th>{t("Phone")}</th>
+              <th>{t("Address")}</th>
+              <th>{t("Images")}</th>
+              <th>{t("Description")}</th>
+              <th>{t("Admin Response")}</th>
+              <th>{t("Location")}</th>
+              <th>{t("Action")}</th>
             </tr>
           </thead>
 
@@ -107,21 +109,21 @@ export default function AdminHusks() {
 
                 <td>{h.description}</td>
 
-                <td>{h.admin_response || "No response"}</td>
+                <td>{h.admin_response || t("No response")}</td>
 
                 <td>
                   {h.map_link ? (
                     <a href={h.map_link} target="_blank" rel="noreferrer">
-                      View Map
+                      {t("View Map")}
                     </a>
                   ) : (
-                    "Not set"
+                    t("Not set")
                   )}
                 </td>
 
                 <td>
                   <button onClick={() => handleResponse(h.id)}>
-                    Send Response
+                    {t("Send Response")}
                   </button>
 
                   
@@ -134,7 +136,7 @@ export default function AdminHusks() {
                         color: "#fff",
                       }}
                     >
-                      Delete
+                      {t("Delete")}
                     </button>
                   )}
                 </td>

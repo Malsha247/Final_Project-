@@ -1,11 +1,13 @@
 import API_BASE_URL from "../config/api";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Styles/Register.css";
 import logo from "../assests/icon.png"; 
 
 function Register() {
+  const { t } = usePreferences();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,22 +37,22 @@ function Register() {
     const newErrors = {};
 
     if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required.";
+      newErrors.firstName = t("First name is required.");
     if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required.";
+      newErrors.lastName = t("Last name is required.");
 
-    if (!formData.email.trim()) newErrors.email = "Email is required.";
+    if (!formData.email.trim()) newErrors.email = t("Email is required.");
     else if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Invalid email format.";
+      newErrors.email = t("Invalid email format.");
 
-    if (!formData.password.trim()) newErrors.password = "Password is required.";
+    if (!formData.password.trim()) newErrors.password = t("Password is required.");
     else if (formData.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters long.";
+      newErrors.password = t("Password must be at least 8 characters long.");
 
     if (!formData.confirmPassword.trim())
-      newErrors.confirmPassword = "Please confirm your password.";
+      newErrors.confirmPassword = t("Please confirm your password.");
     else if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match.";
+      newErrors.confirmPassword = t("Passwords do not match.");
 
     return newErrors;
   };
@@ -93,11 +95,11 @@ function Register() {
         setApiError("");
         setTimeout(() => navigate("/login"), 2000); 
       } else {
-        setApiError(data.message || "Registration failed. Try again.");
+        setApiError(data.message || t("Registration failed. Try again."));
       }
     } catch (err) {
       console.error("Register error:", err);
-      setApiError("Something went wrong. Please try again later.");
+      setApiError(t("Something went wrong. Please try again later."));
     } finally {
       setLoading(false);
     }
@@ -108,17 +110,17 @@ function Register() {
       <div className="register-box">
         
         <div className="register-logo">
-          <img src={logo} alt="Wasantha Eco Husk Logo" />
+          <img src={logo} alt={t("Wasantha Eco Husk Logo")} />
         </div>
 
-        <h2>Create Your Account </h2>
-        <p className="welcome-text">Join Wasantha Eco Husk Solutions today</p>
+        <h2>{t("Create Your Account")}</h2>
+        <p className="welcome-text">{t("Join Wasantha Eco Husk Solutions today")}</p>
 
         {submitted && (
           <div className="success-msg">
             {welcomeEmailSent
-              ? "Registration successful! Welcome email sent. Redirecting..."
-              : "Registration successful, but we could not send the welcome email. Redirecting..."}
+              ? t("Registration successful! Welcome email sent. Redirecting...")
+              : t("Registration successful, but we could not send the welcome email. Redirecting...")}
           </div>
         )}
         {apiError && <div className="error-msg">{apiError}</div>}
@@ -130,7 +132,7 @@ function Register() {
             <input
               type="text"
               name="firstName"
-              placeholder="First Name"
+              placeholder={t("First Name")}
               value={formData.firstName}
               onChange={handleChange}
             />
@@ -145,7 +147,7 @@ function Register() {
             <input
               type="text"
               name="lastName"
-              placeholder="Last Name"
+              placeholder={t("Last Name")}
               value={formData.lastName}
               onChange={handleChange}
             />
@@ -160,7 +162,7 @@ function Register() {
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder={t("Email")}
               value={formData.email}
               onChange={handleChange}
             />
@@ -173,7 +175,7 @@ function Register() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder={t("Password")}
               value={formData.password}
               onChange={handleChange}
             />
@@ -194,7 +196,7 @@ function Register() {
             <input
               type={showConfirm ? "text" : "password"}
               name="confirmPassword"
-              placeholder="Confirm Password"
+              placeholder={t("Confirm Password")}
               value={formData.confirmPassword}
               onChange={handleChange}
             />
@@ -210,15 +212,15 @@ function Register() {
           )}
 
           <button type="submit" className="btn-register" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
+            {loading ? t("Registering...") : t("Register")}
           </button>
         </form>
 
         <div className="extra-links">
           <p>
-            Already have an account?{" "}
+            {t("Already have an account?")}{" "}
             <Link to="/login" className="link-green">
-              Login Here
+              {t("Login Here")}
             </Link>
           </p>
         </div>

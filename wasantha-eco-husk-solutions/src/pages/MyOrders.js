@@ -1,9 +1,11 @@
 import API_BASE_URL from "../config/api";
 import React, { useEffect, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/MyOrders.css";
 
 export default function MyOrders() {
+  const { t } = usePreferences();
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
   const [orders, setOrders] = useState([]);
   const [message, setMessage] = useState("");
@@ -39,20 +41,20 @@ export default function MyOrders() {
     if (location) {
       if (location.state && location.state.orderPlaced) {
         const id = location.state.orderId;
-        setMessage(`Order #${id} placed successfully.`);
+        setMessage(`${t("Order #")}${id} ${t("placed successfully.")}`);
       } else {
         const params = new URLSearchParams(location.search);
         const qid = params.get("order_id");
-        if (qid) setMessage(`Order #${qid} placed successfully.`);
+        if (qid) setMessage(`${t("Order #")}${qid} ${t("placed successfully.")}`);
       }
       fetchOrders();
-      const t = setTimeout(() => setMessage(""), 5000);
-      return () => clearTimeout(t);
+      const timerId = setTimeout(() => setMessage(""), 5000);
+      return () => clearTimeout(timerId);
     }
-  }, [location, fetchOrders]);
+  }, [location, fetchOrders, t]);
 
   const cancelOrder = async (orderId) => {
-    if (!window.confirm("Cancel this order?"))
+    if (!window.confirm(t("Cancel this order?")))
       return;
     try {
       const res = await fetch(`${API_BASE}/orders/cancelOrder.php`, {
@@ -66,39 +68,39 @@ export default function MyOrders() {
       const text = await res.text();
       const data = JSON.parse(text);
       if (!data.success) {
-        alert("Failed to cancel: " + (data.message || "unknown"));
+        alert(t("Failed to cancel: ") + (data.message || "unknown"));
       } else {
         // remove from state so it disappears immediately
         setOrders((prev) => prev.filter((o) => o.id !== orderId));
-        alert("Order canceled");
+        alert(t("Order canceled"));
       }
     } catch (err) {
       console.error("cancelOrder network error:", err);
-      alert("Network error while canceling order");
+      alert(t("Network error while canceling order"));
     }
   };
 
   return (
     <div className="orders-page">
-      <h2>My Orders</h2>
+      <h2>{t("My Orders")}</h2>
 
       {message && <div className="order-message">{message}</div>}
       <button onClick={fetchOrders} style={{ marginBottom: 12 }}>
-        Refresh
+        {t("Refresh")}
       </button>
 
       {orders.length === 0 ? (
-        <p className="no-orders">No orders found.</p>
+        <p className="no-orders">{t("No orders found.")}</p>
       ) : (
         <table className="orders-table">
           <thead>
             <tr>
-              <th>Order Number</th>
-              <th>Total</th>
-              <th>Payment</th>
-              <th>Status</th>
-              <th>Created</th>
-              <th>Cancel</th>
+              <th>{t("Order Number")}</th>
+              <th>{t("Total")}</th>
+              <th>{t("Payment")}</th>
+              <th>{t("Status")}</th>
+              <th>{t("Created")}</th>
+              <th>{t("Cancel")}</th>
             </tr>
           </thead>
           <tbody>
@@ -115,9 +117,9 @@ export default function MyOrders() {
                 </td>
                 <td>
                   {o.status === "Pending" || o.status === "Processing" ? (
-                    <button onClick={() => cancelOrder(o.id)}>Cancel</button>
+                    <button onClick={() => cancelOrder(o.id)}>{t("Cancel")}</button>
                   ) : (
-                    <span style={{ color: "#888" }}>Not available</span>
+                    <span style={{ color: "#888" }}>{t("Not available")}</span>
                   )}
                 </td>
               </tr>

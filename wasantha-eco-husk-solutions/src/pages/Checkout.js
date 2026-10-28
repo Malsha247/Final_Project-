@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import API_BASE_URL from "../config/api";
 import "../Styles/Checkout.css";
 
@@ -9,6 +10,7 @@ const PAYPAL_CLIENT_ID =
 const USD_RATE = 300;
 
 export default function Checkout() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const formRef = useRef(null);
   const submittingRef = useRef(false);
@@ -83,7 +85,7 @@ export default function Checkout() {
         const data = await res.json();
 
         if (!res.ok || !data.success) {
-          throw new Error(data.message || "Could not load your cart.");
+          throw new Error(data.message || t("Could not load your cart."));
         }
 
         setCart(Array.isArray(data.items) ? data.items : []);
@@ -91,7 +93,7 @@ export default function Checkout() {
         if (controller.signal.aborted) return;
 
         console.error("Load cart failed:", err);
-        setCartError(err.message || "Could not load your cart.");
+        setCartError(err.message || t("Could not load your cart."));
       } finally {
         if (!controller.signal.aborted) {
           setCartLoading(false);
@@ -102,7 +104,7 @@ export default function Checkout() {
     loadCart();
 
     return () => controller.abort();
-  }, [user, navigate]);
+  }, [user, navigate, t]);
 
   // Load PayPal SDK.
   useEffect(() => {
@@ -129,12 +131,12 @@ export default function Checkout() {
         setPaypalReady(true);
         setPaypalError("");
       } else {
-        setPaypalError("PayPal could not be loaded. Please refresh the page.");
+        setPaypalError(t("PayPal could not be loaded. Please refresh the page."));
       }
     };
 
     const handleError = () => {
-      setPaypalError("PayPal could not be loaded. Please refresh the page.");
+      setPaypalError(t("PayPal could not be loaded. Please refresh the page."));
     };
 
     script.addEventListener("load", handleLoad);
@@ -148,7 +150,7 @@ export default function Checkout() {
       script.removeEventListener("load", handleLoad);
       script.removeEventListener("error", handleError);
     };
-  }, []);
+  }, [t]);
 
   // Render PayPal buttons using the current form and total.
   useEffect(() => {
@@ -208,13 +210,13 @@ export default function Checkout() {
           const result = await res.json();
 
           if (!res.ok || !result.success) {
-            throw new Error(result.message || "Order save failed.");
+            throw new Error(result.message || t("Order save failed."));
           }
 
           alert(
             result.email_sent === false
-              ? "Payment successful and order placed, but the confirmation email could not be sent. Please check My Orders."
-              : "Payment successful!"
+              ? t("Payment successful and order placed, but the confirmation email could not be sent. Please check My Orders.")
+              : t("Payment successful!")
           );
           navigate("/my-orders");
         } catch (err) {
@@ -222,15 +224,15 @@ export default function Checkout() {
 
           alert(
             captured
-              ? "Payment captured, but order confirmation failed. Please contact support before paying again."
-              : "Payment could not be completed. Please check your payment status."
+              ? t("Payment captured, but order confirmation failed. Please contact support before paying again.")
+              : t("Payment could not be completed. Please check your payment status.")
           );
         }
       },
 
       onError: (err) => {
         console.error("PayPal/Card Error:", err);
-        alert("A payment error occurred. Please check your payment status.");
+        alert(t("A payment error occurred. Please check your payment status."));
       },
     });
 
@@ -241,7 +243,7 @@ export default function Checkout() {
         if (!disposed) {
           console.error("PayPal render failed:", err);
           setPaypalError(
-            "PayPal buttons could not be displayed. Please refresh the page."
+            t("PayPal buttons could not be displayed. Please refresh the page.")
           );
         }
       }
@@ -271,6 +273,7 @@ export default function Checkout() {
     paypalReady,
     cartLoading,
     cartError,
+    t,
   ]);
 
   // Cash on delivery.
@@ -286,7 +289,7 @@ export default function Checkout() {
     }
 
     if (cartLoading || cartError || cart.length === 0) {
-      alert("Please make sure your cart contains items before ordering.");
+      alert(t("Please make sure your cart contains items before ordering."));
       return;
     }
 
@@ -310,19 +313,19 @@ export default function Checkout() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Order failed.");
+        throw new Error(data.message || t("Order failed."));
       }
 
       alert(
         data.email_sent === false
-          ? "Order placed successfully, but the confirmation email could not be sent. Please check My Orders."
-          : "Order placed successfully"
+          ? t("Order placed successfully, but the confirmation email could not be sent. Please check My Orders.")
+          : t("Order placed successfully")
       );
       navigate("/my-orders");
     } catch (err) {
       console.error("Checkout failed:", err);
       alert(
-        "Could not confirm your order. Check My Orders before trying again."
+        t("Could not confirm your order. Check My Orders before trying again.")
       );
     } finally {
       submittingRef.current = false;
@@ -332,7 +335,7 @@ export default function Checkout() {
 
   return (
     <div className="checkout-page">
-      <h2>Checkout</h2>
+      <h2>{t("Checkout")}</h2>
 
       {cartError && (
         <p className="error-msg" role="alert">
@@ -347,7 +350,7 @@ export default function Checkout() {
       >
         <input
           name="customer_name"
-          placeholder="Full Name"
+          placeholder={t("Full Name")}
           value={form.customer_name}
           onChange={handleChange}
           required
@@ -356,7 +359,7 @@ export default function Checkout() {
         <input
           type="email"
           name="customer_email"
-          placeholder="Email"
+          placeholder={t("Email")}
           value={form.customer_email}
           onChange={handleChange}
           required
@@ -365,7 +368,7 @@ export default function Checkout() {
         <input
           type="tel"
           name="customer_phone"
-          placeholder="Phone Number"
+          placeholder={t("Phone Number")}
           value={form.customer_phone}
           onChange={handleChange}
           required
@@ -373,7 +376,7 @@ export default function Checkout() {
 
         <textarea
           name="shipping_address"
-          placeholder="Shipping Address"
+          placeholder={t("Shipping Address")}
           value={form.shipping_address}
           onChange={handleChange}
           required
@@ -384,17 +387,17 @@ export default function Checkout() {
           value={form.payment_method}
           onChange={handleChange}
         >
-          <option value="Cash on Delivery">Cash on Delivery</option>
-          <option value="PayPal">PayPal</option>
+          <option value="Cash on Delivery">{t("Cash on Delivery")}</option>
+          <option value="PayPal">{t("PayPal")}</option>
         </select>
 
         <div className="order-summary">
-          <h3>Items</h3>
+          <h3>{t("Items")}</h3>
 
           {cartLoading ? (
-            <p>Loading your cart...</p>
+            <p>{t("Loading your cart...")}</p>
           ) : cart.length === 0 ? (
-            <p>No items in cart</p>
+            <p>{t("No items in cart")}</p>
           ) : (
             cart.map((item) => (
               <div
@@ -418,10 +421,10 @@ export default function Checkout() {
           )}
 
           <hr />
-          <h3>Total: Rs. {total.toFixed(2)}</h3>
+          <h3>{t("Total:")} Rs. {total.toFixed(2)}</h3>
 
           {form.payment_method === "PayPal" && (
-            <p>PayPal Amount: ${totalUSD}</p>
+            <p>{t("PayPal Amount:")} ${totalUSD}</p>
           )}
         </div>
 
@@ -435,18 +438,18 @@ export default function Checkout() {
               cart.length === 0
             }
           >
-            {submitting ? "Placing Order..." : "Place Order"}
+            {submitting ? t("Placing Order...") : t("Place Order")}
           </button>
         )}
       </form>
 
       {form.payment_method === "PayPal" && (
         <div style={{ marginTop: 20 }}>
-          <h3>Pay with PayPal / Card</h3>
+          <h3>{t("Pay with PayPal / Card")}</h3>
 
           {paypalError && <p role="alert">{paypalError}</p>}
 
-          {!paypalReady && !paypalError && <p>Loading PayPal...</p>}
+          {!paypalReady && !paypalError && <p>{t("Loading PayPal...")}</p>}
 
           <div id="paypal-button-container"></div>
         </div>

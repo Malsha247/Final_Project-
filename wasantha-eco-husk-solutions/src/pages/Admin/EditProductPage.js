@@ -1,12 +1,14 @@
 import API_BASE_URL, { assetUrl } from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
   `${API_BASE_URL}/products`;
 
 export default function EditProductPage() {
+  const { t } = usePreferences();
   const { id } = useParams();
   const [form, setForm] = useState({
     id: id,
@@ -37,7 +39,7 @@ export default function EditProductPage() {
             image_url: j.product.image_url || "",
           });
         else {
-          alert("Product not found");
+          alert(t("Product not found"));
           navigate("/admin/products");
         }
       } catch (e) {
@@ -45,7 +47,7 @@ export default function EditProductPage() {
       }
     };
     load();
-  }, [id, navigate]);
+  }, [id, navigate, t]);
 
   const handleChange = (e) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -66,7 +68,7 @@ export default function EditProductPage() {
         });
         const jr = await r.json();
         if (!jr.success) {
-          alert(jr.message || "Image upload failed");
+          alert(jr.message || t("Image upload failed"));
           setLoading(false);
           return;
         }
@@ -89,12 +91,12 @@ export default function EditProductPage() {
       });
       const j = await res.json();
       if (j.success) {
-        alert("Product updated");
+        alert(t("Product updated"));
         navigate("/admin/products");
-      } else alert(j.message || "Update failed");
+      } else alert(j.message || t("Update failed"));
     } catch (e) {
       console.error(e);
-      alert("Error updating product");
+      alert(t("Error updating product"));
     } finally {
       setLoading(false);
     }
@@ -103,12 +105,12 @@ export default function EditProductPage() {
   return (
     <div className="pm-container">
       <div className="pm-header">
-        <h2>Edit Product</h2>
+        <h2>{t("Edit Product")}</h2>
       </div>
 
       <form className="pm-form" onSubmit={handleSubmit}>
         <label>
-          Name
+          {t("Name")}
           <input
             name="name"
             value={form.name}
@@ -118,7 +120,7 @@ export default function EditProductPage() {
         </label>
 
         <label>
-          Description
+          {t("Description")}
           <textarea
             name="description"
             value={form.description}
@@ -127,7 +129,7 @@ export default function EditProductPage() {
         </label>
 
         <label>
-          Price
+          {t("Price")}
           <input
             name="price"
             type="number"
@@ -138,7 +140,7 @@ export default function EditProductPage() {
         </label>
 
         <label>
-          Stock
+          {t("Stock")}
           <input
             name="stock"
             type="number"
@@ -148,7 +150,7 @@ export default function EditProductPage() {
         </label>
 
         <label>
-          Category
+          {t("Category")}
           <input
             name="category"
             value={form.category}
@@ -157,20 +159,20 @@ export default function EditProductPage() {
         </label>
 
         <div>
-          Current image:
+          {t("Current image:")}
           {form.image_url ? (
             <img
               src={assetUrl(form.image_url)}
-              alt="current"
+              alt={t("Current image")}
               className="pm-current"
             />
           ) : (
-            <div className="pm-noimage small">No image</div>
+            <div className="pm-noimage small">{t("No image")}</div>
           )}
         </div>
 
         <label>
-          Replace image (optional)
+          {t("Replace image (optional)")}
           <input
             type="file"
             accept="image/*"
@@ -180,7 +182,7 @@ export default function EditProductPage() {
 
         <div style={{ marginTop: 12 }}>
           <button className="pm-btn" type="submit" disabled={loading}>
-            {loading ? "Saving..." : "Save Changes"}
+            {loading ? t("Saving...") : t("Save Changes")}
           </button>
           <button
             className="pm-btn"
@@ -188,7 +190,7 @@ export default function EditProductPage() {
             onClick={() => navigate("/admin/products")}
             style={{ marginLeft: 8 }}
           >
-            Cancel
+            {t("Cancel")}
           </button>
         </div>
       </form>

@@ -2,9 +2,11 @@ import API_BASE_URL from "../config/api";
 // src/pages/EditProfile.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/Profile.css";
 
 export default function EditProfile() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
 
   const userJson = sessionStorage.getItem("user");
@@ -23,7 +25,7 @@ export default function EditProfile() {
   /* ================= LOAD USER DATA ================= */
   useEffect(() => {
     if (!user || !user.id) {
-      alert("Please log in to edit your profile.");
+      alert(t("Please log in to edit your profile."));
       navigate("/login");
       return;
     }
@@ -62,14 +64,14 @@ export default function EditProfile() {
         });
         setLoaded(true);
       });
-  }, [user, navigate, loaded]);
+  }, [user, navigate, loaded, t]);
 
   /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!user || !user.id) {
-      alert("User not logged in!");
+      alert(t("User not logged in!"));
       return;
     }
 
@@ -96,7 +98,7 @@ export default function EditProfile() {
       const data = await res.json();
 
       if (data.success) {
-        alert(" Profile updated successfully!");
+        alert(t("Profile updated successfully!"));
 
         // Update session storage
         const updatedUser = {
@@ -109,11 +111,11 @@ export default function EditProfile() {
         sessionStorage.setItem("user", JSON.stringify(updatedUser));
         navigate("/profile");
       } else {
-        alert(data.message || "Update failed");
+        alert(data.message || t("Update failed"));
       }
     } catch (err) {
       console.error("Update error:", err);
-      alert("Server error. Please try again later.");
+      alert(t("Server error. Please try again later."));
     } finally {
       setLoading(false);
     }
@@ -122,10 +124,10 @@ export default function EditProfile() {
   /* ================= UI ================= */
   return (
     <div className="profile-page">
-      <h2>Edit Profile</h2>
+      <h2>{t("Edit Profile")}</h2>
 
       <form className="profile-form" onSubmit={handleSubmit}>
-        <label>First Name</label>
+        <label>{t("First Name")}</label>
         <input
           type="text"
           value={form.first_name}
@@ -133,14 +135,14 @@ export default function EditProfile() {
           required
         />
 
-        <label>Last Name</label>
+        <label>{t("Last Name")}</label>
         <input
           type="text"
           value={form.last_name}
           onChange={(e) => setForm({ ...form, last_name: e.target.value })}
         />
 
-        <label>Email</label>
+        <label>{t("Email")}</label>
         <input
           type="email"
           value={form.email}
@@ -148,21 +150,21 @@ export default function EditProfile() {
           required
         />
 
-        <label>Change Password (optional)</label>
+        <label>{t("Change Password (optional)")}</label>
         <input
           type="password"
-          placeholder="Enter new password if you want to change it"
+          placeholder={t("Enter new password if you want to change it")}
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "Saving..." : "Save Changes"}
+          {loading ? t("Saving...") : t("Save Changes")}
         </button>
       </form>
 
       <button className="back-btn" onClick={() => navigate("/profile")}>
-        Back to Profile
+        {t("Back to Profile")}
       </button>
     </div>
   );

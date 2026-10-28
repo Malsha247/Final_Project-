@@ -1,12 +1,14 @@
 import API_BASE_URL from "../../config/api";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/ProductManage.css";
 
 const API_BASE =
   `${API_BASE_URL}/products`;
 
 export default function AddProductPage() {
+  const { t } = usePreferences();
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -40,9 +42,9 @@ export default function AddProductPage() {
         });
         const j = await res.json();
         if (j.success) {
-          alert("Product added");
+          alert(t("Product added"));
           navigate("/admin/products");
-        } else alert(j.message || "Add failed");
+        } else alert(j.message || t("Add failed"));
       } else {
         const res = await fetch(`${API_BASE}/addProduct.php`, {
           method: "POST",
@@ -55,13 +57,13 @@ export default function AddProductPage() {
         });
         const j = await res.json();
         if (j.success) {
-          alert("Product added");
+          alert(t("Product added"));
           navigate("/admin/products");
-        } else alert(j.message || "Add failed");
+        } else alert(j.message || t("Add failed"));
       }
     } catch (err) {
       console.error(err);
-      alert("Error adding product");
+      alert(t("Error adding product"));
     } finally {
       setLoading(false);
     }
@@ -70,12 +72,12 @@ export default function AddProductPage() {
   return (
     <div className="pm-container">
       <div className="pm-header">
-        <h2>Add Product</h2>
+        <h2>{t("Add Product")}</h2>
       </div>
 
       <form className="pm-form" onSubmit={handleSubmit}>
         <label>
-          Name
+          {t("Name")}
           <input
             name="name"
             value={form.name}
@@ -85,7 +87,7 @@ export default function AddProductPage() {
         </label>
 
         <label>
-          Description
+          {t("Description")}
           <textarea
             name="description"
             value={form.description}
@@ -94,7 +96,7 @@ export default function AddProductPage() {
         </label>
 
         <label>
-          Price
+          {t("Price")}
           <input
             name="price"
             type="number"
@@ -106,7 +108,7 @@ export default function AddProductPage() {
         </label>
 
         <label>
-          Stock
+          {t("Stock")}
           <input
             name="stock"
             type="number"
@@ -117,21 +119,21 @@ export default function AddProductPage() {
 
      
         <label>
-          Category
+          {t("Category")}
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
             required
           >
-            <option value="">-- Select Category --</option>
-            <option value="chips">Coconut Husk Chips</option>
-            <option value="By-products">Chips By-Products</option>
+            <option value="">{t("-- Select Category --")}</option>
+            <option value="chips">{t("Coconut Husk Chips")}</option>
+            <option value="By-products">{t("Chips By-Products")}</option>
           </select>
         </label>
 
         <label>
-          Image (optional)
+          {t("Image (optional)")}
           <input
             type="file"
             accept="image/*"
@@ -141,7 +143,7 @@ export default function AddProductPage() {
 
         <div style={{ marginTop: 12 }}>
           <button className="pm-btn" type="submit" disabled={loading}>
-            {loading ? "Saving..." : "Save Product"}
+            {loading ? t("Saving...") : t("Save Product")}
           </button>
           <button
             className="pm-btn"
@@ -149,7 +151,7 @@ export default function AddProductPage() {
             onClick={() => navigate("/admin/products")}
             style={{ marginLeft: 8 }}
           >
-            Cancel
+            {t("Cancel")}
           </button>
         </div>
       </form>

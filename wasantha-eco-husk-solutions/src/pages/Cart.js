@@ -1,11 +1,13 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import { Trash2 } from "lucide-react";
 import "../Styles/Cart.css";
 import productPlaceholder from "../assests/main.jpg";
 
 export default function Cart() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,26 +34,26 @@ export default function Cart() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Could not load your cart.");
+        throw new Error(data.message || t("Could not load your cart."));
       }
 
       setCart(Array.isArray(data.items) ? data.items : []);
     } catch (fetchError) {
       console.error("Error fetching cart:", fetchError);
-      setError(fetchError.message || "Could not load your cart.");
+      setError(fetchError.message || t("Could not load your cart."));
     } finally {
       setLoading(false);
     }
-  }, [user?.id]);
+  }, [user?.id, t]);
 
   useEffect(() => {
     if (!user?.id) {
-      alert("Please log in to view your cart.");
+      alert(t("Please log in to view your cart."));
       navigate("/login");
       return;
     }
     fetchCart();
-  }, [navigate, user?.id, fetchCart]);
+  }, [navigate, user?.id, fetchCart, t]);
 
   const handleUpdateQty = async (cartId, newQty, productId) => {
     if (newQty < 1) return;
@@ -69,7 +71,7 @@ export default function Cart() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Could not update cart quantity.");
+        throw new Error(data.message || t("Could not update cart quantity."));
       }
 
       setCart((previous) =>
@@ -82,7 +84,7 @@ export default function Cart() {
       setError("");
     } catch (updateError) {
       console.error("Update cart quantity failed:", updateError);
-      setError(updateError.message || "Could not update cart quantity.");
+      setError(updateError.message || t("Could not update cart quantity."));
     }
   };
 
@@ -94,7 +96,7 @@ export default function Cart() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Could not remove the item.");
+        throw new Error(data.message || t("Could not remove the item."));
       }
 
       setCart((previous) =>
@@ -103,7 +105,7 @@ export default function Cart() {
       setError("");
     } catch (removeError) {
       console.error("Remove cart item failed:", removeError);
-      setError(removeError.message || "Could not remove the item.");
+      setError(removeError.message || t("Could not remove the item."));
     }
   };
 
@@ -113,16 +115,16 @@ export default function Cart() {
   );
 
   if (loading) {
-    return <p className="cart-loading" role="status">Loading your cart...</p>;
+    return <p className="cart-loading" role="status">{t("Loading your cart...")}</p>;
   }
 
   return (
     <main className="cart-page">
       <header className="cart-header">
-        <p className="cart-eyebrow">Your selections</p>
-        <h2>Your shopping cart</h2>
+        <p className="cart-eyebrow">{t("Your selections")}</p>
+        <h2>{t("Your shopping cart")}</h2>
         <p className="cart-subtitle">
-          {cart.length} {cart.length === 1 ? "item" : "items"} in your cart
+          {cart.length} {cart.length === 1 ? t("item") : t("items")} {t("in your cart")}
         </p>
       </header>
 
@@ -130,10 +132,10 @@ export default function Cart() {
 
       {cart.length === 0 ? (
         <section className="empty-cart">
-          <h3>Your cart is empty</h3>
-          <p>Explore our products and add something you love.</p>
+          <h3>{t("Your cart is empty")}</h3>
+          <p>{t("Explore our products and add something you love.")}</p>
           <Link className="cart-empty-action" to="/products">
-            Browse products
+            {t("Browse products")}
           </Link>
         </section>
       ) : (
@@ -142,17 +144,17 @@ export default function Cart() {
             <table className="cart-table">
               <thead>
                 <tr>
-                  <th scope="col">Product</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Subtotal</th>
-                  <th scope="col"><span className="sr-only">Actions</span></th>
+                  <th scope="col">{t("Product")}</th>
+                  <th scope="col">{t("Quantity")}</th>
+                  <th scope="col">{t("Price")}</th>
+                  <th scope="col">{t("Subtotal")}</th>
+                  <th scope="col"><span className="sr-only">{t("Actions")}</span></th>
                 </tr>
               </thead>
               <tbody>
                 {cart.map((item) => (
                   <tr key={item.id}>
-                    <td className="cart-product" data-label="Product">
+                    <td className="cart-product" data-label={t("Product")}>
                       <img
                         src={item.image_url ? assetUrl(item.image_url) : productPlaceholder}
                         alt={item.name}
@@ -165,12 +167,12 @@ export default function Cart() {
                       />
                       <span>{item.name}</span>
                     </td>
-                    <td data-label="Quantity">
+                    <td data-label={t("Quantity")}>
                       <div className="qty-wrapper">
                         <button
                           type="button"
                           className="qty-btn"
-                          aria-label={`Decrease ${item.name} quantity`}
+                          aria-label={`${t("Decrease")} ${item.name} ${t("quantity")}`}
                           disabled={Number(item.quantity) <= 1}
                           onClick={() =>
                             handleUpdateQty(
@@ -186,13 +188,13 @@ export default function Cart() {
                           type="text"
                           value={item.quantity}
                           readOnly
-                          aria-label={`${item.name} quantity`}
+                          aria-label={`${item.name} ${t("quantity")}`}
                           className="qty-input"
                         />
                         <button
                           type="button"
                           className="qty-btn"
-                          aria-label={`Increase ${item.name} quantity`}
+                          aria-label={`${t("Increase")} ${item.name} ${t("quantity")}`}
                           onClick={() =>
                             handleUpdateQty(
                               item.id,
@@ -205,17 +207,17 @@ export default function Cart() {
                         </button>
                       </div>
                     </td>
-                    <td data-label="Price">
+                    <td data-label={t("Price")}>
                       Rs. {Number(item.price).toFixed(2)}
                     </td>
-                    <td className="cart-line-total" data-label="Subtotal">
+                    <td className="cart-line-total" data-label={t("Subtotal")}>
                       Rs. {(Number(item.price) * Number(item.quantity)).toFixed(2)}
                     </td>
-                    <td className="cart-remove-cell" data-label="Remove item">
+                    <td className="cart-remove-cell" data-label={t("Remove item")}>
                       <button
                         type="button"
                         className="remove-btn"
-                        aria-label={`Remove ${item.name} from cart`}
+                        aria-label={`${t("Remove")} ${item.name} ${t("from cart")}`}
                         onClick={() => handleRemove(item.id)}
                       >
                         <Trash2 size={17} aria-hidden="true" />
@@ -227,22 +229,22 @@ export default function Cart() {
             </table>
           </div>
 
-          <section className="cart-summary" aria-label="Order summary">
-            <h3>Cart total <span>Rs. {total.toFixed(2)}</span></h3>
+          <section className="cart-summary" aria-label={t("Order summary")}>
+            <h3>{t("Cart total")} <span>Rs. {total.toFixed(2)}</span></h3>
             <div className="cart-actions">
               <button
                 type="button"
                 className="btn-continue"
                 onClick={() => navigate("/products")}
               >
-                Continue shopping
+                {t("Continue shopping")}
               </button>
               <button
                 type="button"
                 className="btn-checkout"
                 onClick={() => navigate("/checkout")}
               >
-                Proceed to checkout
+                {t("Proceed to checkout")}
               </button>
             </div>
           </section>

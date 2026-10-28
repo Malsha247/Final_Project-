@@ -1,11 +1,13 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/Sell.css";
 import huskImg from "../assests/husk.png";
 import plantImg from "../assests/plant.jpg";
 
 export default function Sell() {
+  const { t } = usePreferences();
   const navigate = useNavigate();
 
   let user = null;
@@ -17,7 +19,7 @@ export default function Sell() {
 
   const handleSellClick = (path) => {
     if (!user) {
-      alert("Please log in to continue.");
+      alert(t("Please log in to continue."));
       navigate("/login");
       return;
     }
@@ -27,12 +29,12 @@ export default function Sell() {
   return (
     <main className="sell-page">
       <header className="sell-header">
-        <p className="sell-eyebrow">Join our growing community</p>
-        <h2>Sell with Wasantha Eco Husk</h2>
-        <p>Choose a product type to create your listing and reach local customers.</p>
+        <p className="sell-eyebrow">{t("Join our growing community")}</p>
+        <h2>{t("Sell with Wasantha Eco Husk")}</h2>
+        <p>{t("Choose a product type to create your listing and reach local customers.")}</p>
       </header>
 
-      <div className="sell-options" aria-label="Choose what to sell">
+      <div className="sell-options" aria-label={t("Choose what to sell")}>
         <button
           type="button"
           className="sell-card"
@@ -40,12 +42,12 @@ export default function Sell() {
         >
           <img src={huskImg} alt="" />
           <span className="sell-card-content">
-            <span className="sell-card-eyebrow">Natural materials</span>
-            <span className="sell-card-title">Coconut Husk</span>
+            <span className="sell-card-eyebrow">{t("Natural materials")}</span>
+            <span className="sell-card-title">{t("Coconut Husk")}</span>
             <span className="sell-card-description">
-              List your husk chips and related coconut coir products.
+              {t("List your husk chips and related coconut coir products.")}
             </span>
-            <span className="sell-card-action">Create a husk listing</span>
+            <span className="sell-card-action">{t("Create a husk listing")}</span>
           </span>
         </button>
 
@@ -56,12 +58,12 @@ export default function Sell() {
         >
           <img src={plantImg} alt="" />
           <span className="sell-card-content">
-            <span className="sell-card-eyebrow">Grow and share</span>
-            <span className="sell-card-title">Coconut Plants</span>
+            <span className="sell-card-eyebrow">{t("Grow and share")}</span>
+            <span className="sell-card-title">{t("Coconut Plants")}</span>
             <span className="sell-card-description">
-              Connect with buyers looking for healthy coconut plants.
+              {t("Connect with buyers looking for healthy coconut plants.")}
             </span>
-            <span className="sell-card-action">Create a plant listing</span>
+            <span className="sell-card-action">{t("Create a plant listing")}</span>
           </span>
         </button>
       </div>

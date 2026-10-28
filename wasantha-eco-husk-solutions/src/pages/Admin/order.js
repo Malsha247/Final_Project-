@@ -1,7 +1,9 @@
 import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
+import { usePreferences } from "../../contexts/PreferencesContext";
 
 export default function AdminOrders() {
+  const { t } = usePreferences();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -16,17 +18,17 @@ export default function AdminOrders() {
 
   return (
     <div className="admin-orders">
-      <h2>Recent Orders</h2>
+      <h2>{t("Recent Orders")}</h2>
       <table>
         <thead>
           <tr>
-            <th>Order Number</th>
-            <th>Customer</th>
-            <th>Phone Number</th>
-            <th>Address</th> {}
-            <th>Payment</th>
-            <th>Status</th>
-            <th>Total</th>
+            <th>{t("Order Number")}</th>
+            <th>{t("Customer")}</th>
+            <th>{t("Phone Number")}</th>
+            <th>{t("Address")}</th> {}
+            <th>{t("Payment")}</th>
+            <th>{t("Status")}</th>
+            <th>{t("Total")}</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +37,7 @@ export default function AdminOrders() {
               <td>{o.id}</td>
               <td>{o.customer_name}</td>
               <td>{o.customer_phone}</td>
-              <td>{o.shipping_address || "Not provided"}</td>
+              <td>{o.shipping_address || t("Not provided")}</td>
               <td>{o.payment_status}</td>
               <td>{o.status}</td>
               <td>Rs. {o.total_price}</td>

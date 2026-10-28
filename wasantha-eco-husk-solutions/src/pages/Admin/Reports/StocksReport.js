@@ -1,6 +1,7 @@
 import API_BASE_URL from "../../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../../contexts/PreferencesContext";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import {
@@ -19,6 +20,7 @@ import "../../../Styles/AdminStyle/Reports/stocksReport.css";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export default function StocksReport() {
+  const { t } = usePreferences();
   const [summary, setSummary] = useState(null);
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,16 +66,16 @@ export default function StocksReport() {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text("Stock Report", 14, 15);
+    doc.text(t("Stock Report"), 14, 15);
 
     doc.setFontSize(11);
-    doc.text(`Total Products: ${summary.total_products}`, 14, 25);
-    doc.text(`Total Stock Units: ${summary.total_stock}`, 14, 32);
-    doc.text(`Low Stock Items: ${summary.low_stock}`, 14, 39);
+    doc.text(`${t("Total Products")}: ${summary.total_products}`, 14, 25);
+    doc.text(`${t("Total Stock Units")}: ${summary.total_stock}`, 14, 32);
+    doc.text(`${t("Low Stock Items")}: ${summary.low_stock}`, 14, 39);
 
     autoTable(doc, {
       startY: 50,
-      head: [["Product", "Stock", "Price"]],
+      head: [[t("Product"), t("Stock"), t("Price")]],
       body: stocks.map((p) => [p.product_name, p.stock, `Rs. ${p.price}`]),
     });
 
@@ -85,7 +87,7 @@ export default function StocksReport() {
     labels: stocks.map((p) => p.product_name),
     datasets: [
       {
-        label: "Stock Quantity",
+        label: t("Stock Quantity"),
         data: stocks.map((p) => p.stock),
         backgroundColor: "#66bb6a",
       },
@@ -101,49 +103,49 @@ export default function StocksReport() {
 
   /* ===== GUARDS ===== */
   if (loading) {
-    return <p style={{ padding: 20 }}>Loading stock report...</p>;
+    return <p style={{ padding: 20 }}>{t("Loading stock report...")}</p>;
   }
 
   if (!summary) {
-    return <p style={{ padding: 20 }}>No stock data available</p>;
+    return <p style={{ padding: 20 }}>{t("No stock data available")}</p>;
   }
 
   return (
     <div className="report-wrapper">
-      <h2 className="report-title">Stock Report</h2>
+      <h2 className="report-title">{t("Stock Report")}</h2>
 
       {/* ACTION BUTTONS */}
       <div className="report-actions">
         <button className="back-btn" onClick={() => navigate("/admin/reports")}>
-          Back to Reports
+          {t("Back to Reports")}
         </button>
 
         <button className="pdf-btn" onClick={downloadPDF}>
-          Download PDF
+          {t("Download PDF")}
         </button>
       </div>
 
       {/* SUMMARY */}
       <div className="summary-grid">
         <div className="summary-card">
-          <h4>Total Products</h4>
+          <h4>{t("Total Products")}</h4>
           <p>{summary.total_products}</p>
         </div>
 
         <div className="summary-card">
-          <h4>Total Stock</h4>
+          <h4>{t("Total Stock")}</h4>
           <p>{summary.total_stock}</p>
         </div>
 
         <div className="summary-card danger">
-          <h4>Low Stock Items</h4>
+          <h4>{t("Low Stock Items")}</h4>
           <p>{summary.low_stock}</p>
         </div>
       </div>
 
       {/* CHART */}
       <div className="chart-card">
-        <h3>Stock Levels</h3>
+        <h3>{t("Stock Levels")}</h3>
         <Bar data={chartData} options={chartOptions} />
       </div>
 
@@ -151,9 +153,9 @@ export default function StocksReport() {
       <table className="report-table">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Stock</th>
-            <th>Price</th>
+            <th>{t("Product")}</th>
+            <th>{t("Stock")}</th>
+            <th>{t("Price")}</th>
           </tr>
         </thead>
         <tbody>

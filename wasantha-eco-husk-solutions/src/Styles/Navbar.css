@@ -9,6 +9,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+html[lang="si"] .navbar {
+  font-family: "Noto Sans Sinhala", "Iskoola Pota", sans-serif;
+}
+
 .navbar-container {
   display: flex;
   max-width: 1240px;
@@ -106,6 +110,54 @@
   flex: 0 0 auto;
   align-items: center;
   gap: 8px;
+}
+
+.preference-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preferences-floating {
+  position: fixed;
+  z-index: 1200;
+  top: 10px;
+  right: 12px;
+}
+
+.preferences-floating .preference-controls {
+  padding: 4px;
+  border: 1px solid #d8e6d3;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(23, 75, 43, 0.12);
+}
+
+.preference-btn {
+  display: inline-flex;
+  min-width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid #d8e6d3;
+  border-radius: 10px;
+  background: #f4f8f1;
+  color: #1d6b36;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.preference-btn:hover {
+  background: #287844;
+  color: #fff;
+}
+
+.preference-btn:focus-visible {
+  outline: 3px solid rgba(47, 132, 69, 0.3);
+  outline-offset: 2px;
 }
 
 .icon-btn {
@@ -295,6 +347,16 @@
     gap: 6px;
   }
 
+  .preference-controls {
+    gap: 4px;
+  }
+
+  .preference-btn {
+    min-width: 32px;
+    height: 34px;
+    padding: 0 6px;
+  }
+
   .icon-btn,
   .menu-btn {
     width: 36px;
@@ -317,6 +379,10 @@
   .nav-links a,
   .icon-btn,
   .profile-btn {
+    transition: none;
+  }
+
+  .preference-btn {
     transition: none;
   }
 }

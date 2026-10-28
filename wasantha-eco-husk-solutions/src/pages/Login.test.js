@@ -1,6 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Login from "./Login";
 
+jest.mock("../contexts/PreferencesContext", () => ({
+  usePreferences: () => ({ t: (text) => text }),
+}));
+
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   Link: ({ children }) => <span>{children}</span>,

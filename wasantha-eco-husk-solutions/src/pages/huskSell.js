@@ -2,6 +2,7 @@ import API_BASE_URL from "../config/api";
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { usePreferences } from "../contexts/PreferencesContext";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -16,6 +17,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function SellHusk() {
+  const { t } = usePreferences();
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   const [form, setForm] = useState({
@@ -120,50 +122,50 @@ export default function SellHusk() {
         alert(" " + data.message);
       }
     } catch (err) {
-      alert(" Something went wrong");
+      alert(t("Something went wrong"));
     }
   };
 
   return (
     <div className="sell-form-page">
-      <h2>Sell Your Coconut Husk </h2>
+      <h2>{t("Sell Your Coconut Husk")}</h2>
 
       <form onSubmit={handleSubmit} className="sell-form">
-        <label>Name</label>
+        <label>{t("Name")}</label>
         <input
           required
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
 
-        <label>Address</label>
+        <label>{t("Address")}</label>
         <input
           required
           value={form.address}
           onChange={(e) => setForm({ ...form, address: e.target.value })}
         />
 
-        <label>Phone</label>
+        <label>{t("Phone")}</label>
         <input
           required
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
         />
 
-        <label>Description</label>
+        <label>{t("Description")}</label>
         <textarea
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
 
-        <label>Upload Images</label>
+        <label>{t("Upload Images")}</label>
         <input type="file" onChange={(e) => handleImageChange(e, 0)} />
         <input type="file" onChange={(e) => handleImageChange(e, 1)} />
 
-        <label>Mark Your Location</label>
+        <label>{t("Mark Your Location")}</label>
         <div ref={mapRef} className="map-box" style={{ height: "300px" }} />
 
-        <button type="submit">Submit for Review</button>
+        <button type="submit">{t("Submit for Review")}</button>
       </form>
     </div>
   );

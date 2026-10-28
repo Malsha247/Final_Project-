@@ -1,14 +1,16 @@
 import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/adminFeedbacks.css";
 
 export default function AdminFeedbacks() {
+  const { t } = usePreferences();
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [replyText, setReplyText] = useState({});
   const adminName =
     (JSON.parse(sessionStorage.getItem("user") || "null") || {}).first_name ||
-    "Admin";
+    t("Admin");
 
   useEffect(() => {
     const load = async () => {
@@ -45,7 +47,7 @@ export default function AdminFeedbacks() {
 
   const sendReply = async (id) => {
     const text = (replyText[id] || "").trim();
-    if (!text) return alert("Reply cannot be empty");
+    if (!text) return alert(t("Reply cannot be empty"));
 
     try {
       const res = await fetch(
@@ -69,15 +71,15 @@ export default function AdminFeedbacks() {
           console.warn("replyFeedback returned non-JSON:", respText);
           data = {
             success: false,
-            message: "Invalid JSON response from server",
+            message: t("Invalid JSON response from server"),
           };
         }
       } else {
-        data = { success: false, message: "Empty response from server" };
+        data = { success: false, message: t("Empty response from server") };
       }
 
       if (res.ok && data && data.success) {
-        alert("Reply sent");
+        alert(t("Reply sent"));
         setList((prev) =>
           prev.map((item) =>
             item.id === id
@@ -95,23 +97,23 @@ export default function AdminFeedbacks() {
         setReplyText((prev) => ({ ...prev, [id]: "" }));
       } else {
         alert(
-          "Failed: " +
-            (data && data.message ? data.message : `Status ${res.status}`)
+          t("Failed: ") +
+            (data && data.message ? data.message : `${t("Status")} ${res.status}`)
         );
       }
     } catch (err) {
       console.error("Network / fetch error:", err);
-      alert("Could not connect to backend");
+      alert(t("Could not connect to backend"));
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{t("Loading...")}</p>;
 
   return (
     <div className="admin-feedbacks-page">
-      <h2>Feedback & Inquiries</h2>
+      <h2>{t("Feedback & Inquiries")}</h2>
       {list.length === 0 ? (
-        <p>No feedbacks.</p>
+        <p>{t("No feedbacks.")}</p>
       ) : (
         <div className="feedbacks-list">
           {list.map((f) => (
@@ -127,7 +129,7 @@ export default function AdminFeedbacks() {
 
               {f.is_replied ? (
                 <div className="fb-reply">
-                  <strong>Replied by {f.replied_by}:</strong>
+                  <strong>{t("Replied by")} {f.replied_by}:</strong>
                   <div>{f.reply}</div>
                 </div>
               ) : (
@@ -139,7 +141,7 @@ export default function AdminFeedbacks() {
                       setReplyText({ ...replyText, [f.id]: e.target.value })
                     }
                   />
-                  <button onClick={() => sendReply(f.id)}>Send Reply</button>
+                  <button onClick={() => sendReply(f.id)}>{t("Send Reply")}</button>
                 </div>
               )}
             </div>

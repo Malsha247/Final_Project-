@@ -1,10 +1,12 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/Plants.css";
 import plantPlaceholder from "../assests/plant.jpg";
 
 export default function Plants() {
+  const { t } = usePreferences();
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,20 +30,20 @@ export default function Plants() {
   return (
     <main className="plants-page">
       <header className="plants-header">
-        <p className="plants-eyebrow">Grow greener with us</p>
-        <h2>Plants for Sale</h2>
-        <p>Find coconut plants from growers across Sri Lanka.</p>
+        <p className="plants-eyebrow">{t("Grow greener with us")}</p>
+        <h2>{t("Plants for Sale")}</h2>
+        <p>{t("Find coconut plants from growers across Sri Lanka.")}</p>
       </header>
 
       {loading ? (
-        <p className="plants-status" role="status">Loading plants...</p>
+        <p className="plants-status" role="status">{t("Loading plants...")}</p>
       ) : plants.length === 0 ? (
-        <p className="plants-status">No plants available right now.</p>
+        <p className="plants-status">{t("No plants available right now.")}</p>
       ) : (
         <>
           <p className="plants-count">
             <strong>{plants.length}</strong>{" "}
-            {plants.length === 1 ? "listing" : "listings"} available
+            {plants.length === 1 ? t("listing") : t("listings")} {t("available")}
           </p>
           <div className="plants-grid">
             {plants.map((plant) => (
@@ -53,7 +55,7 @@ export default function Plants() {
                 <div className="plants-thumb-wrap">
                   <img
                     src={plant.image ? assetUrl(plant.image) : plantPlaceholder}
-                    alt={`${plant.owner_name || "Coconut plant"} listing`}
+                    alt={`${plant.owner_name || t("Coconut plant")} ${t("listing")}`}
                     loading="lazy"
                     onError={(event) => {
                       event.currentTarget.onerror = null;
@@ -62,15 +64,15 @@ export default function Plants() {
                   />
                 </div>
                 <div className="plants-info">
-                  <h3>{plant.owner_name || "Local grower"}</h3>
+                  <h3>{plant.owner_name || t("Local grower")}</h3>
                   {plant.description && (
                     <p className="plants-description">{plant.description}</p>
                   )}
                   <p className="plants-address">{plant.address}</p>
                   <p className="plants-meta">
-                    Posted: {new Date(plant.created_at).toLocaleDateString()}
+                    {t("Posted:")} {new Date(plant.created_at).toLocaleDateString()}
                   </p>
-                  <span className="plants-card-link">View plant details</span>
+                  <span className="plants-card-link">{t("View plant details")}</span>
                 </div>
               </Link>
             ))}

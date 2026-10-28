@@ -1,9 +1,11 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { usePreferences } from "../contexts/PreferencesContext";
 import "../Styles/PlantDetails.css";
 
 export default function PlantDetails() {
+  const { t } = usePreferences();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -41,13 +43,13 @@ export default function PlantDetails() {
     e.preventDefault();
 
     if (!user) {
-      alert("Please login to send a request.");
+      alert(t("Please login to send a request."));
       navigate("/login");
       return;
     }
 
     if (!form.name || !form.email || !form.phone) {
-      alert("Please fill name, email and phone number.");
+      alert(t("Please fill name, email and phone number."));
       return;
     }
 
@@ -73,10 +75,10 @@ export default function PlantDetails() {
       const data = await res.json();
 
       if (!data.success) {
-        throw new Error(data.message || "Request failed");
+        throw new Error(data.message || t("Request failed"));
       }
 
-      alert("Request sent successfully!");
+      alert(t("Request sent successfully!"));
 
       
       setForm({
@@ -86,15 +88,15 @@ export default function PlantDetails() {
         message: "",
       });
     } catch (err) {
-      alert("Error: " + err.message);
+      alert(t("Error: ") + err.message);
     } finally {
       setSending(false);
     }
   };
 
   
-  if (loading) return <p className="center">Loading plant...</p>;
-  if (!plant) return <p className="center">Plant not found.</p>;
+  if (loading) return <p className="center">{t("Loading plant...")}</p>;
+  if (!plant) return <p className="center">{t("Plant not found.")}</p>;
 
   return (
     <div className="plant-details-page">
@@ -120,11 +122,11 @@ export default function PlantDetails() {
       <hr />
 
       {/* REQUEST FORM */}
-      <h3>Request This Plant</h3>
+      <h3>{t("Request This Plant")}</h3>
 
       <form onSubmit={handleSubmit} className="request-form">
         <input
-          placeholder="Your Name"
+          placeholder={t("Your Name")}
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
@@ -132,14 +134,14 @@ export default function PlantDetails() {
 
         <input
           type="email"
-          placeholder="Your Email"
+          placeholder={t("Your Email")}
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
         />
 
         <input
-          placeholder="Phone Number"
+          placeholder={t("Phone Number")}
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           required
@@ -148,7 +150,7 @@ export default function PlantDetails() {
         <input
           type="number"
           min="1"
-          placeholder="Quantity"
+          placeholder={t("Quantity")}
           value={form.quantity}
           onChange={(e) =>
             setForm({ ...form, quantity: Math.max(1, e.target.value) })
@@ -156,13 +158,13 @@ export default function PlantDetails() {
         />
 
         <textarea
-          placeholder="Message (optional)"
+          placeholder={t("Message (optional)")}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
         />
 
         <button type="submit" disabled={sending}>
-          {sending ? "Sending..." : "Send Request"}
+          {sending ? t("Sending...") : t("Send Request")}
         </button>
       </form>
     </div>

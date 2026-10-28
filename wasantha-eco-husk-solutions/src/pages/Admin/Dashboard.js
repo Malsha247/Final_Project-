@@ -1,6 +1,7 @@
 import API_BASE_URL from "../../config/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/Dashbord.css";
 
 import huskImg from "../../assests/husk.png";
@@ -11,6 +12,7 @@ import feedbackImg from "../../assests/feedback.png";
 import reportImg from "../../assests/reports.png";
 
 const Dashboard = () => {
+  const { t } = usePreferences();
   const navigate = useNavigate();
   const [totalOrders, setTotalOrders] = useState(0);
 
@@ -37,26 +39,26 @@ const Dashboard = () => {
   }, []);
 
   const tiles = [
-    { title: `Orders (${totalOrders})`, img: ordersImg, link: "/admin/order" },
-    { title: "Products", img: productsImg, link: "/admin/products" },
-    { title: "Coconut Husk", img: huskImg, link: "/admin/huskList" },
+    { title: t("Orders") + ` (${totalOrders})`, img: ordersImg, link: "/admin/order" },
+    { title: t("Products"), img: productsImg, link: "/admin/products" },
+    { title: t("Coconut Husk"), img: huskImg, link: "/admin/huskList" },
     {
-      title: "Delivery Persons Management",
+      title: t("Delivery Persons Management"),
       img: plantImg,
       link: "/admin/delivery-persons",
     },
     {
-      title: "Feedbacks and Inquiries",
+      title: t("Feedbacks and Inquiries"),
       img: feedbackImg,
       link: "/admin/feedbacks",
     },
-    { title: "Reports", img: reportImg, link: "/admin/reports" },
+    { title: t("Reports"), img: reportImg, link: "/admin/reports" },
   ];
 
   return (
     <div className="eco-dashboard">
       <main className="dashboard-main">
-        <h2>Admin Dashboard</h2>
+        <h2>{t("Admin Dashboard")}</h2>
 
         <div className="dashboard-grid">
           {tiles.map((tile, i) => (
