@@ -8,14 +8,16 @@ import plantImg from "../assests/plant.jpg";
 export default function Sell() {
   const navigate = useNavigate();
 
-
-  const userJson = sessionStorage.getItem("user");
-  const user = userJson ? JSON.parse(userJson) : null;
-
+  let user = null;
+  try {
+    user = JSON.parse(sessionStorage.getItem("user") || "null");
+  } catch (error) {
+    console.error("Invalid session user:", error);
+  }
 
   const handleSellClick = (path) => {
     if (!user) {
-      alert(" Please log in to continue.");
+      alert("Please log in to continue.");
       navigate("/login");
       return;
     }
@@ -23,27 +25,46 @@ export default function Sell() {
   };
 
   return (
-    <div className="sell-page">
-      <h2>Sell Your Coconut Products </h2>
-      <p>Select what you want to sell</p>
+    <main className="sell-page">
+      <header className="sell-header">
+        <p className="sell-eyebrow">Join our growing community</p>
+        <h2>Sell with Wasantha Eco Husk</h2>
+        <p>Choose a product type to create your listing and reach local customers.</p>
+      </header>
 
-      <div className="sell-options">
-        <div
+      <div className="sell-options" aria-label="Choose what to sell">
+        <button
+          type="button"
           className="sell-card"
           onClick={() => handleSellClick("/sell-husk")}
         >
-          <img src={huskImg} alt="Coconut Husk" />
-          <h3>Coconut Husk</h3>
-        </div>
+          <img src={huskImg} alt="" />
+          <span className="sell-card-content">
+            <span className="sell-card-eyebrow">Natural materials</span>
+            <span className="sell-card-title">Coconut Husk</span>
+            <span className="sell-card-description">
+              List your husk chips and related coconut coir products.
+            </span>
+            <span className="sell-card-action">Create a husk listing</span>
+          </span>
+        </button>
 
-        <div
+        <button
+          type="button"
           className="sell-card"
           onClick={() => handleSellClick("/sell-plant")}
         >
-          <img src={plantImg} alt="Coconut Plant" />
-          <h3>Coconut Plant</h3>
-        </div>
+          <img src={plantImg} alt="" />
+          <span className="sell-card-content">
+            <span className="sell-card-eyebrow">Grow and share</span>
+            <span className="sell-card-title">Coconut Plants</span>
+            <span className="sell-card-description">
+              Connect with buyers looking for healthy coconut plants.
+            </span>
+            <span className="sell-card-action">Create a plant listing</span>
+          </span>
+        </button>
       </div>
-    </div>
+    </main>
   );
 }
