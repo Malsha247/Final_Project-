@@ -1,10 +1,9 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../Styles/Products.css";
 
 const Products = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(true);
@@ -53,24 +52,35 @@ const Products = () => {
 
   return (
     <div className="products-page">
-      <h2>Our Products</h2>
+      <header className="products-header">
+        <p className="products-eyebrow">Wasantha Eco Husk Solutions</p>
+        <h2>Our Products</h2>
+        <p>Explore quality coconut husk products for your home, garden, and farm.</p>
+      </header>
 
       <div className="filter-bar">
         <input
           type="text"
-          placeholder=" Search product..."
+          aria-label="Search products"
+          placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <input
           type="number"
-          placeholder="Min Price"
+          aria-label="Minimum price"
+          placeholder="Min price"
+          min="0"
+          step="0.01"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
         />
         <input
           type="number"
-          placeholder="Max Price"
+          aria-label="Maximum price"
+          placeholder="Max price"
+          min="0"
+          step="0.01"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
         />
@@ -82,21 +92,27 @@ const Products = () => {
           />
           In Stock Only
         </label>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <select
+          aria-label="Sort products"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
           <option value="newest">Newest</option>
           <option value="price-asc">Price: Low to High</option>
           <option value="price-desc">Price: High to Low</option>
         </select>
       </div>
 
-      <div className="category-tabs">
+      <div className="category-tabs" aria-label="Product categories">
         {["all", "chips", "by-products"].map((cat) => (
           <button
             key={cat}
+            type="button"
             className={`category-btn ${
               selectedCategory === cat ? "active" : ""
             }`}
             onClick={() => setSelectedCategory(cat)}
+            aria-pressed={selectedCategory === cat}
           >
             {cat === "all"
               ? "All Products"
@@ -107,29 +123,35 @@ const Products = () => {
         ))}
       </div>
 
+      {!loading && (
+        <p className="products-count" aria-live="polite">
+          Showing <strong>{filteredProducts.length}</strong>{" "}
+          {filteredProducts.length === 1 ? "product" : "products"}
+        </p>
+      )}
+
       {loading ? (
-        <p>Loading products...</p>
+        <p className="products-status">Loading products...</p>
       ) : filteredProducts.length === 0 ? (
-        <p className="no-products">No products available.</p>
+        <p className="products-status">No products match your filters.</p>
       ) : (
         <div className="product-grid">
           {filteredProducts.map((p) => (
-            <div
+            <Link
               key={p.id}
               className="product-card"
-              onClick={() => navigate(`/product/${p.id}`)}
+              to={`/product/${p.id}`}
             >
-              <img
-                src={assetUrl(p.image_url)}
-                alt={p.name}
-              />
+              <div className="product-image-wrap">
+                <img src={assetUrl(p.image_url)} alt={p.name} loading="lazy" />
+              </div>
               <div className="product-info">
                 <h3>{p.name}</h3>
-                <p>{p.description}</p>
+                <p className="desc">{p.description}</p>
                 <p className="price">Rs. {parseFloat(p.price).toFixed(2)}</p>
 
                 {p.category.toLowerCase().includes("chip") && (
-                  <p className="bag-price"> Price (500g bag)</p>
+                  <p className="bag-price">Price (500g bag)</p>
                 )}
 
                 <span
@@ -137,10 +159,10 @@ const Products = () => {
                     p.stock > 0 ? "in-stock" : "out-stock"
                   }`}
                 >
-                  {p.stock > 0 ? " In Stock" : " Out of Stock"}
+                  {p.stock > 0 ? "In stock" : "Out of stock"}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
