@@ -65,7 +65,7 @@ export const Home = () => {
         <div className="product-grid polished">
           {featuredProducts.length ? featuredProducts.map((product) => (
             <article key={product.id} className="product-card polished">
-              <div className="product-media"><img src={product.image_url ? assetUrl(product.image_url) : heroImage} alt={product.name} loading="lazy" /><Link to={`/product/${product.id}`} className="product-cta">View product</Link></div>
+              <div className="product-media"><img src={product.image_url ? assetUrl(product.image_url) : heroImage} alt={product.name} loading="lazy" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = heroImage; }} /><Link to={`/product/${product.id}`} className="product-cta">View product</Link></div>
               <div className="product-info polished"><h3>{product.name}</h3></div>
             </article>
           )) : <p className="no-products">Our featured products will appear here soon.</p>}

@@ -58,7 +58,10 @@ const Navbar = () => {
         </div>
 
         {/* ===== NAV LINKS ===== */}
-        <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
+        <ul
+          id="primary-navigation"
+          className={`nav-links ${isMenuOpen ? "open" : ""}`}
+        >
           {[
             { name: "Home", path: "/" },
             { name: "Products", path: "/products" },
@@ -82,6 +85,24 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+
+          <li className="mobile-only-link">
+            {userName ? (
+              <Link
+                to="/"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  handleLogout();
+                }}
+              >
+                Log out
+              </Link>
+            ) : (
+              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                Log in
+              </Link>
+            )}
+          </li>
         </ul>
 
         {/* ===== RIGHT ICONS ===== */}
@@ -139,44 +160,17 @@ const Navbar = () => {
 
           {/* ===== MOBILE TOGGLE ===== */}
           <button
+            type="button"
             className="menu-btn"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="primary-navigation"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
-
-      {/* ===== MOBILE MENU ===== */}
-      {isMenuOpen && (
-        <div className="mobile-menu">
-          {[
-            { label: "Home", path: "/" },
-            { label: "Products", path: "/products" },
-            { label: "Plants", path: "/plants" },
-            { label: "Sell", path: "/sell" },
-            { label: "About", path: "/about-us" },
-            { label: "Contact", path: "/contact" },
-            userName ? { label: "Orders", path: "/my-orders" } : null,
-            userName
-              ? { label: "Logout", path: "/" }
-              : { label: "Login", path: "/login" },
-          ]
-            .filter(Boolean)
-            .map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  if (item.label === "Logout") handleLogout();
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-        </div>
-      )}
     </nav>
   );
 };
