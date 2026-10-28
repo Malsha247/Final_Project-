@@ -1,6 +1,6 @@
 // src/components/Navbar.js
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, User, LogOut, ChevronDown } from "lucide-react";
 import "../Styles/Navbar.css";
 import logo from "../assests/icon.png";
@@ -71,18 +71,26 @@ const Navbar = () => {
             { name: "Contact", path: "/contact" },
           ].map((link) => (
             <li key={link.name}>
-              <Link to={link.path} onClick={() => setIsMenuOpen(false)}>
+              <NavLink
+                to={link.path}
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
                 {link.name}
-              </Link>
+              </NavLink>
             </li>
           ))}
 
           {/* ===== ORDERS LINK (ONLY WHEN LOGGED IN) ===== */}
           {userName && (
             <li>
-              <Link to="/my-orders" onClick={() => setIsMenuOpen(false)}>
+              <NavLink
+                to="/my-orders"
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
                 Orders
-              </Link>
+              </NavLink>
             </li>
           )}
 

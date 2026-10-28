@@ -3,10 +3,9 @@
   z-index: 999;
   top: 0;
   width: 100%;
-  border-bottom: 1px solid #e8eee5;
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 4px 18px rgba(23, 75, 43, 0.07);
-  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #dce8d8;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(23, 75, 43, 0.09);
   font-family: "Poppins", sans-serif;
 }
 
@@ -33,10 +32,12 @@
 .logo-img {
   width: 46px;
   height: 46px;
-  border-radius: 12px;
-  background: #edf5e9;
+  border: 1px solid #dce8d8;
+  border-radius: 13px;
+  background: #f2f7ef;
   object-fit: contain;
   padding: 4px;
+  box-shadow: 0 2px 6px rgba(23, 75, 43, 0.08);
 }
 
 .logo-text {
@@ -45,9 +46,10 @@
 
 .logo-text h1 {
   margin: 0;
-  color: #174b2b;
+  color: #123d22;
   font-size: 1rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .logo-text p {
@@ -60,7 +62,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 1.5vw, 22px);
+  gap: clamp(4px, 0.8vw, 12px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -69,36 +71,34 @@
 .nav-links a {
   position: relative;
   display: inline-block;
-  padding: 9px 2px;
-  color: #34463a;
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 9px 11px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #293d30;
+  font-size: 0.88rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
 }
 
 .nav-links a::after {
-  position: absolute;
-  right: 0;
-  bottom: 3px;
-  left: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: #4b9b5b;
-  content: "";
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
+  content: none;
 }
 
 .nav-links a:hover,
-.nav-links a:focus-visible {
-  color: #287844;
+.nav-links a:focus-visible,
+.nav-links a.active {
+  border-color: #d7e8d2;
+  background: #eff7eb;
+  color: #1d6b36;
 }
 
-.nav-links a:hover::after,
-.nav-links a:focus-visible::after {
-  transform: scaleX(1);
+.nav-links a:focus-visible,
+.icon-btn:focus-visible,
+.menu-btn:focus-visible,
+.profile-btn:focus-visible {
+  outline: 3px solid rgba(47, 132, 69, 0.3);
+  outline-offset: 2px;
 }
 
 .nav-icons {
@@ -114,15 +114,16 @@
   height: 38px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #e1ecdc;
-  border-radius: 12px;
-  background: #f3f8f0;
-  color: #287844;
+  border: 1px solid #d8e6d3;
+  border-radius: 11px;
+  background: #f4f8f1;
+  color: #1d6b36;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
 .icon-btn:hover {
+  border-color: #287844;
   background: #287844;
   color: #fff;
 }
@@ -134,8 +135,8 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #e1ecdc;
-  border-radius: 12px;
-  background: #f3f8f0;
+  border-radius: 11px;
+  background: #f4f8f1;
   color: #174b2b;
   cursor: pointer;
 }
@@ -150,11 +151,17 @@
   align-items: center;
   gap: 7px;
   padding: 8px 10px;
-  border: 1px solid #e1ecdc;
-  border-radius: 12px;
-  background: #f6faf4;
+  border: 1px solid #d8e6d3;
+  border-radius: 11px;
+  background: #f5f9f2;
   color: #174b2b;
   cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.profile-btn:hover {
+  border-color: #b8d2b1;
+  background: #edf6e9;
 }
 
 .user-greeting {
@@ -251,12 +258,10 @@
     font-size: 0.95rem;
   }
 
-  .nav-links a::after {
-    display: none;
-  }
-
   .nav-links a:hover,
-  .nav-links a:focus-visible {
+  .nav-links a:focus-visible,
+  .nav-links a.active {
+    border-color: transparent;
     background: #f2f7ef;
   }
 
@@ -275,6 +280,7 @@
   .logo-img {
     width: 40px;
     height: 40px;
+    border-radius: 11px;
   }
 
   .logo-text h1 {
@@ -309,8 +315,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nav-links a,
-  .nav-links a::after,
-  .icon-btn {
+  .icon-btn,
+  .profile-btn {
     transition: none;
   }
 }
