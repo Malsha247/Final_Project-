@@ -1,5 +1,5 @@
 import API_BASE_URL from "../../config/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePreferences } from "../../contexts/PreferencesContext";
 import "../../Styles/AdminStyle/DeliveryPersons.css";
@@ -23,7 +23,7 @@ export default function DeliveryPersons() {
   const PER_DELIVERY = 100;
 
   /* ================= LOAD ================= */
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const res = await fetch(
         `${API_BASE_URL}/delivery/getAll.php`
@@ -33,11 +33,11 @@ export default function DeliveryPersons() {
     } catch {
       setMessage(t("Failed to load delivery persons"));
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     load();
-  }, []);
+  }, [load]);
 
   /* ================= CREATE ================= */
   const submit = async () => {
