@@ -1,8 +1,8 @@
 import API_BASE_URL, { assetUrl } from "../config/api";
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../Styles/ProductDetails.css";
+import productPlaceholder from "../assests/main.jpg";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -10,47 +10,64 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [error, setError] = useState("");
 
-  const userJson = sessionStorage.getItem("user");
-  const user = userJson ? JSON.parse(userJson) : null;
+  let user = null;
+  try {
+    user = JSON.parse(sessionStorage.getItem("user") || "null");
+  } catch (sessionError) {
+    console.error("Invalid session user:", sessionError);
+  }
 
   useEffect(() => {
     if (!id) {
-      setError("Invalid or missing product ID");
+      setError("Invalid or missing product ID.");
       setLoading(false);
       return;
     }
 
-    async function fetchProduct() {
+    const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `${API_BASE_URL}/products/getProductById.php?id=${id}`
+          `${API_BASE_URL}/products/getProductById.php?id=${encodeURIComponent(id)}`
         );
         const data = await res.json();
-        if (data.success) setProduct(data.product);
-        else setError(data.message);
-      } catch (err) {
-        setError("Failed to fetch product.");
-        console.error(err);
+
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || "Product details could not be loaded.");
+        }
+
+        setProduct(data.product);
+      } catch (fetchError) {
+        console.error("Failed to fetch product:", fetchError);
+        setError(fetchError.message || "Failed to fetch product.");
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchProduct();
   }, [id]);
 
+  const stock = Number(product?.stock) || 0;
+
   const handleAddToCart = async () => {
-    if (!user) {
-      alert("Please login to add to cart.");
+    if (!user?.id) {
+      alert("Please log in to add to cart.");
       navigate("/login");
       return;
     }
 
-    const res = await fetch(
-      `${API_BASE_URL}/cart/addToCart.php`,
-      {
+    if (!product || stock <= 0 || qty > stock) {
+      alert(stock <= 0 ? "This product is out of stock." : "Please select a valid quantity.");
+      return;
+    }
+
+    setAddingToCart(true);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/cart/addToCart.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -58,43 +75,81 @@ export default function ProductDetails() {
           product_id: id,
           quantity: qty,
         }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Could not add the product to your cart.");
       }
-    );
-    const data = await res.json();
-    if (data.success) {
+
       alert("Product added to cart.");
       navigate("/cart");
-    } else {
-      alert(data.message || "Could not add the product to your cart.");
+    } catch (addError) {
+      console.error("Add to cart failed:", addError);
+      alert(addError.message || "Could not add the product to your cart.");
+    } finally {
+      setAddingToCart(false);
     }
   };
 
-  if (loading) return <p>Loading product details...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!product) return <p>Product not found.</p>;
+  if (loading) {
+    return <p className="product-details-status" role="status">Loading product details...</p>;
+  }
+  if (error) {
+    return <p className="product-details-status error" role="alert">{error}</p>;
+  }
+  if (!product) {
+    return <p className="product-details-status">Product not found.</p>;
+  }
 
   return (
-    <div className="product-details">
-      <img
-        src={assetUrl(product.image_url)}
-        alt={product.name}
-        className="pd-image"
-      />
-      <div className="details-info">
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <p className="price">Rs. {parseFloat(product.price).toFixed(2)}</p>
-        <div className="quantity-section">
-          <label>Quantity:</label>
-          <input
-            type="number"
-            min="1"
-            value={qty}
-            onChange={(e) => setQty(Math.max(1, e.target.value))}
+    <main className="product-details-page">
+      <section className="product-details" aria-labelledby="product-title">
+        <div className="pd-image-wrap">
+          <img
+            src={product.image_url ? assetUrl(product.image_url) : productPlaceholder}
+            alt={product.name}
+            className="pd-image"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = productPlaceholder;
+            }}
           />
         </div>
-        <button onClick={handleAddToCart}>Add to Cart</button>
-      </div>
-    </div>
+        <div className="details-info">
+          <p className="pd-eyebrow">Wasantha Eco Husk product</p>
+          <h2 id="product-title">{product.name}</h2>
+          {product.description && (
+            <p className="pd-description">{product.description}</p>
+          )}
+          <p className="pd-price">Rs. {Number(product.price).toFixed(2)}</p>
+          <p className={`pd-stock ${stock <= 0 ? "out-of-stock" : ""}`}>
+            {stock > 0 ? `${stock} available` : "Out of stock"}
+          </p>
+          <div className="quantity-section">
+            <label htmlFor="product-quantity">Quantity</label>
+            <input
+              id="product-quantity"
+              type="number"
+              min="1"
+              max={stock || 1}
+              value={qty}
+              onChange={(event) => {
+                const nextQuantity = Number.parseInt(event.target.value, 10);
+                setQty(Number.isNaN(nextQuantity) ? 1 : Math.min(stock || 1, Math.max(1, nextQuantity)));
+              }}
+            />
+          </div>
+          <button
+            type="button"
+            className="pd-add-button"
+            onClick={handleAddToCart}
+            disabled={stock <= 0 || addingToCart}
+          >
+            {addingToCart ? "Adding to cart..." : stock > 0 ? "Add to cart" : "Out of stock"}
+          </button>
+        </div>
+      </section>
+    </main>
   );
 }

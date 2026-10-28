@@ -211,7 +211,7 @@
   display: none;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 820px) {
   .navbar-container {
     min-height: 66px;
     padding: 8px 18px;
