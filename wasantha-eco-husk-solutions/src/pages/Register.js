@@ -17,6 +17,7 @@ function Register() {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [welcomeEmailSent, setWelcomeEmailSent] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -88,6 +89,7 @@ function Register() {
 
       if (res.ok && data.success) {
         setSubmitted(true);
+        setWelcomeEmailSent(data.email_sent !== false);
         setApiError("");
         setTimeout(() => navigate("/login"), 2000); 
       } else {
@@ -114,7 +116,9 @@ function Register() {
 
         {submitted && (
           <div className="success-msg">
-             Registration successful! Redirecting...
+            {welcomeEmailSent
+              ? "Registration successful! Welcome email sent. Redirecting..."
+              : "Registration successful, but we could not send the welcome email. Redirecting..."}
           </div>
         )}
         {apiError && <div className="error-msg">{apiError}</div>}

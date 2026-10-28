@@ -1,45 +1,60 @@
 <?php
-// backend/api/plants/helpers/sendEmailFallback.php
-// Clean, safe email helper.
-// DOES NOT load DB
-// DOES NOT decide seller/buyer
-// ONLY sends email to the given address
 
 function send_email_fallback(
     $to,
     $subject,
     $htmlBody,
-    $from = "yourgmail@gmail.com",      // âœ… system email
-    $fromName = "Wasantha Eco Husk",
-    $replyTo = null
+    $from = 'wasanthaeco2001@gmail.com',
+    $fromName = 'Wasantha Eco Husk Solutions',
+    $replyTo = null,
+    $preferredSmtpPassword = null
 ) {
-    // Load Composer autoload if available
-    $autoload1 = __DIR__ . '/../../../vendor/autoload.php';
-    $autoload2 = __DIR__ . '/../../vendor/autoload.php';
-
-    if (file_exists($autoload1)) {
-        require_once $autoload1;
-    } elseif (file_exists($autoload2)) {
-        require_once $autoload2;
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+        return 'Invalid recipient email address.';
     }
 
-    // -----------------------------
-    // Use PHPMailer with SMTP
-    // -----------------------------
+    $autoload = __DIR__ . '/../../../vendor/autoload.php';
+    if (is_file($autoload)) {
+        require_once $autoload;
+    }
+
     if (class_exists('\PHPMailer\PHPMailer\PHPMailer')) {
+        $smtpPassword = $preferredSmtpPassword ?: (getenv('SMTP_PASSWORD') ?: '');
+        if ($smtpPassword === '') {
+            foreach ([
+                'SMTP_PASSWORD_API_REGISTER',
+                'SMTP_PASSWORD_API_ORDERS_SENDORDERNOTIFICATION',
+                'SMTP_PASSWORD_API_PLANTS_HELPERS_SENDEMAILFALLBACK',
+                'SMTP_PASSWORD_API_SELLER_SENDRESPONSE',
+            ] as $environmentKey) {
+                $smtpPassword = getenv($environmentKey) ?: '';
+                if ($smtpPassword !== '') {
+                    break;
+                }
+            }
+        }
+
+        $smtpHost = getenv('SMTP_HOST') ?: 'smtp.gmail.com';
+        if (strcasecmp($smtpHost, 'smtp.gmail.com') === 0) {
+            $smtpPassword = preg_replace('/\s+/', '', trim($smtpPassword));
+        }
+
+        if ($smtpPassword === '') {
+            return 'SMTP password is not configured.';
+        }
+
         try {
             $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-
-            // ðŸ” SMTP CONFIG (Gmail)
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'wasanthaeco2001@gmail.com'; // ðŸ”´ CHANGE
-            $mail->Password   = (getenv('SMTP_PASSWORD_API_PLANTS_HELPERS_SENDEMAILFALLBACK') ?: '');   // ðŸ”´ CHANGE
-            $mail->SMTPSecure = 'tls';
-            $mail->Port       = 587;
-
-            // Email headers
+            $mail->Host = $smtpHost;
+            $mail->SMTPAuth = true;
+            $mail->Username = getenv('SMTP_USERNAME') ?: 'wasanthaeco2001@gmail.com';
+            $mail->Password = $smtpPassword;
+            $mail->SMTPSecure = getenv('SMTP_ENCRYPTION')
+                ?: \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = (int) (getenv('SMTP_PORT') ?: 587);
+            $mail->Timeout = 15;
+            $mail->CharSet = 'UTF-8';
             $mail->setFrom($from, $fromName);
 
             if (!empty($replyTo) && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
@@ -49,20 +64,18 @@ function send_email_fallback(
             $mail->addAddress($to);
             $mail->isHTML(true);
             $mail->Subject = $subject;
-            $mail->Body    = $htmlBody;
-
+            $mail->Body = $htmlBody;
+            $mail->AltBody = trim(preg_replace('/\s+/', ' ', strip_tags($htmlBody)));
             $mail->send();
-            return true;
 
+            return true;
         } catch (\PHPMailer\PHPMailer\Exception $e) {
-            return "PHPMailer error: " . $e->getMessage();
+            error_log('SMTP email delivery failed: ' . $e->getMessage());
+            return 'SMTP email delivery failed.';
         }
     }
 
-    // -----------------------------
-    // Fallback: PHP mail()
-    // -----------------------------
-    $headers  = "MIME-Version: 1.0\r\n";
+    $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $headers .= "From: {$fromName} <{$from}>\r\n";
 
@@ -70,9 +83,9 @@ function send_email_fallback(
         $headers .= "Reply-To: {$replyTo}\r\n";
     }
 
-    if (@mail($to, $subject, $htmlBody, $headers)) {
+    if (mail($to, $subject, $htmlBody, $headers)) {
         return true;
     }
 
-    return "mail() failed â€” SMTP not configured";
+    return 'SMTP is unavailable and mail() failed.';
 }

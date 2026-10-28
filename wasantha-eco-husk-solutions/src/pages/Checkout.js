@@ -211,7 +211,11 @@ export default function Checkout() {
             throw new Error(result.message || "Order save failed.");
           }
 
-          alert("Payment successful!");
+          alert(
+            result.email_sent === false
+              ? "Payment successful and order placed, but the confirmation email could not be sent. Please check My Orders."
+              : "Payment successful!"
+          );
           navigate("/my-orders");
         } catch (err) {
           console.error("PayPal checkout failed:", err);
@@ -309,7 +313,11 @@ export default function Checkout() {
         throw new Error(data.message || "Order failed.");
       }
 
-      alert("Order placed successfully");
+      alert(
+        data.email_sent === false
+          ? "Order placed successfully, but the confirmation email could not be sent. Please check My Orders."
+          : "Order placed successfully"
+      );
       navigate("/my-orders");
     } catch (err) {
       console.error("Checkout failed:", err);

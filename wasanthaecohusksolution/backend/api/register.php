@@ -8,14 +8,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 
 require_once __DIR__ . '/../config/db.php';
-
-$autoloadPath = __DIR__ . '/../vendor/autoload.php';
-if (is_file($autoloadPath)) {
-    require_once $autoloadPath;
-}
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+require_once __DIR__ . '/plants/helpers/sendEmailFallback.php';
 
 try {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -67,52 +60,34 @@ try {
     $insert = $conn->prepare("INSERT INTO customer (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
     $insert->execute([$firstName, $lastName, $email, $hashedPassword]);
 
-    
-    if (class_exists(PHPMailer::class)) {
-        $mail = new PHPMailer(true);
-        try {
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'wasanthaeco2001@gmail.com'; 
-        $mail->Password   = (getenv('SMTP_PASSWORD_API_REGISTER') ?: ''); 
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-
-        
-
-        $mail->setFrom('wasanthaeco2001@gmail.com', 'Wasantha Eco Husk Solutions');
-        $mail->addAddress($email, "$firstName $lastName");
-
-        $mail->isHTML(true);
-        $mail->Subject = "Welcome to Wasantha Eco Husk Solutions ðŸŒ¿";
-        $mail->Body    = "
+    $safeFirstName = htmlspecialchars($firstName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $emailResult = send_email_fallback(
+        $email,
+        'Welcome to Wasantha Eco Husk Solutions',
+        "
             <html>
-            <body style='font-family: Arial, sans-serif; color: #2e2e2e;'>
-                <h2 style='color:#1b5e20;'>Welcome, {$firstName}!</h2>
-                <p>Thank you for joining <b>Wasantha Eco Husk Solutions</b>.</p>
-                <p>Weâ€™re happy to have you in our eco-friendly community! ðŸŒ±</p>
-                <br>
-                <p>Best regards,<br><b>Wasantha Eco Husk Team</b></p>
+            <body style='font-family: Arial, sans-serif; color: #20352a;'>
+                <h2 style='color:#174b2b;'>Welcome, {$safeFirstName}!</h2>
+                <p>Thank you for joining <strong>Wasantha Eco Husk Solutions</strong>.</p>
+                <p>We’re happy to have you in our eco-friendly community.</p>
+                <p>Best regards,<br><strong>Wasantha Eco Husk Team</strong></p>
             </body>
-            </html>";
-        $mail->AltBody = "Welcome, {$firstName}! Thank you for joining Wasantha Eco Husk Solutions.";
-
-        if ($mail->send()) {
-            error_log("Greeting email sent successfully to {$email}");
-        } else {
-            error_log("PHPMailer send() returned false: " . $mail->ErrorInfo);
-        }
-
-        } catch (Exception $e) {
-            error_log(" Mailer Exception: " . $e->getMessage());
-            error_log(" PHPMailer Debug Info: " . ($mail->ErrorInfo ?? 'unavailable'));
-        }
-    } else {
-        error_log('PHPMailer is unavailable; registration email was skipped.');
+            </html>",
+        'wasanthaeco2001@gmail.com',
+            'Wasantha Eco Husk Solutions',
+            null,
+            getenv('SMTP_PASSWORD_API_REGISTER') ?: null
+    );
+    $emailSent = ($emailResult === true);
+    if (!$emailSent) {
+        error_log('Registration welcome email was not sent: ' . $emailResult);
     }
 
-    echo json_encode(["success" => true, "message" => "Registration successful."]);
+    echo json_encode([
+        "success" => true,
+        "message" => "Registration successful.",
+        "email_sent" => $emailSent,
+    ]);
 
 } catch (Throwable $e) {
     error_log(" PHP Error: " . $e->getMessage());

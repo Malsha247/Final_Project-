@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../plants/helpers/sendEmailFallback.php';
 
 $raw = file_get_contents("php://input");
 $data = json_decode($raw, true);
@@ -88,11 +89,45 @@ try {
 
     $conn->commit();
 
+    $escapeEmailHtml = static function ($value) {
+        return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    };
+    $safeName = $escapeEmailHtml($name);
+    $safePayment = $escapeEmailHtml($payment);
+    $safeAddress = $escapeEmailHtml($address);
+    $safeTotal = number_format($total, 2, '.', ',');
+
+    $emailResult = send_email_fallback(
+        $email,
+        "Order confirmation #{$order_id} - Wasantha Eco Husk Solutions",
+        "
+            <html>
+            <body style='font-family: Arial, sans-serif; color: #20352a; line-height: 1.6;'>
+                <h2 style='color: #174b2b;'>Thank you for your order, {$safeName}!</h2>
+                <p>Your order <strong>#{$order_id}</strong> has been placed successfully.</p>
+                <p><strong>Payment method:</strong> {$safePayment}</p>
+                <p><strong>Order total:</strong> Rs. {$safeTotal}</p>
+                <p><strong>Shipping address:</strong> {$safeAddress}</p>
+                <p>We’ll notify you when your order status changes.</p>
+                <p><strong>Wasantha Eco Husk Solutions</strong></p>
+            </body>
+            </html>",
+        'wasanthaeco2001@gmail.com',
+        'Wasantha Eco Husk Solutions',
+        null,
+        getenv('SMTP_PASSWORD_API_ORDERS_SENDORDERNOTIFICATION') ?: null
+    );
+    $emailSent = ($emailResult === true);
+    if (!$emailSent) {
+        error_log("Order confirmation email was not sent for order #{$order_id}: " . $emailResult);
+    }
+
     echo json_encode([
         "success" => true,
         "order_id" => $order_id,
         "payment_method" => $payment,
         "status" => $status,
+        "email_sent" => $emailSent,
     ]);
 } catch (Exception $e) {
     if ($conn->inTransaction()) $conn->rollBack();
