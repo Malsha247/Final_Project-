@@ -500,6 +500,73 @@
   }
 }
 
+html[data-theme="dark"] .home-page {
+  --home-forest: #b7e2bd;
+  --home-green: #a7d9ad;
+  --home-leaf: #82c58d;
+  --home-cream: #101a14;
+  --home-sage: #1d2d22;
+  --home-ink: #e8f0e8;
+  --home-muted: #b2c2b5;
+  --home-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+  background: var(--home-cream);
+  color: var(--home-ink);
+}
+
+html[data-theme="dark"] .home-page .features,
+html[data-theme="dark"] .home-page .featured-products,
+html[data-theme="dark"] .home-page .testimonials.polished {
+  background: var(--home-cream);
+}
+
+html[data-theme="dark"] .home-page .section-eyebrow,
+html[data-theme="dark"] .home-page .features > h2,
+html[data-theme="dark"] .home-page .featured-products h2,
+html[data-theme="dark"] .home-page .testimonials h2 {
+  color: var(--home-forest);
+}
+
+html[data-theme="dark"] .home-page .features > p:not(.section-eyebrow),
+html[data-theme="dark"] .home-page .products-count,
+html[data-theme="dark"] .home-page .testimonial-quote.no-avatar,
+html[data-theme="dark"] .home-page .no-products {
+  color: var(--home-muted);
+}
+
+html[data-theme="dark"] .home-page .feature-card,
+html[data-theme="dark"] .home-page .product-card.polished,
+html[data-theme="dark"] .home-page .testimonial-card.polished {
+  border-color: #354b3b;
+  background: #17241b;
+  box-shadow: var(--home-shadow);
+}
+
+html[data-theme="dark"] .home-page .feature-card h3,
+html[data-theme="dark"] .home-page .product-info.polished h3,
+html[data-theme="dark"] .home-page .testimonial-name {
+  color: #d7ead9;
+}
+
+html[data-theme="dark"] .home-page .feature-card p,
+html[data-theme="dark"] .home-page .testimonial-quote.no-avatar p {
+  color: var(--home-muted);
+}
+
+html[data-theme="dark"] .home-page .feature-card svg {
+  color: #a7d9ad;
+}
+
+html[data-theme="dark"] .home-page .section-link {
+  color: #a7d9ad;
+}
+
+html[data-theme="dark"] .home-page .feature-card:hover,
+html[data-theme="dark"] .home-page .product-card.polished:hover,
+html[data-theme="dark"] .home-page .testimonial-card.polished:hover {
+  border-color: #527b59;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-section > img,
   .feature-card,
