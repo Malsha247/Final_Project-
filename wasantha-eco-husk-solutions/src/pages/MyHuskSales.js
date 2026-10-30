@@ -16,7 +16,7 @@ export default function MyHuskSales() {
       return;
     }
     fetch(
-      `${API_BASE_URL}/seller/getHusksByUser.php?user_id=${user.id}`
+      `${API_BASE_URL}/Seller/getHusksByUser.php?user_id=${user.id}`
     )
       .then((res) => res.json())
       .then((data) => {

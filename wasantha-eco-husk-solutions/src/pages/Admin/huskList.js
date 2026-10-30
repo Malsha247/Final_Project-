@@ -10,7 +10,7 @@ export default function AdminHusks() {
 
   useEffect(() => {
     fetch(
-      `${API_BASE_URL}/seller/getAllHusks.php`
+      `${API_BASE_URL}/Seller/getAllHusks.php`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -25,7 +25,7 @@ export default function AdminHusks() {
   // -------------------------------
   const handleResponse = async (sellerId) => {
     const res = await fetch(
-      `${API_BASE_URL}/seller/sendResponse.php`,
+      `${API_BASE_URL}/Seller/sendResponse.php`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ export default function AdminHusks() {
     if (!window.confirm(t("Delete this husk submission permanently?"))) return;
 
     const res = await fetch(
-      `${API_BASE_URL}/seller/deleteHusk.php`,
+      `${API_BASE_URL}/Seller/deleteHusk.php`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

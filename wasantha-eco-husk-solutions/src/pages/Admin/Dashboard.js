@@ -56,7 +56,7 @@ const Dashboard = () => {
         await Promise.all([
           fetchList("/orders/getAllOrders.php", "orders"),
           fetchList("/products/getAllProducts.php", "products"),
-          fetchList("/seller/getAllHusks.php", "husks"),
+          fetchList("/Seller/getAllHusks.php", "husks"),
           fetchList("/feedback/getAllFeedbacks.php", "feedbacks"),
           fetchList("/delivery/getAll.php", "data"),
         ]);

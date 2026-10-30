@@ -74,7 +74,7 @@ export default function SellHusk() {
     formData.append("image", file);
 
     const res = await fetch(
-      `${API_BASE_URL}/seller/uploadImage.php`,
+      `${API_BASE_URL}/Seller/uploadImage.php`,
       { method: "POST", body: formData }
     );
 
@@ -104,7 +104,7 @@ export default function SellHusk() {
 
     try {
       const res = await fetch(
-        `${API_BASE_URL}/seller/addHusk.php`,
+        `${API_BASE_URL}/Seller/addHusk.php`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
