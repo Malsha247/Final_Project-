@@ -406,3 +406,94 @@
     transition: none;
   }
 }
+
+html[data-theme="dark"] .products-page {
+  background: var(--theme-background);
+  color: var(--theme-text);
+}
+
+html[data-theme="dark"] .products-page .products-eyebrow,
+html[data-theme="dark"] .products-page .products-header h2,
+html[data-theme="dark"] .products-page .products-count strong {
+  color: #b7e2bd;
+}
+
+html[data-theme="dark"] .products-page .products-header > p:last-child,
+html[data-theme="dark"] .products-page .products-count,
+html[data-theme="dark"] .products-page .products-status {
+  color: var(--theme-muted-text);
+}
+
+html[data-theme="dark"] .products-page .filter-bar,
+html[data-theme="dark"] .products-page .product-card,
+html[data-theme="dark"] .products-page .products-status {
+  border-color: var(--theme-border);
+  background: var(--theme-surface);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .products-page .filter-bar input:not([type="checkbox"]),
+html[data-theme="dark"] .products-page .filter-bar select {
+  border-color: var(--theme-border);
+  background: var(--theme-surface-raised);
+  color: var(--theme-text);
+}
+
+html[data-theme="dark"] .products-page .filter-bar input::placeholder {
+  color: var(--theme-muted-text);
+}
+
+html[data-theme="dark"] .products-page .in-stock-checkbox {
+  color: var(--theme-text);
+}
+
+html[data-theme="dark"] .products-page .category-btn {
+  border-color: var(--theme-border);
+  background: var(--theme-surface-raised);
+  color: #d7ead9;
+}
+
+html[data-theme="dark"] .products-page .category-btn:hover {
+  border-color: #527b59;
+  background: #263d2d;
+}
+
+html[data-theme="dark"] .products-page .category-btn.active {
+  border-color: #287844;
+  background: #287844;
+  color: #fff;
+}
+
+html[data-theme="dark"] .products-page .product-card {
+  color: var(--theme-text);
+}
+
+html[data-theme="dark"] .products-page .product-image-wrap {
+  background: #202f25;
+}
+
+html[data-theme="dark"] .products-page .product-image-wrap img {
+  color: var(--theme-muted-text);
+}
+
+html[data-theme="dark"] .products-page .product-info h3,
+html[data-theme="dark"] .products-page .product-info .price {
+  color: #b7e2bd;
+}
+
+html[data-theme="dark"] .products-page .product-info .desc,
+html[data-theme="dark"] .products-page .product-info .bag-price {
+  color: var(--theme-muted-text);
+}
+
+html[data-theme="dark"] .products-page .stock-label.in-stock {
+  border-color: #355b3d;
+  background: #203d29;
+  color: #b7e2bd;
+}
+
+html[data-theme="dark"] .products-page .stock-label.out-stock {
+  border-color: #68403c;
+  background: #3a2826;
+  color: #f0aaa2;
+}
