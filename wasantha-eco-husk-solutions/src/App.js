@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Home } from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -87,114 +87,24 @@ const App = () => {
         <Route path="/plant/:id" element={<Plnatdetails />} />
         <Route path="/my-requests" element={<MyRequests />} />
 
-        {/* ===== Admin Reports ===== */}
-        <Route
-          path="/admin/reports/customers"
-          element={<><AdminNavbar /><CustomersReport /></>}
-        />
-        <Route
-          path="/admin/reports/stocks"
-          element={<><AdminNavbar /><StocksReport /></>}
-        />
-        <Route
-          path="/admin/reports/husk-production"
-          element={<><AdminNavbar /><HuskProductionReport /></>}
-        />
-        <Route
-          path="/admin/reports/orders"
-          element={<><AdminNavbar /><OrdersReport /></>}
-        />
-
-        {/* ===== Admin Routes ===== */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <>
-              <AdminNavbar />
-              <Dashboard />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/products"
-          element={
-            <>
-              <AdminNavbar />
-              <ProductList />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/products/add"
-          element={
-            <>
-              <AdminNavbar />
-              <AddProductPage />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/products/edit/:id"
-          element={
-            <>
-              <AdminNavbar />
-              <EditProductPage />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/order"
-          element={
-            <>
-              <AdminNavbar />
-              <AdminOrders />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/huskList"
-          element={
-            <>
-              <AdminNavbar />
-              <Husklist />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/feedbacks"
-          element={
-            <>
-              <AdminNavbar />
-              <AdminFeedbacks />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/reports"
-          element={
-            <>
-              <AdminNavbar />
-              <AdminReports />
-            </>
-          }
-        />
-
-        <Route
-          path="/admin/husk-production-entry"
-          element={<><AdminNavbar /><HuskProductionEntry /></>}
-        />
-
-        <Route
-          path="/admin/delivery-persons"
-          element={<><AdminNavbar /><DeliveryPersons /></>}
-        />
+        {/* ===== Admin workspace ===== */}
+        <Route path="/admin" element={<AdminNavbar />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="products" element={<ProductList />} />
+          <Route path="products/add" element={<AddProductPage />} />
+          <Route path="products/edit/:id" element={<EditProductPage />} />
+          <Route path="order" element={<AdminOrders />} />
+          <Route path="huskList" element={<Husklist />} />
+          <Route path="feedbacks" element={<AdminFeedbacks />} />
+          <Route path="reports" element={<AdminReports />} />
+          <Route path="reports/customers" element={<CustomersReport />} />
+          <Route path="reports/stocks" element={<StocksReport />} />
+          <Route path="reports/husk-production" element={<HuskProductionReport />} />
+          <Route path="reports/orders" element={<OrdersReport />} />
+          <Route path="husk-production-entry" element={<HuskProductionEntry />} />
+          <Route path="delivery-persons" element={<DeliveryPersons />} />
+        </Route>
 
         {/* ===== Delivery ===== */}
         <Route path="/delivery/dashboard" element={<DeliveryDashboard />} />

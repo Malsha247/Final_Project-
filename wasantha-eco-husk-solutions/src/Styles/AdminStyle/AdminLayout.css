@@ -1,0 +1,302 @@
+.admin-shell {
+  --admin-bg: #f3f7f2;
+  --admin-surface: #ffffff;
+  --admin-surface-soft: #f7faf6;
+  --admin-text: #1d3124;
+  --admin-muted: #728176;
+  --admin-border: #e2ebe1;
+  --admin-green: #287844;
+  --admin-green-strong: #17542e;
+  display: flex;
+  min-height: 100vh;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html[data-theme="dark"] .admin-shell {
+  --admin-bg: #101a14;
+  --admin-surface: #17241b;
+  --admin-surface-soft: #1d2d22;
+  --admin-text: #e8f0e8;
+  --admin-muted: #a7b9aa;
+  --admin-border: #304638;
+  --admin-green: #8bc896;
+  --admin-green-strong: #b7e2bd;
+}
+
+.admin-sidebar {
+  position: fixed;
+  z-index: 1250;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 258px;
+  flex-direction: column;
+  padding: 22px 15px 16px;
+  border-right: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  box-shadow: 8px 0 28px rgba(20, 54, 29, 0.04);
+}
+
+.admin-brand {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  gap: 11px;
+  padding: 0 9px;
+  color: var(--admin-text);
+  text-decoration: none;
+}
+
+.admin-brand img {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  padding: 4px;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  background: var(--admin-surface-soft);
+  object-fit: contain;
+}
+
+.admin-brand span,
+.admin-brand small {
+  display: block;
+}
+
+.admin-brand strong {
+  font-size: 0.91rem;
+  letter-spacing: -0.02em;
+}
+
+.admin-brand small {
+  margin-top: 3px;
+  color: var(--admin-muted);
+  font-size: 0.73rem;
+}
+
+.admin-nav-label {
+  margin: 31px 10px 11px;
+  color: var(--admin-muted);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-nav-link,
+.admin-store-link,
+.admin-logout {
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: var(--admin-muted);
+  font: inherit;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.admin-nav-link svg,
+.admin-store-link svg,
+.admin-logout svg {
+  flex: 0 0 auto;
+}
+
+.admin-nav-link:hover,
+.admin-store-link:hover {
+  background: var(--admin-surface-soft);
+  color: var(--admin-text);
+}
+
+.admin-nav-link.active {
+  border-color: rgba(75, 155, 91, 0.18);
+  background: rgba(75, 155, 91, 0.12);
+  color: var(--admin-green-strong);
+}
+
+.admin-sidebar-footer {
+  display: grid;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--admin-border);
+}
+
+.admin-logout {
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.admin-logout:hover {
+  background: rgba(190, 65, 57, 0.09);
+  color: #c04940;
+}
+
+.admin-shell-main {
+  width: calc(100% - 258px);
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 258px;
+}
+
+.admin-topbar {
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  display: flex;
+  min-height: 74px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 112px 12px 32px;
+  border-bottom: 1px solid var(--admin-border);
+  background: color-mix(in srgb, var(--admin-surface) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.admin-breadcrumb {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.admin-breadcrumb span,
+.admin-user small {
+  color: var(--admin-muted);
+  font-size: 0.71rem;
+}
+
+.admin-breadcrumb strong {
+  color: var(--admin-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-user-avatar {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid rgba(75, 155, 91, 0.2);
+  border-radius: 50%;
+  background: rgba(75, 155, 91, 0.13);
+  color: var(--admin-green-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-user > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-user strong {
+  color: var(--admin-text);
+  font-size: 0.82rem;
+}
+
+.admin-menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  background: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.admin-content {
+  width: 100%;
+  min-height: calc(100vh - 74px);
+  padding: clamp(20px, 3vw, 36px);
+}
+
+.admin-sidebar-scrim {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .admin-sidebar {
+    transform: translateX(-105%);
+    transition: transform 0.24s ease;
+  }
+
+  .admin-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .admin-shell-main {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .admin-menu-toggle {
+    display: inline-flex;
+  }
+
+  .admin-topbar {
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+
+  .admin-sidebar-scrim {
+    position: fixed;
+    z-index: 1240;
+    inset: 0;
+    display: block;
+    border: 0;
+    background: rgba(5, 15, 8, 0.52);
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-topbar {
+    min-height: 66px;
+    gap: 12px;
+    padding: 10px 108px 10px 14px;
+  }
+
+  .admin-user {
+    margin-left: auto;
+  }
+
+  .admin-user > span:last-child {
+    display: none;
+  }
+
+  .admin-content {
+    padding: 18px 14px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-sidebar,
+  .admin-nav-link,
+  .admin-store-link,
+  .admin-logout {
+    transition: none;
+  }
+}
