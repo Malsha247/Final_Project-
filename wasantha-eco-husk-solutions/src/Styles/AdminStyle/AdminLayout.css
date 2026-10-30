@@ -1,5 +1,5 @@
 .admin-shell {
-  --admin-bg: #f3f7f2;
+  --admin-bg: #eaf1e9;
   --admin-surface: #ffffff;
   --admin-surface-soft: #f7faf6;
   --admin-text: #1d3124;
@@ -7,6 +7,11 @@
   --admin-border: #e2ebe1;
   --admin-green: #287844;
   --admin-green-strong: #17542e;
+  --admin-sidebar-bg: #17462f;
+  --admin-sidebar-text: #f1f7f2;
+  --admin-sidebar-muted: #c1d5c6;
+  --admin-sidebar-border: rgba(224, 242, 228, 0.18);
+  --admin-sidebar-active: #2b7047;
   display: flex;
   min-height: 100vh;
   background: var(--admin-bg);
@@ -23,6 +28,11 @@ html[data-theme="dark"] .admin-shell {
   --admin-border: #304638;
   --admin-green: #8bc896;
   --admin-green-strong: #b7e2bd;
+  --admin-sidebar-bg: #132018;
+  --admin-sidebar-text: #e8f0e8;
+  --admin-sidebar-muted: #a7b9aa;
+  --admin-sidebar-border: #304638;
+  --admin-sidebar-active: #23432d;
 }
 
 .admin-sidebar {
@@ -33,9 +43,9 @@ html[data-theme="dark"] .admin-shell {
   width: 258px;
   flex-direction: column;
   padding: 22px 15px 16px;
-  border-right: 1px solid var(--admin-border);
-  background: var(--admin-surface);
-  box-shadow: 8px 0 28px rgba(20, 54, 29, 0.04);
+  border-right: 1px solid var(--admin-sidebar-border);
+  background: var(--admin-sidebar-bg);
+  box-shadow: 8px 0 28px rgba(20, 54, 29, 0.12);
 }
 
 .admin-brand {
@@ -44,7 +54,7 @@ html[data-theme="dark"] .admin-shell {
   align-items: center;
   gap: 11px;
   padding: 0 9px;
-  color: var(--admin-text);
+  color: var(--admin-sidebar-text);
   text-decoration: none;
 }
 
@@ -53,7 +63,7 @@ html[data-theme="dark"] .admin-shell {
   height: 43px;
   flex: 0 0 43px;
   padding: 4px;
-  border: 1px solid var(--admin-border);
+  border: 1px solid var(--admin-sidebar-border);
   border-radius: 13px;
   background: var(--admin-surface-soft);
   object-fit: contain;
@@ -71,13 +81,13 @@ html[data-theme="dark"] .admin-shell {
 
 .admin-brand small {
   margin-top: 3px;
-  color: var(--admin-muted);
+  color: var(--admin-sidebar-muted);
   font-size: 0.73rem;
 }
 
 .admin-nav-label {
   margin: 31px 10px 11px;
-  color: var(--admin-muted);
+  color: var(--admin-sidebar-muted);
   font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.13em;
@@ -117,14 +127,15 @@ html[data-theme="dark"] .admin-shell {
 
 .admin-nav-link:hover,
 .admin-store-link:hover {
-  background: var(--admin-surface-soft);
-  color: var(--admin-text);
+  background: rgba(241, 247, 242, 0.1);
+  color: var(--admin-sidebar-text);
 }
 
 .admin-nav-link.active {
-  border-color: rgba(75, 155, 91, 0.18);
-  background: rgba(75, 155, 91, 0.12);
-  color: var(--admin-green-strong);
+  border-color: rgba(210, 239, 216, 0.25);
+  background: var(--admin-sidebar-active);
+  color: #ffffff;
+  box-shadow: inset 3px 0 0 #9ed5a8;
 }
 
 .admin-sidebar-footer {
@@ -132,7 +143,7 @@ html[data-theme="dark"] .admin-shell {
   gap: 6px;
   margin-top: auto;
   padding-top: 14px;
-  border-top: 1px solid var(--admin-border);
+  border-top: 1px solid var(--admin-sidebar-border);
 }
 
 .admin-logout {
@@ -143,7 +154,7 @@ html[data-theme="dark"] .admin-shell {
 
 .admin-logout:hover {
   background: rgba(190, 65, 57, 0.09);
-  color: #c04940;
+  color: #ffd1ca;
 }
 
 .admin-shell-main {

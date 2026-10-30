@@ -263,7 +263,7 @@ const Dashboard = () => {
 
       <section className="dashboard-summary-grid" aria-label={t("Store summary")}>
         {summaryCards.map(({ label, value, icon: Icon, color, to }) => (
-          <Link className="dashboard-summary-card" to={to} key={label}>
+          <Link className={`dashboard-summary-card ${color}`} to={to} key={label}>
             <span className={`summary-icon ${color}`}>
               <Icon size={20} aria-hidden="true" />
             </span>
