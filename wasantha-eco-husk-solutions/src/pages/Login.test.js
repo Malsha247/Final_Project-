@@ -6,10 +6,14 @@ jest.mock("../contexts/PreferencesContext", () => ({
 }));
 
 const mockNavigate = jest.fn();
-jest.mock("react-router-dom", () => ({
-  Link: ({ children }) => <span>{children}</span>,
-  useNavigate: () => mockNavigate,
-}), { virtual: true });
+jest.mock(
+  "react-router-dom",
+  () => ({
+    Link: ({ children }) => <span>{children}</span>,
+    useNavigate: () => mockNavigate,
+  }),
+  { virtual: true },
+);
 
 const submit = () => {
   fireEvent.change(screen.getByPlaceholderText("Enter your email"), {
@@ -18,7 +22,7 @@ const submit = () => {
   fireEvent.change(screen.getByPlaceholderText("Enter your password"), {
     target: { value: "test-password" },
   });
-  return screen.getByRole("button", { name: "Login" }).closest("form");
+  return screen.getByRole("button", { name: "Login" });
 };
 
 beforeEach(() => {
@@ -29,25 +33,43 @@ beforeEach(() => {
 
 test("shows the backend 401 message and blocks submissions while pending", async () => {
   let respond;
-  fetch.mockReturnValue(new Promise((resolve) => { respond = resolve; }));
+  fetch.mockReturnValue(
+    new Promise((resolve) => {
+      respond = resolve;
+    }),
+  );
   render(<Login />);
-  const form = submit();
-  fireEvent.submit(form);
-  fireEvent.submit(form);
+  const button = submit();
+  fireEvent.click(button);
+  fireEvent.click(button);
   expect(fetch).toHaveBeenCalledTimes(1);
   expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual({
-    email: "test@example.invalid", password: "test-password",
+    email: "test@example.invalid",
+    password: "test-password",
   });
-  respond({ ok: false, json: async () => ({ success: false, message: "Invalid email or password" }) });
+  respond({
+    ok: false,
+    json: async () => ({
+      success: false,
+      message: "Invalid email or password",
+    }),
+  });
   await screen.findByText("Invalid email or password");
   expect(mockNavigate).not.toHaveBeenCalled();
 });
 
 test("handles an HTML response without exposing it", async () => {
-  fetch.mockResolvedValue({ ok: false, json: async () => { throw new SyntaxError("HTML response"); } });
+  fetch.mockResolvedValue({
+    ok: false,
+    json: async () => {
+      throw new SyntaxError("HTML response");
+    },
+  });
   render(<Login />);
-  fireEvent.submit(submit());
-  await screen.findByText("The login server returned an invalid response. Please try again later.");
+  fireEvent.click(submit());
+  await screen.findByText(
+    "The login server returned an invalid response. Please try again later.",
+  );
 });
 
 test.each([
@@ -56,11 +78,16 @@ test.each([
   ["customer", "/"],
 ])("preserves %s session and redirect", async (role, path) => {
   const user = { id: 1, email: "test@example.invalid", role };
-  fetch.mockResolvedValue({ ok: true, json: async () => ({ success: true, user }) });
+  fetch.mockResolvedValue({
+    ok: true,
+    json: async () => ({ success: true, user }),
+  });
   render(<Login />);
-  fireEvent.submit(submit());
+  fireEvent.click(submit());
   await screen.findByText("Login successful!");
   expect(JSON.parse(sessionStorage.getItem("user"))).toEqual(user);
   expect(sessionStorage.getItem("user_id")).toBe("1");
-  await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(path), { timeout: 2000 });
+  await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(path), {
+    timeout: 2000,
+  });
 });

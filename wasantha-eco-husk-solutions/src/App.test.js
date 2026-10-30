@@ -17,17 +17,18 @@ afterEach(() => {
 });
 
 test("saves language and theme preferences when toggled", () => {
-  const { container } = render(
+  render(
     <PreferencesProvider>
       <PreferenceControls />
     </PreferencesProvider>
   );
 
   fireEvent.click(screen.getByRole("button", { name: "Language: English" }));
-  fireEvent.click(container.querySelector(".theme-btn"));
+  fireEvent.click(screen.getByRole("button", { pressed: false }));
 
   expect(document.documentElement.lang).toBe("si");
   expect(document.documentElement.dataset.theme).toBe("dark");
+  expect(screen.getByRole("button", { pressed: true })).toBeInTheDocument();
   expect(window.localStorage.getItem("wehs-language")).toBe("si");
   expect(window.localStorage.getItem("wehs-theme")).toBe("dark");
 });

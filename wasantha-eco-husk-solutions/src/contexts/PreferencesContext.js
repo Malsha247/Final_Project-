@@ -83,6 +83,7 @@ export const PreferenceControls = () => {
         type="button"
         className="preference-btn theme-btn"
         onClick={toggleTheme}
+        aria-pressed={theme === "dark"}
         aria-label={t(theme === "light" ? "Switch to dark mode" : "Switch to light mode")}
         title={t(theme === "light" ? "Switch to dark mode" : "Switch to light mode")}
       >
